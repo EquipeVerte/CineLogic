@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace ASPNET_MVC_Bootstrap4_Template
+namespace CineLogic
 {
     public class MvcApplication : System.Web.HttpApplication
     {

@@ -343,7 +343,13 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Seances\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Datepicker\css\" />
+    <Folder Include="Content\Datepicker\js\" />
+    <Folder Include="Content\Datepicker\locales\" />
+    <Folder Include="Content\FontAwesome\" />
+    <Folder Include="Content\Fullcalendar\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />

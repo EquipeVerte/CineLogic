@@ -6,10 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ASPNET_MVC_Bootstrap4_Template.Models;
-using ASPNET_MVC_Bootstrap4_Template.Models.Programmation;
+using CineLogic.Models;
+using CineLogic.Models.Programmation;
 
-namespace ASPNET_MVC_Bootstrap4_Template.Controllers
+namespace CineLogic.Controllers
 {
     public class SeancesController : Controller
     {

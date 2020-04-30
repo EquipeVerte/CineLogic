@@ -1,5 +1,7 @@
-﻿using ASPNET_MVC_Bootstrap4_Template.Models;
-using ASPNET_MVC_Bootstrap4_Template.Models.Programmation;
+﻿
+
+using CineLogic.Models;
+using CineLogic.Models.Programmation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

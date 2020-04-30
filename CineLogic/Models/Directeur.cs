@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASPNET_MVC_Bootstrap4_Template.Models
+namespace CineLogic.Models
 {
     using System;
     using System.Collections.Generic;

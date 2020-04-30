@@ -58,7 +58,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ASPNET_MVC_Bootstrap4_Template\CineLogic.csproj">
+    <ProjectReference Include="..\CineLogic\CineLogic.csproj">
       <Project>{36663BA8-B91B-41C1-A378-6ADDE28E1323}</Project>
       <Name>CineLogic</Name>
     </ProjectReference>

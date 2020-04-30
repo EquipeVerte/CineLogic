@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace ASPNET_MVC_Bootstrap4_Template
+namespace CineLogic
 {
     public class FilterConfig
     {

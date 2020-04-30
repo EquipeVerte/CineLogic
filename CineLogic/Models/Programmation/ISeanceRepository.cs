@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASPNET_MVC_Bootstrap4_Template.Models.Programmation
+namespace CineLogic.Models.Programmation
 {
     public interface ISeanceRepository
     {

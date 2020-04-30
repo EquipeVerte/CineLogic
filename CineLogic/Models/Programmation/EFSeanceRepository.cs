@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace ASPNET_MVC_Bootstrap4_Template.Models.Programmation
+namespace CineLogic.Models.Programmation
 {
     public class EFSeanceRepository : ISeanceRepository
     {
