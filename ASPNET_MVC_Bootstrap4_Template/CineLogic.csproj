@@ -130,6 +130,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\ContenusController.cs" />
+    <Compile Include="Controllers\DirecteursController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -338,6 +342,26 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Contenus\Create.cshtml" />
+    <Content Include="Views\Contenus\Delete.cshtml" />
+    <Content Include="Views\Contenus\Details.cshtml" />
+    <Content Include="Views\Contenus\Edit.cshtml" />
+    <Content Include="Views\Contenus\Index.cshtml" />
+    <Content Include="Views\Acteurs\Create.cshtml" />
+    <Content Include="Views\Acteurs\Delete.cshtml" />
+    <Content Include="Views\Acteurs\Details.cshtml" />
+    <Content Include="Views\Acteurs\Edit.cshtml" />
+    <Content Include="Views\Acteurs\Index.cshtml" />
+    <Content Include="Views\Directeurs\Create.cshtml" />
+    <Content Include="Views\Directeurs\Delete.cshtml" />
+    <Content Include="Views\Directeurs\Details.cshtml" />
+    <Content Include="Views\Directeurs\Edit.cshtml" />
+    <Content Include="Views\Directeurs\Index.cshtml" />
+    <Content Include="Views\Genres\Create.cshtml" />
+    <Content Include="Views\Genres\Delete.cshtml" />
+    <Content Include="Views\Genres\Details.cshtml" />
+    <Content Include="Views\Genres\Edit.cshtml" />
+    <Content Include="Views\Genres\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
