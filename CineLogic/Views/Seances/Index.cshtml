@@ -1,7 +1,88 @@
-﻿
+﻿@model IEnumerable<CineLogic.Models.Seance>
+
+@section css {
+    @Styles.Render("~/Content/fullcalendarcss")
+    @Styles.Render("~/Content/bootstrapdatepickercss")
+}
+
+@section scripts {
+    @Scripts.Render("~/Content/fullcalendarjs")
+    @Scripts.Render("~/Content/bootstrapdatepickerjs")
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var date_input = $('input[name="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            var options = {
+                todayBtn: 'linked',
+                language: 'fr',
+                orientation: 'top left',
+                daysOfWeekHighlighted: '0,6'
+            };
+            date_input.datepicker(options);
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['timeGrid', 'bootstrap'],
+                defaultView: 'timeGridWeek',
+                themeSystem: 'bootstrap',
+                locale: 'fr',
+                allDaySlot: false,
+                minTime: "08:00:00",
+                maxTime: "24:00:00",
+                events: [
+                    {
+                        title: 'Matin',
+                        start: '2020-04-16 10:00:00',
+                        end: '2020-04-16 14:00:00',
+                        url: 'matin.html',
+                        backgroundColor: 'green'
+                    },
+                    {
+                        title: 'Après-Midi \n Jurassic Park 23',
+                        start: '2020-04-16 14:00:00',
+                        end: '2020-04-16 18:00:00',
+                        url: 'apresmidi.html',
+                        backgroundColor: 'primary'
+                    },
+                    {
+                        title: 'Soir',
+                        start: '2020-04-16 18:00:00',
+                        end: '2020-04-16 22:00:00',
+                        url: 'soir.html',
+                        backgroundColor: 'green'
+                    }
+                ],
+                eventTimeFormat: { // like '14:30:00'
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }
+            });
+
+            calendar.render();
+
+
+        });
+    </script>
+}
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input name="date" class="form-control" type="text" />
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div id='calendar' class="p-4">
+        </div>
+    </div>
+</div>
 

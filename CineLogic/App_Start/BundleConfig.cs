@@ -25,6 +25,35 @@ namespace CineLogic
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fullcalendarcss").Include(
+                    "~/Content/Fullcalendar/core/main.css",
+                    "~/Content/Fullcalendar/daygrid/main.css",
+                    "~/Content/Fullcalendar/timegrid/main.css",
+                    "~/Content/Fullcalendar/interaction/main.css",
+                    "~/Content/Fullcalendar/bootstrap/main.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/fullcalendarjs").Include(
+                    "~/Content/Fullcalendar/core/main.js",
+                    "~/Content/Fullcalendar/daygrid/main.js",
+                    "~/Content/Fullcalendar/timegrid/main.js",
+                    "~/Content/Fullcalendar/interaction/main.js",
+                    "~/Content/Fullcalendar/bootstrap/main.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrapdatepickercss").Include(
+                    "~/Content/Datepicker/css/bootstrap-datepicker.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/bootstrapdatepickerjs").Include(
+                    "~/Content/Datepicker/js/bootstrap-datepicker.js",
+                    "~/Content/Datepicker/locales/bootstrap-datepicker.fr.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/fontawesomejs").Include(
+                    "~/Content/FontAwesome/all.js"
+                ));
         }
     }
 }

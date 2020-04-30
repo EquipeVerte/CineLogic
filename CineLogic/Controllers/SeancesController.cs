@@ -27,7 +27,9 @@ namespace CineLogic.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            List<Seance> seances = repository.GetAllSeances().ToList();
+
+            return View(seances);
         }
         
 

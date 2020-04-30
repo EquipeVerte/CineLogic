@@ -192,6 +192,49 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.standalone.min.css" />
+    <Content Include="Content\Datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\Datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Datepicker\locales\bootstrap-datepicker.en-CA.min.js" />
+    <Content Include="Content\Datepicker\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Content\FontAwesome\all.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.css" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.esm.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.min.css" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.min.js" />
+    <Content Include="Content\Fullcalendar\core\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\core\locales-all.js" />
+    <Content Include="Content\Fullcalendar\core\locales-all.min.js" />
+    <Content Include="Content\Fullcalendar\core\main.css" />
+    <Content Include="Content\Fullcalendar\core\main.esm.js" />
+    <Content Include="Content\Fullcalendar\core\main.js" />
+    <Content Include="Content\Fullcalendar\core\main.min.css" />
+    <Content Include="Content\Fullcalendar\core\main.min.js" />
+    <Content Include="Content\Fullcalendar\daygrid\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\daygrid\main.css" />
+    <Content Include="Content\Fullcalendar\daygrid\main.esm.js" />
+    <Content Include="Content\Fullcalendar\daygrid\main.js" />
+    <Content Include="Content\Fullcalendar\daygrid\main.min.css" />
+    <Content Include="Content\Fullcalendar\daygrid\main.min.js" />
+    <Content Include="Content\Fullcalendar\interaction\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\interaction\main.esm.js" />
+    <Content Include="Content\Fullcalendar\interaction\main.js" />
+    <Content Include="Content\Fullcalendar\interaction\main.min.js" />
+    <Content Include="Content\Fullcalendar\timegrid\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\timegrid\main.css" />
+    <Content Include="Content\Fullcalendar\timegrid\main.esm.js" />
+    <Content Include="Content\Fullcalendar\timegrid\main.js" />
+    <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
+    <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -235,6 +278,25 @@
     <Content Include="Models\CineDB.edmx.diagram">
       <DependentUpon>CineDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.css.map" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.js.map" />
+    <Content Include="Content\Fullcalendar\bootstrap\package.json" />
+    <Content Include="Content\Fullcalendar\bootstrap\README.md" />
+    <Content Include="Content\Fullcalendar\core\main.js.map" />
+    <Content Include="Content\Fullcalendar\core\package.json" />
+    <Content Include="Content\Fullcalendar\core\README.md" />
+    <Content Include="Content\Fullcalendar\daygrid\main.js.map" />
+    <Content Include="Content\Fullcalendar\daygrid\package.json" />
+    <Content Include="Content\Fullcalendar\daygrid\README.md" />
+    <Content Include="Content\Fullcalendar\interaction\main.js.map" />
+    <Content Include="Content\Fullcalendar\interaction\package.json" />
+    <Content Include="Content\Fullcalendar\interaction\README.md" />
+    <Content Include="Content\Fullcalendar\timegrid\main.js.map" />
+    <Content Include="Content\Fullcalendar\timegrid\package.json" />
+    <Content Include="Content\Fullcalendar\timegrid\README.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -343,19 +405,18 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Seances\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Content\Fullcalendar\bootstrap\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\core\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\daygrid\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\interaction\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\timegrid\main.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
