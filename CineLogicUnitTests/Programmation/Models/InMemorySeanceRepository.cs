@@ -26,7 +26,7 @@ namespace CineLogicUnitTests.Programmation.Models
             db.Remove(seance);
         }
 
-        public IEnumerable<Seance> GeatSeancesBySalle(int salleID)
+        public IEnumerable<Seance> GetSeancesBySalle(int salleID)
         {
             return db.Where(s => s.SalleID == salleID);
         }

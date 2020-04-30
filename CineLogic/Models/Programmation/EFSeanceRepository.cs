@@ -22,7 +22,7 @@ namespace CineLogic.Models.Programmation
             db.Seances.Remove(seance);
         }
 
-        public IEnumerable<Seance> GeatSeancesBySalle(int salleID)
+        public IEnumerable<Seance> GetSeancesBySalle(int salleID)
         {
             return db.Seances.Where(s => s.SalleID == salleID);
         }
@@ -45,6 +45,40 @@ namespace CineLogic.Models.Programmation
         public void UpdateSeance(Seance seance)
         {
             db.Entry(seance).State = EntityState.Modified;
+        }
+
+        public IEnumerable<CinemaSelectionItem> GetCinemas()
+        {
+            List<CinemaSelectionItem> cinemas = new List<CinemaSelectionItem>();
+
+            foreach(Cinema cinema in db.Cinemas)
+            {
+                CinemaSelectionItem csi = new CinemaSelectionItem()
+                {
+                    CinemaID = cinema.CinemaID,
+                    Nom = cinema.Nom,
+                };                
+
+                cinemas.Add(csi);
+            }
+
+            return cinemas;
+        }
+
+        public IEnumerable<SalleSelectionItem> GetSalles(int CinemaID)
+        {
+            List<SalleSelectionItem> salles = new List<SalleSelectionItem>();
+
+            foreach(Salle salle in db.Cinemas.Find(CinemaID).Salles)
+            {
+                salles.Add(new SalleSelectionItem()
+                {
+                    SalleID = salle.SalleID,
+                    Nom = salle.Nom
+                });
+            }
+
+            return salles;
         }
 
         public void Dispose()

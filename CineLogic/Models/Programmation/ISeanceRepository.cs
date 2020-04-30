@@ -16,11 +16,15 @@ namespace CineLogic.Models.Programmation
 
         IEnumerable<Seance> GetAllSeances();
 
-        IEnumerable<Seance> GeatSeancesBySalle(int salleID);
+        IEnumerable<Seance> GetSeancesBySalle(int salleID);
 
         void UpdateSeance(Seance seance);
 
         int SaveChanges();
+
+        IEnumerable<CinemaSelectionItem> GetCinemas();
+
+        IEnumerable<SalleSelectionItem> GetSalles(int cinemaID);
 
         void Dispose();
     } 

@@ -165,8 +165,10 @@
     <Compile Include="Models\Genre.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Programmation\CinemaSelectionItem.cs" />
     <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Models\Programmation\ISeanceRepository.cs" />
+    <Compile Include="Models\Programmation\SalleSelectionItem.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -404,6 +406,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Seances\Index.cshtml" />
+    <Content Include="Views\Seances\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
