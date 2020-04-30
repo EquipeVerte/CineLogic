@@ -237,6 +237,7 @@
     <Content Include="Content\Fullcalendar\timegrid\main.js" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
+    <Content Include="Content\programmation.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -406,7 +407,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Seances\Index.cshtml" />
-    <Content Include="Views\Seances\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

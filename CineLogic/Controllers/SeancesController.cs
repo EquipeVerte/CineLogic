@@ -33,12 +33,13 @@ namespace CineLogic.Controllers
             return View();
         }
         
-        public ActionResult Schedule(int id)
+        [HttpPost]
+        public ActionResult Create(Seance seance)
         {
-            List<Seance> seances = repository.GetAllSeances().ToList();
+            Console.WriteLine(seance);
 
-            return View(seances);
-        }
+            return Json(new { success = true });
+        } 
 
         [HttpGet]
         public ContentResult Cinemas()
