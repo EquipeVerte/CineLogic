@@ -36,7 +36,7 @@ namespace CineLogic.Controllers
         [HttpPost]
         public ActionResult Create(Seance seance)
         {
-            Console.WriteLine(seance);
+            
 
             return Json(new { success = true });
         } 
