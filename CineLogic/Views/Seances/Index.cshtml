@@ -26,7 +26,9 @@
 <h2>Selectionner le cinéma et salle:</h2>
 <div class="d-flex">
     <select class="form-control mr-2" id="cinema-select"></select>
-    <select class="form-control" id="salle-select"></select>
+    <select class="form-control mr-2" id="salle-select"></select>
+    <button class="btn btn-outline-primary"><i class="fas fa-sync-alt"></i></button>
+
 </div>
 
 <hr />
@@ -36,6 +38,10 @@
         <div class="d-flex flex-column border p-4">
             <h5>Ajouter une séance</h5>
             <div id="date-picker" class="my-3">
+            </div>
+
+            <div id="alert-date" class="alert alert-danger collapse">
+                Vous devez selectionner une date!
             </div>
 
             <div class="form-group">
@@ -70,14 +76,55 @@
         <div id='calendar' class="p-4 border">
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Création d'une séance</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Vous allez créer cette séance:
+                    </p>
+                    <dl>
+                        <dt>
+                            Salle
+                        </dt>
+                        <dd id="conf-salle"></dd>
+                        <dt>
+                            Titre
+                        </dt>
+                        <dd id="conf-titre"></dd>
+                        <dt>
+                            Heure de début
+                        </dt>
+                        <dd id="conf-debut"></dd>
+                        <dt>
+                            Heure de fin
+                        </dt>
+                        <dd id="conf-fin"></dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-outline-success" id="btn-confirmed">Continuer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts {
     @Scripts.Render("~/Content/fullcalendarjs")
     @Scripts.Render("~/Content/bootstrapdatepickerjs")
 
-    <script>
 
+    <script>
         $(document).ready(function () {
 
             //  Chercher les cinemas disponibles.
@@ -171,6 +218,30 @@
 
             //  Ajouter une nouvelle séance.
             $("#create-seance").click(function () {
+                console.log("Create clicked.");
+
+                if ($("#date-picker").datepicker('getDate') == null) {
+                    console.log("Alert");
+                    $("#alert-date").show();
+                }
+                else {
+                    $("#alert-date").hide();
+
+                    $("#conf-salle").html($("#cinema-select option:selected").text() + " - " + $("#salle-select option:selected").text());
+                    $("#conf-titre").html($('input[name = "titre"]').val());
+                    $("#conf-debut").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
+                    $("#conf-fin").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
+
+                    $("#confirmationModal").modal('show');
+                }
+
+                
+            });
+
+            
+            $("#btn-confirmed").click(function () {
+
+                $("#confirmationModal").modal('hide');
 
                 console.log($('input[name = "titre"]').val());
                 console.log($('#salle-select').val());
@@ -199,7 +270,9 @@
                         console.log(e);
                     }
                 })
-            })
+            });
+
+            
         })
             .ajaxStart(function () {
                 console.log("ajax start");
