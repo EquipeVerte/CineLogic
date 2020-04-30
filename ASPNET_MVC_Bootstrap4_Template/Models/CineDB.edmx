@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acteur">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cinema">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+          </Key>
+          <Property Name="CinemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Adresse" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="EnExploitation" Type="bit" Nullable="false" />
+          <Property Name="ResponsableID" Type="int" Nullable="false" />
+          <Property Name="Programmateur" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Contenu">
+          <Key>
+            <PropertyRef Name="Titre" />
+          </Key>
+          <Property Name="Titre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Annee" Type="int" Nullable="false" />
+          <Property Name="RuntimeMins" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="3" Scale="1" />
+          <Property Name="Votes" Type="int" />
+          <Property Name="Revenue" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="MetaScore" Type="int" />
+        </EntityType>
+        <EntityType Name="ContenuActeur">
+          <Key>
+            <PropertyRef Name="ContenuTitre" />
+            <PropertyRef Name="ActeurNom" />
+          </Key>
+          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ActeurNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContenuDirecteur">
+          <Key>
+            <PropertyRef Name="ContenuTitre" />
+            <PropertyRef Name="DirecteurNom" />
+          </Key>
+          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DirecteurNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContenuGenre">
+          <Key>
+            <PropertyRef Name="ContenuTitre" />
+            <PropertyRef Name="GenreNom" />
+          </Key>
+          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GenreNom" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Directeur">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="ResponsableID" />
+          </Key>
+          <Property Name="ResponsableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NumTel" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salle">
+          <Key>
+            <PropertyRef Name="SalleID" />
+          </Key>
+          <Property Name="SalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TypeEcran" Type="nvarchar" MaxLength="100" />
+          <Property Name="SystemSon" Type="nvarchar" MaxLength="100" />
+          <Property Name="EnExploitation" Type="bit" Nullable="false" />
+          <Property Name="CinemaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seance">
+          <Key>
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="SeanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="HeureDebut" Type="datetime" Nullable="false" />
+          <Property Name="HeureFin" Type="datetime" Nullable="false" />
+          <Property Name="SalleID" Type="int" Nullable="false" />
+          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
+          <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
+          <Property Name="HashIterations" Type="int" Nullable="false" />
+          <Property Name="NomComplet" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cinema_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="ResponsableID" />
+            </Principal>
+            <Dependent Role="Cinema">
+              <PropertyRef Name="ResponsableID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="Cinema">
+              <PropertyRef Name="Programmateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuActeur_Acteur">
+          <End Role="Acteur" Type="Self.Acteur" Multiplicity="1" />
+          <End Role="ContenuActeur" Type="Self.ContenuActeur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Acteur">
+              <PropertyRef Name="Nom" />
+            </Principal>
+            <Dependent Role="ContenuActeur">
+              <PropertyRef Name="ActeurNom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuActeur_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
+          <End Role="ContenuActeur" Type="Self.ContenuActeur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="ContenuActeur">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuDirecteur_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
+          <End Role="ContenuDirecteur" Type="Self.ContenuDirecteur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="ContenuDirecteur">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuDirecteur_Directeur">
+          <End Role="Directeur" Type="Self.Directeur" Multiplicity="1" />
+          <End Role="ContenuDirecteur" Type="Self.ContenuDirecteur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directeur">
+              <PropertyRef Name="Nom" />
+            </Principal>
+            <Dependent Role="ContenuDirecteur">
+              <PropertyRef Name="DirecteurNom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuGenre_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
+          <End Role="ContenuGenre" Type="Self.ContenuGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="ContenuGenre">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuGenre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="ContenuGenre" Type="Self.ContenuGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Nom" />
+            </Principal>
+            <Dependent Role="ContenuGenre">
+              <PropertyRef Name="GenreNom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Salle_Cinema">
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="1" />
+          <End Role="Salle" Type="Self.Salle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema">
+              <PropertyRef Name="CinemaID" />
+            </Principal>
+            <Dependent Role="Salle">
+              <PropertyRef Name="CinemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seance_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="0..1" />
+          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="Seance">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seance_Salle">
+          <End Role="Salle" Type="Self.Salle" Multiplicity="1" />
+          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salle">
+              <PropertyRef Name="SalleID" />
+            </Principal>
+            <Dependent Role="Seance">
+              <PropertyRef Name="SalleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CineDBModelStoreContainer">
+          <EntitySet Name="Acteur" EntityType="Self.Acteur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cinema" EntityType="Self.Cinema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contenu" EntityType="Self.Contenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContenuActeur" EntityType="Self.ContenuActeur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContenuDirecteur" EntityType="Self.ContenuDirecteur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContenuGenre" EntityType="Self.ContenuGenre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Directeur" EntityType="Self.Directeur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsable" EntityType="Self.Responsable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salle" EntityType="Self.Salle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seance" EntityType="Self.Seance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Cinema" EntitySet="Cinema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_User" Association="Self.FK_Cinema_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cinema" EntitySet="Cinema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuActeur_Acteur" Association="Self.FK_ContenuActeur_Acteur">
+            <End Role="Acteur" EntitySet="Acteur" />
+            <End Role="ContenuActeur" EntitySet="ContenuActeur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuActeur_Contenu" Association="Self.FK_ContenuActeur_Contenu">
+            <End Role="Contenu" EntitySet="Contenu" />
+            <End Role="ContenuActeur" EntitySet="ContenuActeur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuDirecteur_Contenu" Association="Self.FK_ContenuDirecteur_Contenu">
+            <End Role="Contenu" EntitySet="Contenu" />
+            <End Role="ContenuDirecteur" EntitySet="ContenuDirecteur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuDirecteur_Directeur" Association="Self.FK_ContenuDirecteur_Directeur">
+            <End Role="Directeur" EntitySet="Directeur" />
+            <End Role="ContenuDirecteur" EntitySet="ContenuDirecteur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuGenre_Contenu" Association="Self.FK_ContenuGenre_Contenu">
+            <End Role="Contenu" EntitySet="Contenu" />
+            <End Role="ContenuGenre" EntitySet="ContenuGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuGenre_Genre" Association="Self.FK_ContenuGenre_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="ContenuGenre" EntitySet="ContenuGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Salle_Cinema" Association="Self.FK_Salle_Cinema">
+            <End Role="Cinema" EntitySet="Cinema" />
+            <End Role="Salle" EntitySet="Salle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seance_Contenu" Association="Self.FK_Seance_Contenu">
+            <End Role="Contenu" EntitySet="Contenu" />
+            <End Role="Seance" EntitySet="Seance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seance_Salle" Association="Self.FK_Seance_Salle">
+            <End Role="Salle" EntitySet="Salle" />
+            <End Role="Seance" EntitySet="Seance" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acteur">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contenus" Relationship="Self.ContenuActeur" FromRole="Acteur" ToRole="Contenu" />
+        </EntityType>
+        <EntityType Name="Cinema">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+          </Key>
+          <Property Name="CinemaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EnExploitation" Type="Boolean" Nullable="false" />
+          <Property Name="ResponsableID" Type="Int32" Nullable="false" />
+          <Property Name="Programmateur" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Responsable" Relationship="Self.FK_Cinema_Responsable" FromRole="Cinema" ToRole="Responsable" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Cinema_User" FromRole="Cinema" ToRole="User" />
+          <NavigationProperty Name="Salles" Relationship="Self.FK_Salle_Cinema" FromRole="Cinema" ToRole="Salle" />
+        </EntityType>
+        <EntityType Name="Contenu">
+          <Key>
+            <PropertyRef Name="Titre" />
+          </Key>
+          <Property Name="Titre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Annee" Type="Int32" Nullable="false" />
+          <Property Name="RuntimeMins" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="Votes" Type="Int32" />
+          <Property Name="Revenue" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="MetaScore" Type="Int32" />
+          <NavigationProperty Name="Seances" Relationship="Self.FK_Seance_Contenu" FromRole="Contenu" ToRole="Seance" />
+          <NavigationProperty Name="Acteurs" Relationship="Self.ContenuActeur" FromRole="Contenu" ToRole="Acteur" />
+          <NavigationProperty Name="Directeurs" Relationship="Self.ContenuDirecteur" FromRole="Contenu" ToRole="Directeur" />
+          <NavigationProperty Name="Genres" Relationship="Self.ContenuGenre" FromRole="Contenu" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="Directeur">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contenus" Relationship="Self.ContenuDirecteur" FromRole="Directeur" ToRole="Contenu" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Nom" />
+          </Key>
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contenus" Relationship="Self.ContenuGenre" FromRole="Genre" ToRole="Contenu" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="ResponsableID" />
+          </Key>
+          <Property Name="ResponsableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumTel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_Responsable" FromRole="Responsable" ToRole="Cinema" />
+        </EntityType>
+        <EntityType Name="Salle">
+          <Key>
+            <PropertyRef Name="SalleID" />
+          </Key>
+          <Property Name="SalleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeEcran" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SystemSon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EnExploitation" Type="Boolean" Nullable="false" />
+          <Property Name="CinemaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cinema" Relationship="Self.FK_Salle_Cinema" FromRole="Salle" ToRole="Cinema" />
+          <NavigationProperty Name="Seances" Relationship="Self.FK_Seance_Salle" FromRole="Salle" ToRole="Seance" />
+        </EntityType>
+        <EntityType Name="Seance">
+          <Key>
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="SeanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HeureDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HeureFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SalleID" Type="Int32" Nullable="false" />
+          <Property Name="ContenuTitre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contenu" Relationship="Self.FK_Seance_Contenu" FromRole="Seance" ToRole="Contenu" />
+          <NavigationProperty Name="Salle" Relationship="Self.FK_Seance_Salle" FromRole="Seance" ToRole="Salle" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
+          <Property Name="Salt" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
+          <Property Name="HashIterations" Type="Int32" Nullable="false" />
+          <Property Name="NomComplet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
+        </EntityType>
+        <Association Name="FK_Cinema_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="ResponsableID" />
+            </Principal>
+            <Dependent Role="Cinema">
+              <PropertyRef Name="ResponsableID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cinema_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="Cinema">
+              <PropertyRef Name="Programmateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Salle_Cinema">
+          <End Role="Cinema" Type="Self.Cinema" Multiplicity="1" />
+          <End Role="Salle" Type="Self.Salle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema">
+              <PropertyRef Name="CinemaID" />
+            </Principal>
+            <Dependent Role="Salle">
+              <PropertyRef Name="CinemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seance_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="0..1" />
+          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="Seance">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seance_Salle">
+          <End Role="Salle" Type="Self.Salle" Multiplicity="1" />
+          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salle">
+              <PropertyRef Name="SalleID" />
+            </Principal>
+            <Dependent Role="Seance">
+              <PropertyRef Name="SalleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ContenuActeur">
+          <End Role="Acteur" Type="Self.Acteur" Multiplicity="*" />
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="*" />
+        </Association>
+        <Association Name="ContenuDirecteur">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="*" />
+          <End Role="Directeur" Type="Self.Directeur" Multiplicity="*" />
+        </Association>
+        <Association Name="ContenuGenre">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="*" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CineDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acteurs" EntityType="Self.Acteur" />
+          <EntitySet Name="Cinemas" EntityType="Self.Cinema" />
+          <EntitySet Name="Contenus" EntityType="Self.Contenu" />
+          <EntitySet Name="Directeurs" EntityType="Self.Directeur" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Responsables" EntityType="Self.Responsable" />
+          <EntitySet Name="Salles" EntityType="Self.Salle" />
+          <EntitySet Name="Seances" EntityType="Self.Seance" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
+            <End Role="Responsable" EntitySet="Responsables" />
+            <End Role="Cinema" EntitySet="Cinemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cinema_User" Association="Self.FK_Cinema_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Cinema" EntitySet="Cinemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Salle_Cinema" Association="Self.FK_Salle_Cinema">
+            <End Role="Cinema" EntitySet="Cinemas" />
+            <End Role="Salle" EntitySet="Salles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seance_Contenu" Association="Self.FK_Seance_Contenu">
+            <End Role="Contenu" EntitySet="Contenus" />
+            <End Role="Seance" EntitySet="Seances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seance_Salle" Association="Self.FK_Seance_Salle">
+            <End Role="Salle" EntitySet="Salles" />
+            <End Role="Seance" EntitySet="Seances" />
+          </AssociationSet>
+          <AssociationSet Name="ContenuActeur" Association="Self.ContenuActeur">
+            <End Role="Acteur" EntitySet="Acteurs" />
+            <End Role="Contenu" EntitySet="Contenus" />
+          </AssociationSet>
+          <AssociationSet Name="ContenuDirecteur" Association="Self.ContenuDirecteur">
+            <End Role="Contenu" EntitySet="Contenus" />
+            <End Role="Directeur" EntitySet="Directeurs" />
+          </AssociationSet>
+          <AssociationSet Name="ContenuGenre" Association="Self.ContenuGenre">
+            <End Role="Contenu" EntitySet="Contenus" />
+            <End Role="Genre" EntitySet="Genres" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CineDBModelStoreContainer" CdmEntityContainer="CineDBEntities">
+          <EntitySetMapping Name="Acteurs">
+            <EntityTypeMapping TypeName="CineDBModel.Acteur">
+              <MappingFragment StoreEntitySet="Acteur">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cinemas">
+            <EntityTypeMapping TypeName="CineDBModel.Cinema">
+              <MappingFragment StoreEntitySet="Cinema">
+                <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+                <ScalarProperty Name="EnExploitation" ColumnName="EnExploitation" />
+                <ScalarProperty Name="ResponsableID" ColumnName="ResponsableID" />
+                <ScalarProperty Name="Programmateur" ColumnName="Programmateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contenus">
+            <EntityTypeMapping TypeName="CineDBModel.Contenu">
+              <MappingFragment StoreEntitySet="Contenu">
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Annee" ColumnName="Annee" />
+                <ScalarProperty Name="RuntimeMins" ColumnName="RuntimeMins" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="MetaScore" ColumnName="MetaScore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directeurs">
+            <EntityTypeMapping TypeName="CineDBModel.Directeur">
+              <MappingFragment StoreEntitySet="Directeur">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="CineDBModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsables">
+            <EntityTypeMapping TypeName="CineDBModel.Responsable">
+              <MappingFragment StoreEntitySet="Responsable">
+                <ScalarProperty Name="ResponsableID" ColumnName="ResponsableID" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="NumTel" ColumnName="NumTel" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salles">
+            <EntityTypeMapping TypeName="CineDBModel.Salle">
+              <MappingFragment StoreEntitySet="Salle">
+                <ScalarProperty Name="SalleID" ColumnName="SalleID" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="TypeEcran" ColumnName="TypeEcran" />
+                <ScalarProperty Name="SystemSon" ColumnName="SystemSon" />
+                <ScalarProperty Name="EnExploitation" ColumnName="EnExploitation" />
+                <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seances">
+            <EntityTypeMapping TypeName="CineDBModel.Seance">
+              <MappingFragment StoreEntitySet="Seance">
+                <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="HeureDebut" ColumnName="HeureDebut" />
+                <ScalarProperty Name="HeureFin" ColumnName="HeureFin" />
+                <ScalarProperty Name="SalleID" ColumnName="SalleID" />
+                <ScalarProperty Name="ContenuTitre" ColumnName="ContenuTitre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CineDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="HashIterations" ColumnName="HashIterations" />
+                <ScalarProperty Name="NomComplet" ColumnName="NomComplet" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ContenuActeur" TypeName="CineDBModel.ContenuActeur" StoreEntitySet="ContenuActeur">
+            <EndProperty Name="Acteur">
+              <ScalarProperty Name="Nom" ColumnName="ActeurNom" />
+            </EndProperty>
+            <EndProperty Name="Contenu">
+              <ScalarProperty Name="Titre" ColumnName="ContenuTitre" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ContenuDirecteur" TypeName="CineDBModel.ContenuDirecteur" StoreEntitySet="ContenuDirecteur">
+            <EndProperty Name="Contenu">
+              <ScalarProperty Name="Titre" ColumnName="ContenuTitre" />
+            </EndProperty>
+            <EndProperty Name="Directeur">
+              <ScalarProperty Name="Nom" ColumnName="DirecteurNom" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ContenuGenre" TypeName="CineDBModel.ContenuGenre" StoreEntitySet="ContenuGenre">
+            <EndProperty Name="Contenu">
+              <ScalarProperty Name="Titre" ColumnName="ContenuTitre" />
+            </EndProperty>
+            <EndProperty Name="Genre">
+              <ScalarProperty Name="Nom" ColumnName="GenreNom" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
