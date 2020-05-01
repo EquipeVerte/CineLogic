@@ -39,7 +39,8 @@ namespace CineLogic
                     "~/Content/Fullcalendar/daygrid/main.js",
                     "~/Content/Fullcalendar/timegrid/main.js",
                     "~/Content/Fullcalendar/interaction/main.js",
-                    "~/Content/Fullcalendar/bootstrap/main.js"
+                    "~/Content/Fullcalendar/bootstrap/main.js",
+                     "~/Content/Fullcalendar/core/locales-all.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepickercss").Include(

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace CineLogic.Models.Programmation
     public class EFSeanceRepository : ISeanceRepository
     {
         private CineDBEntities db = new CineDBEntities();
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            cfg.CreateMap<Salle, SalleSelectionItem>();
+        }).CreateMapper();
 
         public void CreateSeance(Seance seance)
         {
@@ -57,36 +64,12 @@ namespace CineLogic.Models.Programmation
 
         public IEnumerable<CinemaSelectionItem> GetCinemas()
         {
-            List<CinemaSelectionItem> cinemas = new List<CinemaSelectionItem>();
-
-            foreach(Cinema cinema in db.Cinemas)
-            {
-                CinemaSelectionItem csi = new CinemaSelectionItem()
-                {
-                    CinemaID = cinema.CinemaID,
-                    Nom = cinema.Nom,
-                };                
-
-                cinemas.Add(csi);
-            }
-
-            return cinemas;
+            return mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas).ToList();
         }
 
-        public IEnumerable<SalleSelectionItem> GetSalles(int CinemaID)
+        public IEnumerable<SalleSelectionItem> GetSalles(int cinemaID)
         {
-            List<SalleSelectionItem> salles = new List<SalleSelectionItem>();
-
-            foreach(Salle salle in db.Cinemas.Find(CinemaID).Salles)
-            {
-                salles.Add(new SalleSelectionItem()
-                {
-                    SalleID = salle.SalleID,
-                    Nom = salle.Nom
-                });
-            }
-
-            return salles;
+            return mapper.Map<IEnumerable<Salle>, IEnumerable<SalleSelectionItem>>(db.Cinemas.Find(cinemaID).Salles).ToList();
         }
 
         public bool FindSeanceConflicts(Seance seance)

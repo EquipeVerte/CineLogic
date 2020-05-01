@@ -259,7 +259,7 @@
                         events.push({
                             id: item.SeanceID,
                             url: '@Url.Action("Edit")/' + item.SeanceID,
-                            title: item.Titre + (item.ContenuTitre == null ? "" : item.ContenuTitre),
+                            title: item.Titre + (item.ContenuTitre == null ? "" : " - " + item.ContenuTitre),
                             start: item.HeureDebut,
                             end: item.HeureFin,
                             backgroundColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
