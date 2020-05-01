@@ -11,23 +11,17 @@
 }
 
 <div id="loading" class="float-right">
-    <div class="loadicon">
-        <i class="fas fa-film"></i>
-    </div>
-</div>
-<!--
-<div class="float-right">
     <div class="loader">
         <i class="fas fa-film"></i>
     </div>
 </div>
--->
+
 
 <h2>Selectionner le cinéma et salle:</h2>
 <div class="d-flex">
     <select class="form-control mr-2" id="cinema-select"></select>
     <select class="form-control mr-2" id="salle-select"></select>
-    <button class="btn btn-outline-primary"><i class="fas fa-sync-alt"></i></button>
+    <button class="btn btn-outline-primary" id="refresh-events"><i class="fas fa-sync-alt"></i></button>
 
 </div>
 
@@ -45,26 +39,26 @@
             </div>
 
             <div class="form-group">
-                <button class="btn btn-outline-primary">Aller à la date <i class="fas fa-chevron-right"></i></button>
+                <button class="btn btn-outline-primary" id="datechanger">Aller à la date <i class="fas fa-chevron-right"></i></button>
             </div>
 
             <div class="form-group">
                 <label>Heure de début</label>
                 <div class="d-flex">
-                    <input name="debut-hours" class="time-in form-control mr-2" type="number" placeholder="HH" />
-                    <input name="debut-mins" class="time-in form-control" type="number" placeholder="MM" />
+                    <input name="debut-hours" class="time-in form-control mr-2" type="number" placeholder="HH" min="0" max="23" />
+                    <input name="debut-mins" class="time-in form-control" type="number" placeholder="MM" min="0" max="59" />
                 </div>
             </div>
             <div class="form-group">
                 <label>Heure de fin</label>
                 <div class="d-flex">
-                    <input name="fin-hours" class="time-in form-control mr-2" type="number" placeholder="HH" />
-                    <input name="fin-mins" class="time-in form-control" type="number" placeholder="MM" />
+                    <input name="fin-hours" class="time-in form-control mr-2" type="number" placeholder="HH" min="0" max="23" />
+                    <input name="fin-mins" class="time-in form-control" type="number" placeholder="MM" min="0" max="59" />
                 </div>
             </div>
             <div class="form-group">
                 <label>Titre</label>
-                <input name="titre" class="form-control" type="text" />
+                <input name="titre" class="form-control" type="text" maxlength="20" />
             </div>
             <div class="form-group">
                 <button id="create-seance" class="btn btn-outline-success">Créer</button>
@@ -122,166 +116,10 @@
 @section scripts {
     @Scripts.Render("~/Content/fullcalendarjs")
     @Scripts.Render("~/Content/bootstrapdatepickerjs")
-
+    @Scripts.Render("~/Content/Programmation/calendar.js")
 
     <script>
-        $(document).ready(function () {
-
-            //  Chercher les cinemas disponibles.
-            $.get('@Url.Action("Cinemas")', null, function (data) {
-                $.each(data, function (i, item) {
-                    $("#cinema-select").append(
-                        '<option value="' + item.CinemaID + '">' + item.Nom + '</option>'
-                    );
-                    getSalles();
-                });
-            }
-            );
-
-            //  Chercher les salles correspondant à le cinéma selectionné.
-            function getSalles() {
-
-                var cinemaID = $("#cinema-select").val();
-
-                $.get(
-                    '@Url.Action("Salles")',
-                    { cinemaID: cinemaID },
-                    function (data) {
-                        $("#salle-select").empty();
-                        $.each(data, function (i, item) {
-                            $("#salle-select").append(
-                                '<option value="' + item.SalleID + '">' + item.Nom + '</option>'
-                            );
-                        });
-                    }
-                );
-            }
-
-            //  Mettre à jour les salles chaque fois que le cinéma est changé.
-            $("#cinema-select").change(function () {
-                getSalles();
-            });
-
-            //  Créer le datepicker.
-            var options = {
-                todayBtn: 'linked',
-                language: 'fr',
-                orientation: 'bottom left',
-                daysOfWeekHighlighted: '0,6'
-            };
-            $("#date-picker").datepicker(options);
-
-            //  Créer le calendrier des séances.
-            var events = [
-                {
-                    title: 'Matin',
-                    start: '2020-04-16 10:00:00',
-                    end: '2020-04-16 14:00:00',
-                    url: 'matin.html',
-                    backgroundColor: 'green'
-                },
-                {
-                    title: 'Après-Midi \n Jurassic Park 23',
-                    start: '2020-04-16 14:00:00',
-                    end: '2020-04-16 18:00:00',
-                    url: 'apresmidi.html',
-                    backgroundColor: 'primary'
-                },
-                {
-                    title: 'Soir',
-                    start: '2020-04-16 18:00:00',
-                    end: '2020-04-16 22:00:00',
-                    url: 'soir.html',
-                    backgroundColor: 'green'
-                }
-            ];
-
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: ['timeGrid', 'bootstrap'],
-                defaultView: 'timeGridWeek',
-                themeSystem: 'bootstrap',
-                locale: 'fr',
-                allDaySlot: false,
-                minTime: "08:00:00",
-                maxTime: "24:00:00",
-                events: events,
-                eventTimeFormat: { // like '14:30:00'
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }
-            });
-
-            calendar.render();
-
-            //  Ajouter une nouvelle séance.
-            $("#create-seance").click(function () {
-                console.log("Create clicked.");
-
-                if ($("#date-picker").datepicker('getDate') == null) {
-                    console.log("Alert");
-                    $("#alert-date").show();
-                }
-                else {
-                    $("#alert-date").hide();
-
-                    $("#conf-salle").html($("#cinema-select option:selected").text() + " - " + $("#salle-select option:selected").text());
-                    $("#conf-titre").html($('input[name = "titre"]').val());
-                    $("#conf-debut").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
-                    $("#conf-fin").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
-
-                    $("#confirmationModal").modal('show');
-                }
-
-                
-            });
-
-            
-            $("#btn-confirmed").click(function () {
-
-                $("#confirmationModal").modal('hide');
-
-                console.log($('input[name = "titre"]').val());
-                console.log($('#salle-select').val());
-                console.log($("#date-picker").datepicker('getDate'));
-                console.log(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
-                console.log(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
-
-
-                var seanceData = {
-                    titre: $('input[name = "titre"]').val(),
-                    salleID: $('#salle-select').val(),
-                    heureDebut: new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))),
-                    heureFin: new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))),
-                }
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("Create")',
-                    dataType: 'json',
-                    data: '{ seance: ' + JSON.stringify(seanceData) + '}',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function () {
-                        console.log("Post success.");
-                    },
-                    error: function (e) {
-                        console.log(e);
-                    }
-                })
-            });
-
-            
-        })
-            .ajaxStart(function () {
-                console.log("ajax start");
-                $("#loading").show();
-            })
-            .ajaxStop(function () {
-                console.log("ajax stop");
-                $("#loading").hide();
-            });
+        
     </script>
 }
 

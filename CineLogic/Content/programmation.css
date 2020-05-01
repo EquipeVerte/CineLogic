@@ -8,8 +8,8 @@
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-bottom: 16px solid #3498db;
+    border-left: 16px solid #3498db; /* Blue */
+    border-right: 16px solid #3498db;
     border-radius: 50%;
     width: 5rem;
     height: 5rem;

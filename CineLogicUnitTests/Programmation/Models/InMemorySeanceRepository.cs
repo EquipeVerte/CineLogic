@@ -55,5 +55,20 @@ namespace CineLogicUnitTests.Programmation.Models
         {
             return;
         }
+
+        public IEnumerable<CinemaSelectionItem> GetCinemas()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SalleSelectionItem> GetSalles(int cinemaID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FindSeanceConflicts(Seance seance)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

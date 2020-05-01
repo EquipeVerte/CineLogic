@@ -39,7 +39,15 @@ namespace CineLogic.Models.Programmation
 
         public int SaveChanges()
         {
-            return db.SaveChanges();
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return 0;
+            }
         }
 
         public void UpdateSeance(Seance seance)
@@ -79,6 +87,11 @@ namespace CineLogic.Models.Programmation
             }
 
             return salles;
+        }
+
+        public bool FindSeanceConflicts(Seance seance)
+        {
+            return db.Seances.Any(s => s.HeureDebut > seance.HeureDebut && s.HeureDebut < seance.HeureFin || s.HeureFin < seance.HeureFin && s.HeureFin > seance.HeureDebut);
         }
 
         public void Dispose()

@@ -26,6 +26,8 @@ namespace CineLogic.Models.Programmation
 
         IEnumerable<SalleSelectionItem> GetSalles(int cinemaID);
 
+        bool FindSeanceConflicts(Seance seance);
+
         void Dispose();
     } 
 }
