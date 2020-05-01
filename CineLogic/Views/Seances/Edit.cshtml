@@ -64,6 +64,17 @@
     </div>
 }
 
+@using (Html.BeginForm("Delete", "Seances", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.HiddenFor(model => model.SeanceID)
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Supprimer" class="btn btn-outline-danger" />
+    </div>
+</div>
+}
+
 <div>
     <a href="@Url.Action("Index")"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
 </div>

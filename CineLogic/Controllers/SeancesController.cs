@@ -118,6 +118,16 @@ namespace CineLogic.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Delete(int seanceID)
+        {
+            repository.DeleteSeance(seanceID);
+
+            repository.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
