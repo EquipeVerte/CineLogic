@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CineLogic.Models.Contenu>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Annee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Votes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Revenue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetaScore)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Annee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RuntimeMins)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Votes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Revenue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetaScore)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Titre }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Titre }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Titre })
+        </td>
+    </tr>
+}
+
+</table>
