@@ -101,6 +101,23 @@ namespace CineLogic.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Edit(Seance seance)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.UpdateSeance(seance);
+
+                repository.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(seance);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
