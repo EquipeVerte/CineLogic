@@ -172,6 +172,7 @@
     <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Models\Programmation\ISeanceRepository.cs" />
     <Compile Include="Models\Programmation\SalleSelectionItem.cs" />
+    <Compile Include="Models\Programmation\Seance.cs" />
     <Compile Include="Models\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
@@ -412,6 +413,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Seances\Index.cshtml" />
+    <Content Include="Views\Seances\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

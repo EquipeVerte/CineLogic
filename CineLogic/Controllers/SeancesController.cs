@@ -68,11 +68,37 @@ namespace CineLogic.Controllers
         }
 
         [HttpGet]
+        public ContentResult Contenus(string filter)
+        {
+            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
+        }
+
+        [HttpGet]
         public ContentResult Seances(int salleID)
         {
             List<SeanceViewModel> seanceVMs = mapper.Map<IEnumerable<Seance>, IEnumerable<SeanceViewModel>>(repository.GetSeancesBySalle(salleID)).ToList();
 
             return Content(JsonConvert.SerializeObject(seanceVMs), "application/json");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) 
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Seance seance = repository.GetSeance(id.Value);
+
+            if (seance != null)
+            {
+                return View(seance);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         protected override void Dispose(bool disposing)
