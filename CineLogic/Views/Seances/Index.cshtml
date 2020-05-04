@@ -28,6 +28,7 @@
 
 <div class="row">
     <div class="col-md-4">
+        <!-- Ajout d'une séance -->
         <div class="d-flex flex-column border p-4">
             <h5>Ajouter une séance</h5>
             <div id="date-picker" class="my-3">
@@ -65,12 +66,13 @@
         </div>
 
     </div>
+    <!-- Affichage des séances dans un calandrier -->
     <div class="col-md-8">
         <div id='calendar' class="p-4 border">
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal confirmation -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -130,8 +132,6 @@
             });
         }
         );
-
-            
 
         //  Chercher les salles correspondant à le cinéma selectionné.
         function getSalles() {

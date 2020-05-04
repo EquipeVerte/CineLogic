@@ -7,6 +7,7 @@ using System.Web;
 
 namespace CineLogic.Models.Programmation
 {
+    //  Le repository des séances qui utilise la base de données.
     public class EFSeanceRepository : ISeanceRepository
     {
         private CineDBEntities db = new CineDBEntities();
@@ -74,7 +75,7 @@ namespace CineLogic.Models.Programmation
 
         public bool FindSeanceConflicts(Seance seance)
         {
-            return db.Seances.Any(s => s.HeureDebut > seance.HeureDebut && s.HeureDebut < seance.HeureFin || s.HeureFin < seance.HeureFin && s.HeureFin > seance.HeureDebut);
+            return db.Seances.Any(s => s.SalleID == seance.SalleID && (s.HeureDebut > seance.HeureDebut && s.HeureDebut < seance.HeureFin || s.HeureFin < seance.HeureFin && s.HeureFin > seance.HeureDebut));
         }
 
         public void Dispose()

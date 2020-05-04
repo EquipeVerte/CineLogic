@@ -1,7 +1,7 @@
 ﻿@model CineLogic.Models.Seance
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Édition";
 }
 
 <h2>Édition</h2>
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
 {
     @Html.AntiForgeryToken()
 
@@ -55,25 +55,19 @@
                 <input id="filter" class="form-control" />
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sauvegarder" class="btn btn-outline-success" />
-            </div>
-        </div>
     </div>
 }
 
-@using (Html.BeginForm("Delete", "Seances", FormMethod.Post))
+@using (Html.BeginForm("Delete", "Seances", FormMethod.Post, new { name = "delete", id = "delete" }))
 {
 <div class="form-group">
     @Html.HiddenFor(model => model.SeanceID)
-
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Supprimer" class="btn btn-outline-danger" />
-    </div>
+    
 </div>
 }
+
+<input type="submit" value="Supprimer" class="btn btn-outline-danger" form="delete" />
+<input type="submit" value="Sauvegarder" class="btn btn-outline-success" form="edit" />
 
 <div>
     <a href="@Url.Action("Index")"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
@@ -99,6 +93,7 @@
                     });
                 });
             }
+
 
         })
             .ajaxStart(function () {

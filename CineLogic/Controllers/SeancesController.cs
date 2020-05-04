@@ -42,6 +42,11 @@ namespace CineLogic.Controllers
         [HttpPost]
         public ActionResult Create(Seance seance)
         {
+            if (SeanceHasConflicts(seance) || seance.HeureFin <= seance.HeureDebut)
+            {
+                return Json(new { success = false });
+            }
+
             repository.CreateSeance(seance);
 
             repository.SaveChanges();
@@ -52,26 +57,14 @@ namespace CineLogic.Controllers
         [HttpPost]
         public ActionResult Validate(Seance seance)
         {
-            return Json(new { conflicts = repository.FindSeanceConflicts(seance) });
+            return Json(new { conflicts = SeanceHasConflicts(seance) });
         }
 
-        [HttpGet]
-        public ContentResult Cinemas()
+        private bool SeanceHasConflicts(Seance seance)
         {
-            return Content(JsonConvert.SerializeObject(repository.GetCinemas()), "application/json");
+            return repository.FindSeanceConflicts(seance);
         }
-
-        [HttpGet]
-        public ContentResult Salles(int cinemaID)
-        {
-            return Content(JsonConvert.SerializeObject(repository.GetSalles(cinemaID)), "application/json");
-        }
-
-        [HttpGet]
-        public ContentResult Contenus(string filter)
-        {
-            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
-        }
+       
 
         [HttpGet]
         public ContentResult Seances(int salleID)
@@ -135,6 +128,25 @@ namespace CineLogic.Controllers
                 repository.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //  Méthodes à remplacer dans les autres controlleurs.
+        [HttpGet]
+        public ContentResult Cinemas()
+        {
+            return Content(JsonConvert.SerializeObject(repository.GetCinemas()), "application/json");
+        }
+
+        [HttpGet]
+        public ContentResult Salles(int cinemaID)
+        {
+            return Content(JsonConvert.SerializeObject(repository.GetSalles(cinemaID)), "application/json");
+        }
+
+        [HttpGet]
+        public ContentResult Contenus(string filter)
+        {
+            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
         }
     }
 }

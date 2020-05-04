@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CineLogic.Models.Programmation
 {
+    //  Interface pour définir un repository des séances.
     public interface ISeanceRepository
     {
         void CreateSeance(Seance seance);
@@ -22,12 +23,13 @@ namespace CineLogic.Models.Programmation
 
         int SaveChanges();
 
-        IEnumerable<CinemaSelectionItem> GetCinemas();
-
-        IEnumerable<SalleSelectionItem> GetSalles(int cinemaID);
-
         bool FindSeanceConflicts(Seance seance);
 
         void Dispose();
+
+        // Ces méthodes seront remplacé par des méthodes dans autres repositories.
+        IEnumerable<CinemaSelectionItem> GetCinemas();
+
+        IEnumerable<SalleSelectionItem> GetSalles(int cinemaID);
     } 
 }

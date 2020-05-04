@@ -14,6 +14,15 @@ namespace CineLogicUnitTests.Programmation.Models
     {
         private List<Seance> db = new List<Seance>();
 
+        public InMemorySeanceRepository()
+        {
+        }
+
+        public InMemorySeanceRepository(List<Seance> db)
+        {
+            this.db = db;
+        }
+
         public void CreateSeance(Seance seance)
         {
             db.Add(seance);
@@ -68,7 +77,7 @@ namespace CineLogicUnitTests.Programmation.Models
 
         public bool FindSeanceConflicts(Seance seance)
         {
-            throw new NotImplementedException();
+            return db.Any(s => s.SalleID == seance.SalleID && (s.HeureDebut > seance.HeureDebut && s.HeureDebut < seance.HeureFin || s.HeureFin < seance.HeureFin && s.HeureFin > seance.HeureDebut));
         }
     }
 }
