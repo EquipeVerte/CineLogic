@@ -9,38 +9,20 @@ using CineLogic.Models.Programmation;
 using CineLogicUnitTests.Programmation.Models;
 using CineLogic.Models;
 using System.Web.Mvc;
+using Moq;
+using System.Data.Entity;
 
 namespace CineLogic.Controllers.Programmation.Tests
 {
     [TestClass()]
     public class SeancesControllerTests
     {
-        private Seance GetSeance_Valid()
-        {
-            return new Seance()
-            {
-                Titre = "Valid Test Séance",
-                HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
-                HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film"
-            };
-        }
+        private EFSeanceRepository repository;
 
-        private Seance GetSeance_Invalid_Heures()
+        [TestInitialize]
+        public void TestInit()
         {
-            return new Seance()
-            {
-                Titre = "Invalid Test Seance",
-                HeureDebut = new DateTime(2020, 1, 1, 15, 0, 0),
-                HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                SalleID = 1
-            };
-        }
-
-        private List<Seance> GetSeances_Valid()
-        {
-            return new List<Seance>()
+            var list = new List<Seance>
             {
                 new Seance()
                 {
@@ -77,20 +59,45 @@ namespace CineLogic.Controllers.Programmation.Tests
                     HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
                     SalleID = 2,
                     ContenuTitre = "Test Film 2"
-                },
+                }
+            };
+
+            var data = list.AsQueryable();
+
+            var mockSet = new Mock<DbSet<Seance>>();
+            mockSet.As<IQueryable<Seance>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockSet.As<IQueryable<Seance>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockSet.As<IQueryable<Seance>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockSet.As<IQueryable<Seance>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
+            mockSet.Setup(m => m.Add(It.IsAny<Seance>())).Callback<Seance>((s) => list.Add(s));
+
+            var mockContext = new Mock<CineDBEntities>();
+            mockContext.Setup(c => c.Seances).Returns(mockSet.Object);
+
+            repository = new EFSeanceRepository(mockContext.Object);
+        }
+
+        private Seance GetSeance_Valid()
+        {
+            return new Seance()
+            {
+                Titre = "Valid Test Séance",
+                HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
+                HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
+                SalleID = 1,
+                ContenuTitre = "Test Film"
             };
         }
 
-        private SeancesController GetSeanceController()
+        private Seance GetSeance_Invalid_Heures()
         {
-            return new SeancesController(new InMemorySeanceRepository());
-        }
-
-        private SeancesController GetSeancesControllerWithData()
-        {
-            InMemorySeanceRepository repo = new InMemorySeanceRepository(GetSeances_Valid());
-
-            return new SeancesController(repo);
+            return new Seance()
+            {
+                Titre = "Invalid Test Seance",
+                HeureDebut = new DateTime(2020, 1, 1, 15, 0, 0),
+                HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
+                SalleID = 1
+            };
         }
 
         private T GetValueFromJsonResult<T> (JsonResult jsonResult, string propName)
@@ -109,22 +116,20 @@ namespace CineLogic.Controllers.Programmation.Tests
         [TestMethod()]
         public void Create_Post_PutsValidModelIntoRepository()
         {
-            var controller = GetSeanceController();
-            ActionResult actionResult = controller.Create(GetSeance_Valid());
+            Seance testSeance = new Seance()
+            {
+                Titre = "Valid Test Séance",
+                HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
+                HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
+                SalleID = 1,
+                ContenuTitre = "Test Film"
+            };
 
-            Assert.IsInstanceOfType(actionResult, typeof(JsonResult));
-            bool success = GetValueFromJsonResult<bool>(actionResult as JsonResult, "success");
-            Assert.IsTrue(success);
-        }
-        
-        [TestMethod()]
-        public void Create_Post_RejectsOperationIfModelIsNotValid()
-        {
-            var controller = GetSeanceController();
-            ActionResult actionResult = controller.Create(GetSeance_Invalid_Heures());
+            repository.CreateSeance(testSeance);
 
-            bool success = GetValueFromJsonResult<bool>(actionResult as JsonResult, "success");
-            Assert.IsFalse(success);
+            var seances = repository.GetAllSeances().ToList();
+
+            Assert.AreEqual(5, seances.Count);
         }
     }
 }

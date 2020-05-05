@@ -10,13 +10,23 @@ namespace CineLogic.Models.Programmation
     //  Le repository des séances qui utilise la base de données.
     public class EFSeanceRepository : ISeanceRepository
     {
-        private CineDBEntities db = new CineDBEntities();
+        private CineDBEntities db;
 
         private IMapper mapper = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Cinema, CinemaSelectionItem>();
             cfg.CreateMap<Salle, SalleSelectionItem>();
         }).CreateMapper();
+
+        public EFSeanceRepository()
+        {
+            db = new CineDBEntities();
+        }
+
+        public EFSeanceRepository(CineDBEntities db)
+        {
+            this.db = db;
+        }
 
         public void CreateSeance(Seance seance)
         {
