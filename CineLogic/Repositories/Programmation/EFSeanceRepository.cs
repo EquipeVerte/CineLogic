@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
+using CineLogic.Models;
+using CineLogic.Models.Programmation;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace CineLogic.Models.Programmation
+namespace CineLogic.Repositories
 {
     //  Le repository des séances qui utilise la base de données.
     public class EFSeanceRepository : ISeanceRepository
@@ -33,10 +35,8 @@ namespace CineLogic.Models.Programmation
             db.Seances.Add(seance);
         }
 
-        public void DeleteSeance(int id)
+        public void DeleteSeance(Seance seance)
         {
-            Seance seance = db.Seances.Find(id);
-
             db.Seances.Remove(seance);
         }
 

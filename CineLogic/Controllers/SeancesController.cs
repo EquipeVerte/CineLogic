@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using CineLogic.Business.Programmation;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
@@ -15,23 +17,16 @@ namespace CineLogic.Controllers
 {
     public class SeancesController : Controller
     {
-        private ISeanceRepository repository;
-        private IMapper mapper = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<Seance, SeanceViewModel>();
-        })
-            .CreateMapper();
-
-        private CineDBEntities db = new CineDBEntities();
+        private ISeanceService seanceService;
 
         public SeancesController()
         {
-            repository = new EFSeanceRepository();
+            seanceService = new SeanceService();
         }
 
-        public SeancesController(ISeanceRepository repository)
+        public SeancesController(ISeanceService seanceService)
         {
-            this.repository = repository;
+            this.seanceService = seanceService;
         }
 
         public ActionResult Index()
@@ -40,41 +35,22 @@ namespace CineLogic.Controllers
         }
         
         [HttpPost]
-        public ActionResult Create(Seance seance)
+        [HandleErrorJson]
+        public ActionResult Create(SeanceViewModel seance)
         {
-            if (SeanceHasConflicts(seance) || seance.HeureFin <= seance.HeureDebut)
-            {
-                return Json(new { success = false });
-            }
-
-            repository.CreateSeance(seance);
-
-            repository.SaveChanges();
+            seanceService.CreateSeance(seance);
 
             return Json(new { success = true });
-        } 
-
-        [HttpPost]
-        public ActionResult Validate(Seance seance)
-        {
-            return Json(new { conflicts = SeanceHasConflicts(seance) });
         }
-
-        private bool SeanceHasConflicts(Seance seance)
-        {
-            return repository.FindSeanceConflicts(seance);
-        }
-       
 
         [HttpGet]
         public ContentResult Seances(int salleID)
         {
-            List<SeanceViewModel> seanceVMs = mapper.Map<IEnumerable<Seance>, IEnumerable<SeanceViewModel>>(repository.GetSeancesBySalle(salleID)).ToList();
-
-            return Content(JsonConvert.SerializeObject(seanceVMs), "application/json");
+            return Content(JsonConvert.SerializeObject(seanceService.GetSeancesBySalle(salleID)), "application/json");
         }
 
         [HttpGet]
+        [HandleError]
         public ActionResult Edit(int? id)
         {
             if (id == null) 
@@ -82,26 +58,18 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Seance seance = repository.GetSeance(id.Value);
+            SeanceViewModel seance = seanceService.GetSeance(id.Value);
 
-            if (seance != null)
-            {
-                return View(seance);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
+            return View(seance);
         }
 
         [HttpPost]
-        public ActionResult Edit(Seance seance)
+        [HandleError]
+        public ActionResult Edit(SeanceViewModel seance)
         {
             if (ModelState.IsValid)
             {
-                repository.UpdateSeance(seance);
-
-                repository.SaveChanges();
+                seanceService.UpdateSeance(seance);
 
                 return RedirectToAction("Index");
             }
@@ -112,11 +80,10 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
+        [HandleErrorJson]
         public ActionResult Delete(int seanceID)
         {
-            repository.DeleteSeance(seanceID);
-
-            repository.SaveChanges();
+            seanceService.DeleteSeance(seanceID);
 
             return RedirectToAction("Index");
         }
@@ -125,7 +92,7 @@ namespace CineLogic.Controllers
         {
             if (disposing)
             {
-                repository.Dispose();
+                seanceService.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -134,18 +101,34 @@ namespace CineLogic.Controllers
         [HttpGet]
         public ContentResult Cinemas()
         {
-            return Content(JsonConvert.SerializeObject(repository.GetCinemas()), "application/json");
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas)), "application/json");
         }
 
         [HttpGet]
         public ContentResult Salles(int cinemaID)
         {
-            return Content(JsonConvert.SerializeObject(repository.GetSalles(cinemaID)), "application/json");
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Salle, SalleSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Salle>, IEnumerable<SalleSelectionItem>>(db.Salles.Where(s => s.CinemaID == cinemaID))), "application/json");
         }
 
         [HttpGet]
         public ContentResult Contenus(string filter)
         {
+            CineDBEntities db = new CineDBEntities();
+
             return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
         }
     }
