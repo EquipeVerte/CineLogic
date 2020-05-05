@@ -35,4 +35,3 @@ namespace CineLogic.Business.Programmation
         }
     }
 }
-}

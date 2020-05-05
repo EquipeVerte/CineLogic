@@ -4,6 +4,7 @@ using CineLogic.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 
 namespace CineLogic.Business.Programmation
@@ -19,6 +20,7 @@ namespace CineLogic.Business.Programmation
 
         public SeanceService()
         {
+            repository = new EFSeanceRepository();
         }
 
         public SeanceService(EFSeanceRepository repository)
@@ -114,7 +116,11 @@ namespace CineLogic.Business.Programmation
 
         public void Dispose()
         {
-            repository.Dispose();
+            if (repository != null)
+            {
+                repository.Dispose();
+            }
+            return;
         }
     }
 }

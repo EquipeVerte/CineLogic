@@ -147,6 +147,7 @@
     <Compile Include="Business\Programmation\ISeanceService.cs" />
     <Compile Include="Business\Programmation\ScheduleException.cs" />
     <Compile Include="Business\Programmation\SeanceService.cs" />
+    <Compile Include="Controllers\Attributes\HandleErrorJsonAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SeancesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,10 +183,10 @@
     <Compile Include="Models\Genre.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Programmation\CinemaSelectionItem.cs" />
+    <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
-    <Compile Include="Models\Programmation\SalleSelectionItem.cs" />
+    <Compile Include="Business\Cinemas\SalleSelectionItem.cs" />
     <Compile Include="Models\Programmation\Seance.cs" />
     <Compile Include="Business\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\Responsable.cs">

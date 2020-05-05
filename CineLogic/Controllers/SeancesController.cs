@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using CineLogic.Business.Programmation;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
@@ -17,8 +18,6 @@ namespace CineLogic.Controllers
     public class SeancesController : Controller
     {
         private ISeanceService seanceService;
-
-        private CineDBEntities db = new CineDBEntities();
 
         public SeancesController()
         {
@@ -36,13 +35,9 @@ namespace CineLogic.Controllers
         }
         
         [HttpPost]
-        public ActionResult Create(Seance seance)
+        [HandleErrorJson]
+        public ActionResult Create(SeanceViewModel seance)
         {
-            if (SeanceHasConflicts(seance) || seance.HeureFin <= seance.HeureDebut)
-            {
-                return Json(new { success = false });
-            }
-
             seanceService.CreateSeance(seance);
 
             return Json(new { success = true });
@@ -51,12 +46,11 @@ namespace CineLogic.Controllers
         [HttpGet]
         public ContentResult Seances(int salleID)
         {
-            
-
             return Content(JsonConvert.SerializeObject(seanceService.GetSeancesBySalle(salleID)), "application/json");
         }
 
         [HttpGet]
+        [HandleError]
         public ActionResult Edit(int? id)
         {
             if (id == null) 
@@ -64,20 +58,14 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Seance seance = seanceService.GetSeance(id.Value);
+            SeanceViewModel seance = seanceService.GetSeance(id.Value);
 
-            if (seance != null)
-            {
-                return View(seance);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
+            return View(seance);
         }
 
         [HttpPost]
-        public ActionResult Edit(Seance seance)
+        [HandleError]
+        public ActionResult Edit(SeanceViewModel seance)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +80,7 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
+        [HandleErrorJson]
         public ActionResult Delete(int seanceID)
         {
             seanceService.DeleteSeance(seanceID);
@@ -112,18 +101,34 @@ namespace CineLogic.Controllers
         [HttpGet]
         public ContentResult Cinemas()
         {
-            return Content(JsonConvert.SerializeObject(seanceService.GetCinemas()), "application/json");
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas)), "application/json");
         }
 
         [HttpGet]
         public ContentResult Salles(int cinemaID)
         {
-            return Content(JsonConvert.SerializeObject(seanceService.GetSalles(cinemaID)), "application/json");
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Salle, SalleSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Salle>, IEnumerable<SalleSelectionItem>>(db.Salles.Where(s => s.CinemaID == cinemaID))), "application/json");
         }
 
         [HttpGet]
         public ContentResult Contenus(string filter)
         {
+            CineDBEntities db = new CineDBEntities();
+
             return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
         }
     }
