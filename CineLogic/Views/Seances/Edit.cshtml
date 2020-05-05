@@ -1,23 +1,22 @@
 ﻿@model CineLogic.Business.Programmation.SeanceViewModel
 
+@section css {
+    @Styles.Render("~/Content/programmation.css")
+}
+
 @{
     ViewBag.Title = "Édition";
 }
 
-<h2>Édition</h2>
+<h2>Édition : Séance @Model.SeanceID - @Model.Titre</h2>
 
-<div id="loading" class="float-right">
-    <div class="loader">
-        <i class="fas fa-film"></i>
-    </div>
-</div>
-
+<!-- Icon animé qui est affiché lors de l'execution du ajax-->
+<!-- Formulaire d'édition de la séance-->
 @using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Seance</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.SeanceID)
@@ -47,31 +46,49 @@
             </div>
         </div>
 
+        <!-- Selection et boit de récherche pour les films-->
         <div class="form-group">
             @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 d-flex">
-                <select id="film-select" name="contenuTitre" class="form-control mr-2" size="5">
+                <select id="film-select" name="contenuTitre" class="form-control mr-2" size="6">
                 </select>
-                <input id="filter" class="form-control" />
+                <div class="d-flex flex-column h-100">
+                    <input id="filter" class="form-control" />
+                    <div class="d-flex justify-content-center">
+                        <div id="loading" class="p-3">
+                            <div class="loader">
+                                <i class="fas fa-film"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 }
 
+<!-- Formulaire de suppression pour la séance-->
 @using (Html.BeginForm("Delete", "Seances", FormMethod.Post, new { name = "delete", id = "delete" }))
 {
-<div class="form-group">
-    @Html.HiddenFor(model => model.SeanceID)
-    
-</div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.SeanceID)
+    </div>
 }
 
-<input type="submit" value="Supprimer" class="btn btn-outline-danger" form="delete" />
-<input type="submit" value="Sauvegarder" class="btn btn-outline-success" form="edit" />
-
-<div>
-    <a href="@Url.Action("Index")"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+<!-- Boutons de soumission pour les formulaires-->
+<div class="form-group">
+    <div class="col-md-10">
+        <input type="submit" value="Supprimer" class="btn btn-outline-danger mr-3" form="delete" />
+        <input type="submit" value="Sauvegarder" class="btn btn-outline-success" form="edit" />
+    </div>
 </div>
+
+<div class="form-group">
+    <div class="col-md-10">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+    </div>
+</div>
+
 
 @section scripts {
     <script>
@@ -79,6 +96,8 @@
 
             getFilms();
 
+            //  Mettre à jour les films à chaque changement dans la boite de recherche.
+            //  Est-ce que l'ajax est néccesaire? Peut être fais en javascript avec une liste statique?
             $("#filter").on('input', function () {
                 console.log("Change");
                 getFilms();
@@ -93,8 +112,6 @@
                     });
                 });
             }
-
-
         })
             .ajaxStart(function () {
                 console.log("ajax start");
