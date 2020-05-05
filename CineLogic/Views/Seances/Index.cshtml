@@ -57,9 +57,15 @@
                     <input name="fin-mins" class="time-in form-control" type="number" placeholder="MM" min="0" max="59" />
                 </div>
             </div>
+
             <div class="form-group">
                 <label>Titre</label>
                 <input name="titre" class="form-control" type="text" maxlength="20" />
+            </div>
+            <div class="form-group">
+                <div class="alert alert-danger">
+                    <p  id="alert-seance"></p>
+                </div>
             </div>
             <div class="form-group">
                 <button id="create-seance" class="btn btn-outline-success">Créer</button>
@@ -168,7 +174,7 @@
         };
         $("#date-picker").datepicker(options);
 
-        //  Ajouter une nouvelle séance.
+        //  Confirmer l'ajout d'une nouvelle séance.
         $("#create-seance").click(function () {
             console.log("Create clicked.");
 
@@ -187,17 +193,10 @@
             }
         });
 
-
+        //  Ajout confirmé.
         $("#btn-confirmed").click(function () {
 
             $("#confirmationModal").modal('hide');
-
-            console.log($('input[name = "titre"]').val());
-            console.log($('#salle-select').val());
-            console.log($("#date-picker").datepicker('getDate'));
-            console.log(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
-            console.log(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
-
 
             var seanceData = {
                 titre: $('input[name = "titre"]').val(),
@@ -217,6 +216,13 @@
                 },
                 error: function (e) {
                     console.log(e);
+                    $("#alert-seance").empty();
+                    $.each(e.responseJSON, function (i, item) {
+                        $("#alert-seance").append("<b>" + item.key + " : </b>");
+                        $("#alert-seance").append($.each(item.errors, function (i2, item2) {
+                            return item2;
+                        }) + "<br/>");
+                    });
                 }
             })
         });

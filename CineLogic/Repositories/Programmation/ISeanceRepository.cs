@@ -25,13 +25,6 @@ namespace CineLogic.Repositories
 
         int SaveChanges();
 
-        bool FindSeanceConflicts(Seance seance);
-
         void Dispose();
-
-        // Ces méthodes seront remplacé par des méthodes dans autres repositories.
-        IEnumerable<CinemaSelectionItem> GetCinemas();
-
-        IEnumerable<SalleSelectionItem> GetSalles(int cinemaID);
     } 
 }

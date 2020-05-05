@@ -55,6 +55,16 @@ namespace CineLogic.Repositories
             return db.Seances.Find(id);
         }
 
+        public void UpdateSeance(Seance seance)
+        {
+            Seance seanceToUpdate = db.Seances.Find(seance.SeanceID);
+
+            seanceToUpdate.HeureDebut = seance.HeureDebut;
+            seanceToUpdate.HeureFin = seance.HeureFin;
+            seanceToUpdate.Titre = seance.Titre;
+            seanceToUpdate.ContenuTitre = seance.ContenuTitre;
+        }
+
         public int SaveChanges()
         {
             try
@@ -66,26 +76,6 @@ namespace CineLogic.Repositories
                 Console.WriteLine(ex);
                 return 0;
             }
-        }
-
-        public void UpdateSeance(Seance seance)
-        {
-            db.Entry(seance).State = EntityState.Modified;
-        }
-
-        public IEnumerable<CinemaSelectionItem> GetCinemas()
-        {
-            return mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas).ToList();
-        }
-
-        public IEnumerable<SalleSelectionItem> GetSalles(int cinemaID)
-        {
-            return mapper.Map<IEnumerable<Salle>, IEnumerable<SalleSelectionItem>>(db.Cinemas.Find(cinemaID).Salles).ToList();
-        }
-
-        public bool FindSeanceConflicts(Seance seance)
-        {
-            return db.Seances.Any(s => s.SalleID == seance.SalleID && (s.HeureDebut > seance.HeureDebut && s.HeureDebut < seance.HeureFin || s.HeureFin < seance.HeureFin && s.HeureFin > seance.HeureDebut));
         }
 
         public void Dispose()

@@ -36,6 +36,7 @@ namespace CineLogic.Controllers
         
         [HttpPost]
         [HandleErrorJson]
+        [ValidateAjax]
         public ActionResult Create(SeanceViewModel seance)
         {
             seanceService.CreateSeance(seance);

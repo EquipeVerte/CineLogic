@@ -16,6 +16,7 @@ namespace CineLogic.Business.Programmation
         private IMapper mapper = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Seance, SeanceViewModel>();
+            cfg.CreateMap<SeanceViewModel, Seance>();
         }).CreateMapper();
 
         public SeanceService()
@@ -45,7 +46,7 @@ namespace CineLogic.Business.Programmation
             throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");
         }
 
-        public Seance CreateSeance(SeanceViewModel seanceVM)
+        public SeanceViewModel CreateSeance(SeanceViewModel seanceVM)
         {
             if (seanceVM.Validate(this))
             {
@@ -62,7 +63,7 @@ namespace CineLogic.Business.Programmation
                     throw new DBException(ex);
                 }
 
-                return seance;
+                return mapper.Map<Seance, SeanceViewModel>(seance);
             }
             else
             {
@@ -70,7 +71,7 @@ namespace CineLogic.Business.Programmation
             }
         }
 
-        public Seance UpdateSeance(SeanceViewModel seanceVM)
+        public SeanceViewModel UpdateSeance(SeanceViewModel seanceVM)
         {
             if (seanceVM.Validate(this))
             {
@@ -87,7 +88,7 @@ namespace CineLogic.Business.Programmation
                     throw new DBException(ex);
                 }
 
-                return seance;
+                return mapper.Map<Seance,SeanceViewModel>(seance);
             }
             else
             {
@@ -104,14 +105,18 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.DeleteSeance(seance);
+
+                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     throw new DBException(ex);
                 }
             }
-
-            throw new NotFoundException($"La séance avec ID {id} n'existe pas dans la base de données.");
+            else
+            {
+                throw new NotFoundException($"La séance avec ID {id} n'existe pas dans la base de données.");
+            }
         }
 
         public void Dispose()

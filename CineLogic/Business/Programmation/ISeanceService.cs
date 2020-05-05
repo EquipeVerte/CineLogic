@@ -13,9 +13,9 @@ namespace CineLogic.Business.Programmation
 
         SeanceViewModel GetSeance(int id);
 
-        Seance CreateSeance(SeanceViewModel seance);
+        SeanceViewModel CreateSeance(SeanceViewModel seance);
 
-        Seance UpdateSeance(SeanceViewModel seance);
+        SeanceViewModel UpdateSeance(SeanceViewModel seance);
 
         void DeleteSeance(int id);
 

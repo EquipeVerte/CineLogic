@@ -11,6 +11,7 @@ using CineLogic.Models;
 using System.Web.Mvc;
 using Moq;
 using System.Data.Entity;
+using CineLogic.Repositories;
 
 namespace CineLogic.Controllers.Programmation.Tests
 {

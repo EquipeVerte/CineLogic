@@ -10,11 +10,13 @@ namespace CineLogic.Business.Programmation
     {
         [Required]
         public int SeanceID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Le titre du séance est requis.")]
+        [MinLength(3, ErrorMessage = "La longeur minimum du titre est 3.")]
+        [MaxLength(20, ErrorMessage = "La longeur maximum du titre est 20.")]
         public string Titre { get; set; }
-        [Required]
+        [Required(ErrorMessage = "L'heure du début est requis.")]
         public System.DateTime HeureDebut { get; set; }
-        [Required]
+        [Required(ErrorMessage = "L'heure du fin est requis.")]
         public System.DateTime HeureFin { get; set; }
         [Required]
         public int SalleID { get; set; }
