@@ -14,12 +14,6 @@ namespace CineLogic.Repositories
     {
         private CineDBEntities db;
 
-        private IMapper mapper = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<Cinema, CinemaSelectionItem>();
-            cfg.CreateMap<Salle, SalleSelectionItem>();
-        }).CreateMapper();
-
         public EFSeanceRepository()
         {
             db = new CineDBEntities();

@@ -90,8 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\SeancesControllerTests.cs" />
-    <Compile Include="Models\InMemorySeanceRepository.cs" />
+    <Compile Include="SeancesControllerTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

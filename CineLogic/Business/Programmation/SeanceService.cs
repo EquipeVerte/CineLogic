@@ -11,7 +11,7 @@ namespace CineLogic.Business.Programmation
 {
     public class SeanceService : ISeanceService
     {
-        private EFSeanceRepository repository;
+        private ISeanceRepository repository;
 
         private IMapper mapper = new MapperConfiguration(cfg =>
         {
@@ -24,7 +24,7 @@ namespace CineLogic.Business.Programmation
             repository = new EFSeanceRepository();
         }
 
-        public SeanceService(EFSeanceRepository repository)
+        public SeanceService(ISeanceRepository repository)
         {
             this.repository = repository;
         }

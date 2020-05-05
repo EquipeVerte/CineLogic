@@ -28,7 +28,9 @@ namespace CineLogic.Business.Programmation
             {
                 return false;
             }
-            if (seanceService.GetSeancesBySalle(SalleID).Any(s => s.HeureDebut > HeureDebut && s.HeureDebut < HeureFin || s.HeureFin < HeureFin && s.HeureFin > HeureDebut))
+            //List<SeanceViewModel> conflicts = seanceService.GetSeancesBySalle(SalleID).Any(s => s.HeureDebut >= HeureDebut && s.HeureDebut < HeureFin || s.HeureFin <= HeureFin && s.HeureFin > HeureDebut).ToList();
+            //List<SeanceViewModel> conflicts = seanceService.GetSeancesBySalle(SalleID).Where(s => (s.HeureDebut > HeureDebut && s.HeureDebut < HeureFin || s.HeureFin < HeureFin && s.HeureFin > HeureDebut)).ToList();
+            if (seanceService.GetSeancesBySalle(SalleID).Any(s => s.SeanceID != SeanceID && (s.HeureDebut >= HeureDebut && s.HeureDebut < HeureFin || s.HeureFin <= HeureFin && s.HeureFin > HeureDebut)))
             {
                 return false;
             }
