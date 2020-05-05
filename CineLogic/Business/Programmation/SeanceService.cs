@@ -1,0 +1,120 @@
+﻿using AutoMapper;
+using CineLogic.Models;
+using CineLogic.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace CineLogic.Business.Programmation
+{
+    public class SeanceService : ISeanceService
+    {
+        private EFSeanceRepository repository;
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Seance, SeanceViewModel>();
+        }).CreateMapper();
+
+        public SeanceService()
+        {
+        }
+
+        public SeanceService(EFSeanceRepository repository)
+        {
+            this.repository = repository;
+        }
+
+        public IEnumerable<SeanceViewModel> GetSeancesBySalle(int salleID)
+        {
+            return mapper.Map<IEnumerable<Seance>, IEnumerable<SeanceViewModel>>(repository.GetSeancesBySalle(salleID));
+        }
+
+        public SeanceViewModel GetSeance(int id)
+        {
+            Seance seance = repository.GetSeance(id);
+
+            if (seance != null)
+            {
+                return mapper.Map<Seance, SeanceViewModel>(seance);
+            }
+
+            throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");
+        }
+
+        public Seance CreateSeance(SeanceViewModel seanceVM)
+        {
+            if (seanceVM.Validate(this))
+            {
+                Seance seance = mapper.Map<SeanceViewModel, Seance>(seanceVM);
+
+                try
+                {
+                    repository.CreateSeance(seance);
+
+                    repository.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new DBException(ex);
+                }
+
+                return seance;
+            }
+            else
+            {
+                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+            }
+        }
+
+        public Seance UpdateSeance(SeanceViewModel seanceVM)
+        {
+            if (seanceVM.Validate(this))
+            {
+                Seance seance = mapper.Map<SeanceViewModel, Seance>(seanceVM);
+
+                try
+                {
+                    repository.UpdateSeance(seance);
+
+                    repository.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new DBException(ex);
+                }
+
+                return seance;
+            }
+            else
+            {
+                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+            }
+        }
+
+        public void DeleteSeance(int id)
+        {
+            Seance seance = repository.GetSeance(id);
+
+            if (seance != null)
+            {
+                try
+                {
+                    repository.DeleteSeance(seance);
+                }
+                catch (Exception ex)
+                {
+                    throw new DBException(ex);
+                }
+            }
+
+            throw new NotFoundException($"La séance avec ID {id} n'existe pas dans la base de données.");
+        }
+
+        public void Dispose()
+        {
+            repository.Dispose();
+        }
+    }
+}

@@ -142,6 +142,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\DBException.cs" />
+    <Compile Include="Business\NotFoundException.cs" />
+    <Compile Include="Business\Programmation\ISeanceService.cs" />
+    <Compile Include="Business\Programmation\ScheduleException.cs" />
+    <Compile Include="Business\Programmation\SeanceService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SeancesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -178,11 +183,11 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Programmation\CinemaSelectionItem.cs" />
-    <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
-    <Compile Include="Models\Programmation\ISeanceRepository.cs" />
+    <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
+    <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
     <Compile Include="Models\Programmation\SalleSelectionItem.cs" />
     <Compile Include="Models\Programmation\Seance.cs" />
-    <Compile Include="Models\Programmation\SeanceViewModel.cs" />
+    <Compile Include="Business\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>

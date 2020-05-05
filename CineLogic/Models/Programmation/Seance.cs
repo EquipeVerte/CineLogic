@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineLogic.Business;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace CineLogic.Models
     [MetadataType(typeof(SeanceMetaData))]
     public partial class Seance
     {
-        
     }
 
     public class SeanceMetaData
