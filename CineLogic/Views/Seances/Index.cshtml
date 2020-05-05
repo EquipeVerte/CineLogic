@@ -291,8 +291,10 @@
         };
 
         $("#datechanger").click(function () {
-            console.log($("#date-picker").datepicker('getDate'));
-            calendar.gotoDate($("#date-picker").datepicker('getDate'));
+            if ($("#date-picker").datepicker('getDate') != null) {
+                console.log($("#date-picker").datepicker('getDate'));
+                calendar.gotoDate($("#date-picker").datepicker('getDate'));
+            }
         });
     })
         .ajaxStart(function () {
