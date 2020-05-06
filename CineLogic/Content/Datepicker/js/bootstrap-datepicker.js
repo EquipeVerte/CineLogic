@@ -1713,8 +1713,8 @@
 		immediateUpdates: false,
 		title: '',
 		templates: {
-			leftArrow: '&#x00AB;',
-			rightArrow: '&#x00BB;'
+			leftArrow: '<i class="fas fa-chevron-left"></i>',
+			rightArrow: '<i class="fas fa-chevron-right"></i>'
 		},
     showWeekDays: true
 	};

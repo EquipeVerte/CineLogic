@@ -3,7 +3,7 @@
 @section css {
     @Styles.Render("~/Content/fullcalendarcss")
     @Styles.Render("~/Content/bootstrapdatepickercss")
-    @Styles.Render("~/Content/programmation.css")
+    @Styles.Render("~/Content/Programmation/programmation.css")
 }
 
 @{
@@ -33,8 +33,11 @@
             <h5>Ajouter une séance</h5>
 
             <!-- Datepicker-->
-            <div id="date-picker" class="my-3">
+            <div class="my-3 d-flex justify-content-center">
+                <div id="date-picker">
+                </div>
             </div>
+            
 
             <!-- Message d'erreur - Date -->
             <div id="alert-date" class="alert alert-danger collapse">
@@ -43,7 +46,7 @@
 
             <!-- Bouton pour changer la date de l'horaire-->
             <div class="form-group">
-                <button class="btn btn-outline-primary" id="datechanger">Aller à la date <i class="fas fa-chevron-right"></i></button>
+                <button class="btn btn-outline-primary float-right" id="datechanger">Aller à la date <i class="fas fa-chevron-right"></i></button>
             </div>
 
             <!-- Selectionner les heures-->

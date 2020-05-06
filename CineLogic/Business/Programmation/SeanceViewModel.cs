@@ -25,6 +25,7 @@ namespace CineLogic.Business.Programmation
         [Required]
         [DisplayName("Salle ID")]
         public int SalleID { get; set; }
+        [DisplayName("Titre du film")]
         public string ContenuTitre { get; set; }
 
         public bool Validate(ISeanceService seanceService)

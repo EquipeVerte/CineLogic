@@ -49,3 +49,20 @@
     border: 0.5px solid !important;
     color: #0275d8;
 }
+
+.datepicker td {
+    width: 30px;
+}
+
+.datepicker td.active {
+    background-color: #007bff !important;
+    background-image: none !important;
+    border-radius: 4px !important;
+}
+
+
+
+input[readonly] {
+    background-color: lightblue !important;
+    font-weight: bold;
+}

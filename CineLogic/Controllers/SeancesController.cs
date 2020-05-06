@@ -70,9 +70,18 @@ namespace CineLogic.Controllers
         {
             if (ModelState.IsValid)
             {
-                seanceService.UpdateSeance(seance);
+                try
+                {
+                    seanceService.UpdateSeance(seance);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch (ScheduleException ex)
+                {
+                    ViewBag.ScheduleError = ex.Message;
+
+                    return View(seance);
+                }
             }
             else
             {
@@ -81,7 +90,7 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
-        [HandleErrorJson]
+        [HandleError]
         public ActionResult Delete(int seanceID)
         {
             seanceService.DeleteSeance(seanceID);
