@@ -218,5 +218,14 @@ namespace CineLogic.Programmation.Tests
             //  Assert.
             Assert.ThrowsException<NotFoundException>(() => service.DeleteSeance(seanceID));
         }
+
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            if (service != null)
+            {
+                service.Dispose();
+            }
+        }
     }
 }

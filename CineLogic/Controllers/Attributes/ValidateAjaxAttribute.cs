@@ -23,13 +23,9 @@ namespace CineLogic.Controllers.Attributes
                 var errorModel =
                     from x in modelState.Keys
                     where modelState[x].Errors.Count > 0
-                    select new
-                    {
-                        key = x,
-                        errors = modelState[x].Errors.
+                    select new AjaxError(x, modelState[x].Errors.
                                                 Select(y => y.ErrorMessage).
-                                                ToArray()
-                    };
+                                                ToArray());
                 filterContext.Result = new JsonResult()
                 {
                     Data = errorModel

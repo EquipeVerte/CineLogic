@@ -20,6 +20,20 @@
     font-size: 2.5rem;
 }
 
+.loader-small {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-left: 8px solid #3498db; /* Blue */
+    border-right: 8px solid #3498db;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    animation: spin 2s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

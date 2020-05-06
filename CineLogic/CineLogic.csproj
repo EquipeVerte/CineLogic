@@ -147,6 +147,7 @@
     <Compile Include="Business\Programmation\ISeanceService.cs" />
     <Compile Include="Business\Programmation\ScheduleException.cs" />
     <Compile Include="Business\Programmation\SeanceService.cs" />
+    <Compile Include="Controllers\Attributes\AjaxError.cs" />
     <Compile Include="Controllers\Attributes\HandleErrorJsonAttribute.cs" />
     <Compile Include="Controllers\Attributes\ValidateAjaxAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -258,7 +259,11 @@
     <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
     <Content Include="Content\programmation.css" />
+    <Content Include="Content\Programmation\AjaxLoader.js" />
     <Content Include="Content\Programmation\Calendar.js" />
+    <Content Include="Content\Programmation\DatePicker.js" />
+    <Content Include="Content\Programmation\SalleSelection.js" />
+    <Content Include="Content\Programmation\SeanceCreation.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

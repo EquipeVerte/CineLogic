@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CineLogic.Models.Seance>
+﻿@model CineLogic.Business.Programmation.SeanceViewModel
 
 @section css {
     @Styles.Render("~/Content/fullcalendarcss")
@@ -11,12 +11,11 @@
 }
 
 <!-- Icone animé qui est affiché lors que la page fait une operation ajax-->
-<div id="loading" class="float-right">
+<div class="loading float-right">
     <div class="loader">
         <i class="fas fa-film"></i>
     </div>
 </div>
-
 
 <h4>Selectionner le cinéma et salle:</h4>
 
@@ -32,41 +31,61 @@
         <!-- Ajout d'une séance -->
         <div class="d-flex flex-column border p-4">
             <h5>Ajouter une séance</h5>
+
+            <!-- Datepicker-->
             <div id="date-picker" class="my-3">
             </div>
 
+            <!-- Message d'erreur - Date -->
             <div id="alert-date" class="alert alert-danger collapse">
                 Vous devez selectionner une date!
             </div>
 
+            <!-- Bouton pour changer la date de l'horaire-->
             <div class="form-group">
                 <button class="btn btn-outline-primary" id="datechanger">Aller à la date <i class="fas fa-chevron-right"></i></button>
             </div>
 
+            <!-- Selectionner les heures-->
             <div class="form-group">
-                <label>Heure de début</label>
+                <label>@Html.DisplayNameFor(model => model.HeureDebut)</label>
                 <div class="d-flex">
                     <input name="debut-hours" class="time-in form-control mr-2" type="number" placeholder="HH" min="0" max="23" />
                     <input name="debut-mins" class="time-in form-control" type="number" placeholder="MM" min="0" max="59" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Heure de fin</label>
+                <label>@Html.DisplayNameFor(model => model.HeureFin)</label>
                 <div class="d-flex">
                     <input name="fin-hours" class="time-in form-control mr-2" type="number" placeholder="HH" min="0" max="23" />
                     <input name="fin-mins" class="time-in form-control" type="number" placeholder="MM" min="0" max="59" />
                 </div>
             </div>
 
+            <!-- Input pour titre de la séance-->
             <div class="form-group">
-                <label>Titre</label>
+                <label>@Html.DisplayNameFor(model => model.Titre)</label>
                 <input name="titre" class="form-control" type="text" maxlength="20" />
             </div>
-            <div class="form-group">
+
+            <!-- Alert pour les messages d'erreur-->
+            <div class="form-group collapse" id="alert-seance-container">
                 <div class="alert alert-danger">
-                    <p  id="alert-seance"></p>
+                    <h3>Erreur!</h3>
+                    <p id="alert-seance"></p>
                 </div>
             </div>
+
+            <div class="form-group collapse" id="success-seance-container">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <h3>Succès!</h3>
+                    <p>La séance à été ajouté avec succès!</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="form-group">
                 <button id="create-seance" class="btn btn-outline-success">Créer</button>
             </div>
@@ -90,6 +109,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <!-- Affichage des détails sur la séance-->
                     <p>
                         Vous allez créer cette séance:
                     </p>
@@ -113,6 +133,11 @@
                     </dl>
                 </div>
                 <div class="modal-footer">
+                    <div class="loading float-left">
+                        <div class="loader-small">
+                            <i class="fas fa-film"></i>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-outline-success" id="btn-confirmed">Continuer</button>
                 </div>
@@ -122,195 +147,34 @@
 </div>
 
 @section scripts {
+
+    <script type="text/javascript">
+        //================================================================================
+        // VARIABLES À PASSER AUX SCRIPTS
+        //================================================================================
+
+        //  Ces variables doivent être initialisé ici parce que les fonction Razor ne peut pas être appelé dans les autres fichiers.
+
+        //  Noms d'affichage pour les attributs d'une séance.
+        //  Utilisé pour l'affichage des erreurs.
+        var dictVarNames = {
+            "seance.Titre": "@Html.DisplayNameFor(model => model.Titre)",
+            "seance.HeureDebut": "@Html.DisplayNameFor(model => model.HeureDebut)",
+            "seance.HeureFin": "@Html.DisplayNameFor(model => model.HeureFin)",
+            "seance.SalleID": "@Html.DisplayNameFor(model => model.SalleID)"
+        };
+
+        var dictURLs = {
+            "GetSeances": "@Url.Action("Seances")",
+            "EditSeance": "@Url.Action("Edit")",
+            "CreateSeance": "@Url.Action("Create")",
+            "GetCinemas": "@Url.Action("Cinemas")",
+            "GetSalles": "@Url.Action("Salles")"
+        }
+    </script>
+
     @Scripts.Render("~/Content/fullcalendarjs")
     @Scripts.Render("~/Content/bootstrapdatepickerjs")
-    @Scripts.Render("~/Content/Programmation/Calendar.js")
-
-<script>
-    $(document).ready(function () {
-
-        //  Chercher les cinemas disponibles.
-        $.get('@Url.Action("Cinemas")', null, function (data) {
-            $.each(data, function (i, item) {
-                $("#cinema-select").append(
-                    '<option value="' + item.CinemaID + '">' + item.Nom + '</option>'
-                );
-                getSalles();
-            });
-        }
-        );
-
-        //  Chercher les salles correspondant à le cinéma selectionné.
-        function getSalles() {
-
-            var cinemaID = $("#cinema-select").val();
-
-            $.get(
-                '@Url.Action("Salles")',
-                { cinemaID: cinemaID },
-                function (data) {
-                    $("#salle-select").empty();
-                    $.each(data, function (i, item) {
-                        $("#salle-select").append(
-                            '<option value="' + item.SalleID + '">' + item.Nom + '</option>'
-                        );
-                    });
-                    refreshEvents();
-                }
-            );
-        }
-
-        //  Mettre à jour les salles chaque fois que le cinéma est changé.
-        $("#cinema-select").change(function () {
-            getSalles();
-        });
-
-        //  Créer le datepicker.
-        var options = {
-            todayBtn: 'linked',
-            language: 'fr',
-            orientation: 'bottom left',
-            daysOfWeekHighlighted: '0,6'
-        };
-        $("#date-picker").datepicker(options);
-
-        //  Confirmer l'ajout d'une nouvelle séance.
-        $("#create-seance").click(function () {
-            console.log("Create clicked.");
-
-            if ($("#date-picker").datepicker('getDate') == null) {
-                console.log("Alert");
-                $("#alert-date").show();
-            }
-            else {
-                $("#alert-date").hide();
-
-                $("#conf-salle").html($("#cinema-select option:selected").text() + " - " + $("#salle-select option:selected").text());
-                $("#conf-titre").html($('input[name = "titre"]').val());
-                $("#conf-debut").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
-                $("#conf-fin").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
-                $("#confirmationModal").modal('show');
-            }
-        });
-
-        //  Ajout confirmé.
-        $("#btn-confirmed").click(function () {
-
-            $("#confirmationModal").modal('hide');
-
-            var seanceData = {
-                titre: $('input[name = "titre"]').val(),
-                salleID: $('#salle-select').val(),
-                heureDebut: new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))),
-                heureFin: new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))),
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Create")',
-                dataType: 'json',
-                data: '{ seance: ' + JSON.stringify(seanceData) + '}',
-                contentType: 'application/json; charset=utf-8',
-                success: function () {
-                    console.log("Post success.");
-                },
-                error: function (e) {
-                    console.log(e);
-                    $("#alert-seance").empty();
-                    $.each(e.responseJSON, function (i, item) {
-                        $("#alert-seance").append("<b>" + item.key + " : </b>");
-                        $("#alert-seance").append($.each(item.errors, function (i2, item2) {
-                            return item2;
-                        }) + "<br/>");
-                    });
-                }
-            })
-        });
-
-        //  Créer le calendrier des séances.
-        var events = [];
-
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['timeGrid', 'bootstrap'],
-            defaultView: 'timeGridWeek',
-            themeSystem: 'bootstrap',
-            locale: 'fr',
-            allDaySlot: false,
-            minTime: "06:00:00",
-            maxTime: "24:00:00",
-            events: events,
-            height: "parent",
-            eventTimeFormat: { // like '14:30:00'
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            }
-        });
-
-        calendar.render();
-
-        $("#refresh-events").click(function () {
-            refreshEvents();
-        });
-
-        $("#salle-select").change(function () {
-            refreshEvents();
-        });
-
-        var eventsRefreshing = false;
-
-        function refreshEvents() {
-            if (eventsRefreshing) return;
-            eventsRefreshing = true;
-
-            $.each(calendar.getEventSources(), function (i, item) {
-                calendar.getEventSources()[i].remove();
-            });
-
-            var salleID = $('#salle-select').val();
-
-            $('#salle-select').prop('disabled', true);
-
-            var jqxhr = $.get('@Url.Action("Seances")', { salleID: salleID }, function (data) {
-                var events = [];
-                $.each(data, function (i, item) {
-                    events.push({
-                        id: item.SeanceID,
-                        url: '@Url.Action("Edit")/' + item.SeanceID,
-                        title: item.Titre + (item.ContenuTitre == null ? "" : " - " + item.ContenuTitre),
-                        start: item.HeureDebut,
-                        end: item.HeureFin,
-                        backgroundColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
-                        borderColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
-                        eventTitle: item.Titre,
-                        contenuTitre: item.ContenuTitre
-                    });
-
-                });
-                calendar.addEventSource(events);
-                eventsRefreshing = false;
-                $('#salle-select').prop('disabled', false);
-            });
-
-            
-        };
-
-        $("#datechanger").click(function () {
-            if ($("#date-picker").datepicker('getDate') != null) {
-                console.log($("#date-picker").datepicker('getDate'));
-                calendar.gotoDate($("#date-picker").datepicker('getDate'));
-            }
-        });
-    })
-        .ajaxStart(function () {
-            $("#loading").show();
-        })
-        .ajaxStop(function () {
-            $("#loading").hide();
-        });
-
-</script>
+    @Scripts.Render("~/Content/Programmation")
 }
 

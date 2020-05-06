@@ -55,6 +55,14 @@ namespace CineLogic
             bundles.Add(new ScriptBundle("~/Content/fontawesomejs").Include(
                     "~/Content/FontAwesome/all.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Content/Programmation").Include(
+                    "~/Content/Programmation/AjaxLoader.js",
+                    "~/Content/Programmation/DatePicker.js",
+                    "~/Content/Programmation/Calendar.js",
+                    "~/Content/Programmation/SalleSelection.js",
+                    "~/Content/Programmation/SeanceCreation.js"
+                ));
         }
     }
 }
