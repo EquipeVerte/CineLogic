@@ -7,29 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASPNET_MVC_Bootstrap4_Template.Models
+namespace CineLogic.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Cinema
+    public partial class Salle
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cinema()
+        public Salle()
         {
-            this.Salles = new HashSet<Salle>();
+            this.Seances = new HashSet<Seance>();
         }
     
-        public int CinemaID { get; set; }
+        public int SalleID { get; set; }
         public string Nom { get; set; }
-        public string Adresse { get; set; }
+        public string TypeEcran { get; set; }
+        public string SystemSon { get; set; }
         public bool EnExploitation { get; set; }
-        public int ResponsableID { get; set; }
-        public string Programmateur { get; set; }
+        public int CinemaID { get; set; }
     
-        public virtual Responsable Responsable { get; set; }
-        public virtual User User { get; set; }
+        public virtual Cinema Cinema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Salle> Salles { get; set; }
+        public virtual ICollection<Seance> Seances { get; set; }
     }
 }

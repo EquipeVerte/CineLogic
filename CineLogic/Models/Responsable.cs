@@ -7,22 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASPNET_MVC_Bootstrap4_Template.Models
+namespace CineLogic.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Genre
+    public partial class Responsable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genre()
+        public Responsable()
         {
-            this.Contenus = new HashSet<Contenu>();
+            this.Cinemas = new HashSet<Cinema>();
         }
     
+        public int ResponsableID { get; set; }
         public string Nom { get; set; }
+        public string NumTel { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contenu> Contenus { get; set; }
+        public virtual ICollection<Cinema> Cinemas { get; set; }
     }
 }

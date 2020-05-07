@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace ASPNET_MVC_Bootstrap4_Template
+namespace CineLogic
 {
     public class BundleConfig
     {
