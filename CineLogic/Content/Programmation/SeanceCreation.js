@@ -17,8 +17,18 @@
             //  Remplir les informations sur la séance à créé dans le modal de confirmation.
             $("#conf-salle").html($("#cinema-select option:selected").text() + " - " + $("#salle-select option:selected").text());
             $("#conf-titre").html($('input[name = "titre"]').val());
-            $("#conf-debut").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="debut-hours"]').val()) + parseInt($('input[name="debut-mins"]').val()))));
-            $("#conf-fin").html(new Date($("#date-picker").datepicker('getDate').setMinutes(60 * parseInt($('input[name="fin-hours"]').val()) + parseInt($('input[name="fin-mins"]').val()))));
+            $("#conf-debut").html(new Date($("#date-picker")
+                .datepicker('getDate')
+                .setMinutes(
+                    60 * parseInt($('input[name="debut-hours"]').val()) +
+                    parseInt($('input[name="debut-mins"]').val() == "" ? "0" : $('input[name="debut-mins"]').val())))
+                );
+            $("#conf-fin").html(new Date($("#date-picker")
+                .datepicker('getDate')
+                .setMinutes(
+                    60 * parseInt($('input[name="fin-hours"]').val()) +
+                    parseInt($('input[name="fin-mins"]').val() == "" ? "0" : $('input[name="fin-mins"]').val())))
+                );
 
             //  Afficher le modal et attendre confirmation.
             $("#confirmationModal").modal('show');
@@ -35,13 +45,13 @@
                 .datepicker('getDate')
                 .setMinutes(
                     60 * parseInt($('input[name="debut-hours"]').val()) +
-                    parseInt($('input[name="debut-mins"]').val() == "" ? "00" : $('input[name="debut-mins"]').val()))
+                    parseInt($('input[name="debut-mins"]').val() == "" ? "0" : $('input[name="debut-mins"]').val()))
             ),
             heureFin: new Date($("#date-picker")
                 .datepicker('getDate')
                 .setMinutes(
                     60 * parseInt($('input[name="fin-hours"]').val()) +
-                    parseInt($('input[name="fin-mins"]').val() == "" ? "00" : $('input[name="fin-mins"]').val()))
+                    parseInt($('input[name="fin-mins"]').val() == "" ? "0" : $('input[name="fin-mins"]').val()))
             )
         }
 
