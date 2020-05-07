@@ -21,14 +21,14 @@ namespace CineLogic.Controllers
 
         public SeancesController()
         {
-            if (Session["SeanceService"] == null)
+            if (System.Web.HttpContext.Current.Session["SeanceService"] == null)
             {
                 seanceService = new SeanceService();
-                Session["SeanceServie"] = seanceService;
+                System.Web.HttpContext.Current.Session["SeanceService"] = seanceService;
             }
             else
             {
-                seanceService = (SeanceService)Session["SeanceServie"];
+                seanceService = (SeanceService)System.Web.HttpContext.Current.Session["SeanceService"];
             }
         }
 
@@ -106,11 +106,18 @@ namespace CineLogic.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Save()
+        {
+            seanceService.SaveChanges();
+
+            return View("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                seanceService.Dispose();
+                //seanceService.Dispose();
             }
             base.Dispose(disposing);
         }

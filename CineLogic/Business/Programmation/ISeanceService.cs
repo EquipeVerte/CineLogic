@@ -19,6 +19,8 @@ namespace CineLogic.Business.Programmation
 
         void DeleteSeance(int id);
 
+        void SaveChanges();
+
         void Dispose();
     }
 }

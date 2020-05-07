@@ -3,6 +3,7 @@ using CineLogic.Models;
 using CineLogic.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
@@ -55,8 +56,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.CreateSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -80,8 +79,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.UpdateSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -105,8 +102,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.DeleteSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -117,6 +112,11 @@ namespace CineLogic.Business.Programmation
             {
                 throw new NotFoundException($"La séance avec ID {id} n'existe pas dans la base de données.");
             }
+        }
+
+        public void SaveChanges()
+        {
+            repository.SaveChanges();
         }
 
         public void Dispose()
