@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CineLogic.Models.Cinema>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cinémas</h2>
+
+<div class="row">
+    <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+            @foreach (var item in Model)
+            {
+                <a class="list-group-item list-group-item-action" id="list-@Html.DisplayFor(modelItem => item.Nom)-list" data-toggle="list" href="#list-@Html.DisplayFor(modelItem => item.Nom)" role="tab" aria-controls="@Html.DisplayFor(modelItem => item.Nom)">@Html.DisplayFor(modelItem => item.Nom)</a>
+            }
+        </div>
+        <br />
+        @Html.ActionLink("Ajouter un nouveau cinéma", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col-8">
+        <div class="card tab-content" id="nav-tabContent">
+            @foreach (var item in Model)
+            {
+                <div class="tab-pane fade" id="list-@Html.DisplayFor(modelItem => item.Nom)" role="tabpanel" aria-labelledby="list-@Html.DisplayFor(modelItem => item.Nom)-list">
+                    <div class="card-header bg-primary text-white">
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </div>
+
+                    <div class="card-body">
+                        <h4>Adresse</h4>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Adresse)
+                        </p>
+                        <h4>En Exploitation</h4>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.EnExploitation)
+                        </p>
+                        <h4>Nom du responsable</h4>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Responsable.Nom)
+                        </p>
+                        <h4>Nom du programmateur</h4>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.User.NomComplet)
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
