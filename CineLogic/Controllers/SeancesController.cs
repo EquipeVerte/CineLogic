@@ -21,7 +21,15 @@ namespace CineLogic.Controllers
 
         public SeancesController()
         {
-            seanceService = new SeanceService();
+            if (Session["SeanceService"] == null)
+            {
+                seanceService = new SeanceService();
+                Session["SeanceServie"] = seanceService;
+            }
+            else
+            {
+                seanceService = (SeanceService)Session["SeanceServie"];
+            }
         }
 
         public SeancesController(ISeanceService seanceService)

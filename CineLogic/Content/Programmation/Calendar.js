@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     //  Définir les options pour le calendrier.
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['timeGrid', 'bootstrap'],
+        plugins: ['timeGrid', 'interaction', 'bootstrap'],
         defaultView: 'timeGridWeek',
         themeSystem: 'bootstrap',
         locale: 'fr',
@@ -25,7 +25,8 @@ $(document).ready(function () {
             hour: '2-digit',
             minute: '2-digit',
             hour12: false
-        }
+        },
+        //editable: true
     });
 
     //  Créer le calendrier
