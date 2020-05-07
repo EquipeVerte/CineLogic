@@ -11,6 +11,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
@@ -72,3 +79,44 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Titre }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<table class="table">
+    @foreach (var item in Model.Acteurs)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit","Acteurs", new { id = item.Nom }, null) |
+                @Html.ActionLink("Details", "Details","Acteurs", new { id = item.Nom } , null) |
+                @Html.ActionLink("Delete", "Delete","Acteurs", new { id = item.Nom }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+@using (Html.BeginForm("AjouterActeur", "Contenus", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Acteur</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label>Ajouter un acteur</label>
+            <div class="col-md-10">
+               <input name="nomActeur" class="form-control" />
+            </div>
+
+        </div>
+        @Html.HiddenFor(model=>model.Titre)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

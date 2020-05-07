@@ -123,5 +123,21 @@ namespace ASPNET_MVC_Bootstrap4_Template.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public ActionResult AjouterActeur(string titre, string nomActeur)
+        {
+            Contenu contenu = db.Contenus.Find(titre);
+            Acteur acteur = db.Acteurs.Find(nomActeur);
+            if (acteur == null)
+            {
+                acteur = new Acteur();
+                acteur.Nom = nomActeur;
+                db.Acteurs.Add(acteur);
+            }
+            contenu.Acteurs.Add(acteur);
+            db.SaveChanges();
+            return Redirect(Url.Action("Details", titre));
+        }
     }
 }
