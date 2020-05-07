@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ASPNET_MVC_Bootstrap4_Template.Models;
+using CineLogic.Models;
 
-namespace ASPNET_MVC_Bootstrap4_Template.Controllers
+namespace CineLogic.Controllers
 {
     public class ContenusController : Controller
     {
@@ -123,7 +123,7 @@ namespace ASPNET_MVC_Bootstrap4_Template.Controllers
             }
             base.Dispose(disposing);
         }
-
+        //Ajouter un acteur dans un contenu
         [HttpPost]
         public ActionResult AjouterActeur(string titre, string nomActeur)
         {
@@ -137,7 +137,21 @@ namespace ASPNET_MVC_Bootstrap4_Template.Controllers
             }
             contenu.Acteurs.Add(acteur);
             db.SaveChanges();
-            return Redirect(Url.Action("Details", titre));
+            return Redirect(Url.Action("Details","Contenus", new { id = titre }));
+        }
+        //Supprimer un acteur d'un contenu
+        [HttpGet]
+        public ActionResult SupprimerActeur(string contenuId, string ActeurId)
+        {
+            Contenu contenu = db.Contenus.Find(contenuId);
+            Acteur acteur = db.Acteurs.Find(ActeurId);
+            if (acteur == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            contenu.Acteurs.Remove(acteur);
+            db.SaveChanges();
+            return Redirect(Url.Action("Details", "Contenus",new {id= contenuId}));
         }
     }
 }

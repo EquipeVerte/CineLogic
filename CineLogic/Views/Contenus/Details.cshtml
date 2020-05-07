@@ -1,4 +1,4 @@
-﻿@model ASPNET_MVC_Bootstrap4_Template.Models.Contenu
+﻿@model CineLogic.Models.Contenu
 
 @{
     ViewBag.Title = "Details";
@@ -89,7 +89,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit","Acteurs", new { id = item.Nom }, null) |
                 @Html.ActionLink("Details", "Details","Acteurs", new { id = item.Nom } , null) |
-                @Html.ActionLink("Delete", "Delete","Acteurs", new { id = item.Nom }, null)
+                @Html.ActionLink("Delete", "SupprimerActeur","Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
             </td>
         </tr>
     }

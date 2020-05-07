@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASPNET_MVC_Bootstrap4_Template.Models.Contenu>
+﻿@model IEnumerable<CineLogic.Models.Contenu>
 
 @{
     ViewBag.Title = "Index";
@@ -104,34 +104,37 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Annee)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RuntimeMins)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Votes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Revenue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MetaScore)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Titre }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Titre }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Titre })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Titre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Annee)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RuntimeMins)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Rating)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Votes)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Revenue)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MetaScore)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Titre }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Titre }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Titre })
+    </td>
+</tr>
     }
 
 </table>
