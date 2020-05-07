@@ -17,32 +17,51 @@
         <br />
         @Html.ActionLink("Ajouter un nouveau cinéma", "Create", null, new { @class = "btn btn-primary" })
     </div>
-    <div class="col-8">
+    <div class="col-6">
         <div class="card tab-content" id="nav-tabContent">
             @foreach (var item in Model)
             {
                 <div class="tab-pane fade" id="list-@Html.DisplayFor(modelItem => item.Nom)" role="tabpanel" aria-labelledby="list-@Html.DisplayFor(modelItem => item.Nom)-list">
-                    <div class="card-header bg-primary text-white">
-                        @Html.DisplayFor(modelItem => item.Nom)
+                    <div class="card-header bg-primary text-white d-flex justify-content-between">
+                        <div>
+                            Cinéma @Html.DisplayFor(modelItem => item.Nom)
+                        </div>
+                        <div>
+                            @Html.ActionLink("Éditer", "Edit", new { id = item.CinemaID }, new { @class = "btn btn-warning btn-sm text-white" })
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.CinemaID }, new { @class = "btn btn-danger btn-sm" })
+                        </div>
                     </div>
-
                     <div class="card-body">
                         <h4>Adresse</h4>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Adresse)
-                        </p>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.Adresse)
+                            </div>
+                        </div>
                         <h4>En Exploitation</h4>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.EnExploitation)
-                        </p>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.EnExploitation)
+                            </div>
+                        </div>
                         <h4>Nom du responsable</h4>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Responsable.Nom)
-                        </p>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.Responsable.Nom)
+                            </div>
+                            <div>
+                                @Html.ActionLink("Détails", "Details", "Responsables", new { id = item.Responsable.ResponsableID }, new { @class = "btn btn-secondary btn-sm" })
+                            </div>
+                        </div>
                         <h4>Nom du programmateur</h4>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.User.NomComplet)
-                        </p>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.User.NomComplet)
+                            </div>
+                            <div>
+                                @Html.ActionLink("Détails", "Details", "Users", new { id = item.User.Login }, new { @class = "btn btn-secondary btn-sm" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -51,6 +70,6 @@
 </div>
 
 <div>
-    
+
 </div>
 

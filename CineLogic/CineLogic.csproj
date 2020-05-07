@@ -358,7 +358,6 @@
     <Content Include="Views\Responsables\Index.cshtml" />
     <Content Include="Views\Cinemas\Create.cshtml" />
     <Content Include="Views\Cinemas\Delete.cshtml" />
-    <Content Include="Views\Cinemas\Details.cshtml" />
     <Content Include="Views\Cinemas\Edit.cshtml" />
     <Content Include="Views\Cinemas\Index.cshtml" />
     <Content Include="Views\Salles\Create.cshtml" />
