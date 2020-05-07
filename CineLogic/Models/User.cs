@@ -21,6 +21,7 @@ namespace CineLogic.Models
         }
     
         public string Login { get; set; }
+        public string Motdepasse { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] Salt { get; set; }
         public int HashIterations { get; set; }

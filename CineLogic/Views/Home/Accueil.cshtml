@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Accueil";
+}
+
+    <div class="jumbotron">
+        <h1>CineLogic</h1>
+        <p class="lead"></p>
+        <p>@Html.ActionLink("Connextion", "Login", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })</p>
+    </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>L'AMOUR POUR LE TEMPS DE CINÉMA N'EST PAS UN ENTRAÎNEMENT</h2>
+        <h3>VOUS AIMER ET ATTENDRE UNE RÉUNION AMBUL</h3>
+        <p>
+            Le coût des billets achetés pour les sessions à partir du 26 mars 2020 sera remboursé en totalité.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            Des informations sur la reprise des cinémas seront publiées sur le site officiel kinomonitor.ru et sur les réseaux sociaux de Monitor.
+
+            Prenez soin de vous et de vos proches!
+
+            Et nous restons en contact. Afin d'éclairer les minutes de séparation forcée, nous avons préparé beaucoup de choses intéressantes pour vous.
+        </p>
+        <p>Pendant que le film est en pause, ensemble, nous tournerons la série, nous jouerons de nombreux prix, nous ouvrirons le monde du cinéma sous de nouveaux angles inattendus. Abonnez-vous à nos pages sur les réseaux sociaux. Nous vous attendons sur Instagram, Facebook.</p>
+    </div>
+    <div class="col-md-4">
+        <p>AUJOURD'HUI AU CINÉMA</p>
+        <marquee behavior="alternate" scroledelay="3" scrollamount="3">
+
+            <a href="@Url.Action("Details", "Contenus", new { id = 0 })"><img src="~/Images/1917_.png" style="height:250px" /></a>
+            <a href="@Url.Action("Details", "Contenus", new { id = 0 })"><img src="~/Images/Doc-Dulittl.png" style="height:250px" /></a>
+            <a href="@Url.Action("Details", "Contenus", new { id = 0 })"><img src="~/Images/Oiseaux de proie.png" style="height:250px" /></a>
+        </marquee>
+    </div>
+</div>
