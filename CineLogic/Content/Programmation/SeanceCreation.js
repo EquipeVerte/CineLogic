@@ -37,6 +37,7 @@
 
     //  Ajout confirmé.
     $("#btn-confirmed").click(function () {
+        $("#btn-confirmed").prop("disabled", true);
         //  Remplir l'objet des données.
         var seanceData = {
             titre: $('input[name = "titre"]').val(),
@@ -69,6 +70,7 @@
                 $("#success-seance-container").show();
                 $("#alert-seance-container").hide();
                 refreshEvents();
+                $("#btn-confirmed").prop("disabled", false);
             },
             error: function (e) {
                 console.log(e);
@@ -82,6 +84,7 @@
                     }) + "<br/>");
                 });
                 $("#confirmationModal").modal('hide');
+                $("#btn-confirmed").prop("disabled", false);
             }
         })
     });
