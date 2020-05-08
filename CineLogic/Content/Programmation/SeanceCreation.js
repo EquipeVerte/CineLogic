@@ -67,6 +67,7 @@
                 console.log(seanceData);
                 $("#confirmationModal").modal('hide');
                 $("#success-seance-container").show();
+                $("#alert-seance-container").hide();
                 refreshEvents();
             },
             error: function (e) {
