@@ -79,7 +79,7 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Titre }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-<table class="table">
+@*<table class="table">
     @foreach (var item in Model.Acteurs)
     {
         <tr>
@@ -87,15 +87,15 @@
                 @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit","Acteurs", new { id = item.Nom }, null) |
-                @Html.ActionLink("Details", "Details","Acteurs", new { id = item.Nom } , null) |
-                @Html.ActionLink("Delete", "SupprimerActeur","Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
+                @Html.ActionLink("Edit", "Edit", "Acteurs", new { id = item.Nom }, null) |
+                @Html.ActionLink("Details", "Details", "Acteurs", new { id = item.Nom }, null) |
+                @Html.ActionLink("Delete", "SupprimerActeur", "Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
             </td>
         </tr>
     }
-</table>
+</table>*@
 
-@using (Html.BeginForm("AjouterActeur", "Contenus", FormMethod.Post))
+@*@using (Html.BeginForm("AjouterActeur", "Contenus", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -106,11 +106,11 @@
         <div class="form-group">
             <label>Ajouter un acteur</label>
             <div class="col-md-10">
-               <input name="nomActeur" class="form-control" />
+                <input name="nomActeur" class="form-control" />
             </div>
 
         </div>
-        @Html.HiddenFor(model=>model.Titre)
+        @Html.HiddenFor(model => model.Titre)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -118,5 +118,5 @@
             </div>
         </div>
     </div>
-}
+}*@
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
@@ -128,16 +129,19 @@ namespace CineLogic.Controllers
         public ActionResult AjouterActeur(string titre, string nomActeur)
         {
             Contenu contenu = db.Contenus.Find(titre);
-            Acteur acteur = db.Acteurs.Find(nomActeur);
-            if (acteur == null)
+            if(nomActeur != null || nomActeur !="")
             {
-                acteur = new Acteur();
-                acteur.Nom = nomActeur;
-                db.Acteurs.Add(acteur);
+                Acteur acteur = db.Acteurs.Find(nomActeur);
+                if (acteur == null)
+                {
+                    acteur = new Acteur();
+                    acteur.Nom = nomActeur;
+                    db.Acteurs.Add(acteur);
+                }
+                contenu.Acteurs.Add(acteur);
+                db.SaveChanges();
             }
-            contenu.Acteurs.Add(acteur);
-            db.SaveChanges();
-            return Redirect(Url.Action("Details","Contenus", new { id = titre }));
+            return Redirect(Url.Action("Edit", "Contenus", new { id = titre }));
         }
         //Supprimer un acteur d'un contenu
         [HttpGet]
@@ -151,7 +155,42 @@ namespace CineLogic.Controllers
             }
             contenu.Acteurs.Remove(acteur);
             db.SaveChanges();
-            return Redirect(Url.Action("Details", "Contenus",new {id= contenuId}));
+            return Redirect(Url.Action("Edit", "Contenus", new { id = contenuId }));
+        }
+
+        //Ajouter un directeur dans un contenu
+        [HttpPost]
+        public ActionResult AjouterDirecteur(string titre, string nomDirecteur)
+        {
+            Contenu contenu = db.Contenus.Find(titre);
+            if (nomDirecteur != null || nomDirecteur != "")
+            {
+                Directeur directeur = db.Directeurs.Find(nomDirecteur);
+                if (directeur == null)
+                {
+                    directeur = new Directeur();
+                    directeur.Nom = nomDirecteur;
+                    db.Directeurs.Add(directeur);
+                }
+                contenu.Directeurs.Add(directeur);
+                db.SaveChanges();
+            }
+            return Redirect(Url.Action("Edit", "Contenus", new { id = titre }));
+
+        }
+        //Supprimer un directeur d'un contenu
+        [HttpGet]
+        public ActionResult SupprimerDirecteur(string contenuId, string DirecteurId)
+        {
+            Contenu contenu = db.Contenus.Find(contenuId);
+            Directeur directeur = db.Directeurs.Find(DirecteurId);
+            if (directeur == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            contenu.Directeurs.Remove(directeur);
+            db.SaveChanges();
+            return Redirect(Url.Action("Edit", "Contenus", new { id = contenuId }));
         }
     }
 }

@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.description textarea {
+    width: 300px !important;
+    height: 300px !important;
+}
+
