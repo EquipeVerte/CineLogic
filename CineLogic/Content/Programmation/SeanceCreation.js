@@ -66,10 +66,25 @@
             success: function () {
                 console.log("Post success.");
                 console.log(seanceData);
+
+                //  Vider les inputs.
+                $('input[name = "titre"]').val(null);
+                $('input[name="debut-hours"]').val(null);
+                $('input[name="debut-mins"]').val(null);
+                $('input[name="fin-hours"]').val(null);
+                $('input[name="fin-mins"]').val(null);
+
+                //  Cacher le modal.
                 $("#confirmationModal").modal('hide');
+
+                //  Montrer l'alert success et cacher l'alert d'erreur.
                 $("#success-seance-container").show();
                 $("#alert-seance-container").hide();
+
+                //  Rafraichir les séances.
                 refreshEvents();
+
+                //  Réactiver le bouton confirmation.
                 $("#btn-confirmed").prop("disabled", false);
             },
             error: function (e) {
@@ -87,5 +102,11 @@
                 $("#btn-confirmed").prop("disabled", false);
             }
         })
+    });
+
+    $('.alert .close').on("click", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).parent().hide();
     });
 });
