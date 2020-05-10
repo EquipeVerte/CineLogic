@@ -1,0 +1,156 @@
+﻿@model CineLogic.Business.Programmation.SeanceViewModel
+
+@section css {
+    @Styles.Render("~/Content/Programmation/programmation.css")
+}
+
+@{
+    ViewBag.Title = "Édition";
+}
+
+<h2>Édition : Séance @Model.SeanceID - @Model.Titre</h2>
+
+<!-- Icon animé qui est affiché lors de l'execution du ajax-->
+<!-- Formulaire d'édition de la séance-->
+@using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SeanceID)
+        @Html.HiddenFor(model => model.SalleID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Titre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Titre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HeureDebut, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HeureDebut, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HeureDebut, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HeureFin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HeureFin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HeureFin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Selection et boit de récherche pour les films-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly="readonly", @placeholder="Aucun contenu assigné encore"})
+                <div class="d-flex">
+                    <input id="filter" class="form-control mb-1" placeholder="Recherche"/>
+                    <div class="d-flex justify-content-center">
+                        <div id="loading" class="pl-2">
+                            <div class="loader-small">
+                                <i class="fas fa-film"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <select id="film-select"  class="form-control mr-2" size="6">
+                </select>
+            </div>
+        </div>
+
+        @if (ViewBag.ScheduleError != null)
+        {
+            <div class="form-group">
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <h3>Erreur!</h3>
+                    <p>@ViewBag.ScheduleError</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        }
+        @if (ViewBag.Success != null)
+        {
+            <div class="form-group">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <h3>Succès!</h3>
+                    <p>La séance à été mis à jour avec succès</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Formulaire de suppression pour la séance-->
+@using (Html.BeginForm("Delete", "Seances", FormMethod.Post, new { name = "delete", id = "delete" }))
+{
+    <div class="form-group">
+        @Html.HiddenFor(model => model.SeanceID)
+    </div>
+}
+
+<!-- Boutons de soumission pour les formulaires-->
+<div class="form-group">
+    <div class="col-md-10">
+        <input type="submit" value="Supprimer" class="btn btn-outline-danger mr-3" form="delete" />
+        <input type="submit" value="Sauvegarder" class="btn btn-outline-success" form="edit" />
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-10">
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            getFilms();
+
+            //  Mettre à jour les films à chaque changement dans la boite de recherche.
+            //  Est-ce que l'ajax est néccesaire? Peut être fais en javascript avec une liste statique?
+            $("#filter").on('input', function () {
+                console.log("Change");
+                getFilms();
+            });
+
+            function getFilms() {
+                $.get("@Url.Action("Contenus")", { filter: $("#filter").val() }, function (data) {
+                    $("#film-select").empty();
+                    $("#film-select").append('<option value="">N/A</option>');
+                    $.each(data, function (i, item) {
+                        $("#film-select").append('<option value="' + item + '">' + item + '</option>');
+                    });
+                });
+            }
+
+            $("#film-select").on('change', function () {
+                $("#ContenuTitre").val($("#film-select").val());
+            });
+        })
+            .ajaxStart(function () {
+                console.log("ajax start");
+                $("#loading").show();
+            })
+            .ajaxStop(function () {
+                console.log("ajax stop");
+                $("#loading").hide();
+            });
+    </script>
+}
