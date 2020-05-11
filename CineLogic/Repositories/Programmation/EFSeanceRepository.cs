@@ -93,6 +93,12 @@ namespace CineLogic.Repositories
             }
         }
 
+        public void Annuler()
+        {
+            GetTransaction().Rollback();
+            GetTransaction().Dispose();
+        }
+
         public void Dispose()
         {
             db.Dispose();

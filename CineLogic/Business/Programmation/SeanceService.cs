@@ -134,6 +134,11 @@ namespace CineLogic.Business.Programmation
             repository.SaveChanges();
         }
 
+        public void Annuler()
+        {
+            repository.Annuler();
+        }
+
         public void Dispose()
         {
             if (repository != null)

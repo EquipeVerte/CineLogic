@@ -18,18 +18,21 @@ namespace CineLogic.Controllers
 {
     public class SeancesController : Controller
     {
+        private const string SESSION_SS = "SeanceService";
+        private const string SESSION_UV = "UnsavedData";
+
         private ISeanceService seanceService;
 
         public SeancesController()
         {
-            if (System.Web.HttpContext.Current.Session["SeanceService"] == null)
+            if (System.Web.HttpContext.Current.Session[SESSION_SS] == null)
             {
                 seanceService = new SeanceService();
-                System.Web.HttpContext.Current.Session["SeanceService"] = seanceService;
+                System.Web.HttpContext.Current.Session[SESSION_SS] = seanceService;
             }
             else
             {
-                seanceService = (SeanceService)System.Web.HttpContext.Current.Session["SeanceService"];
+                seanceService = (SeanceService)System.Web.HttpContext.Current.Session[SESSION_SS];
             }
         }
 
@@ -40,6 +43,14 @@ namespace CineLogic.Controllers
 
         public ActionResult Index()
         {
+            if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
+            {
+                if((bool)System.Web.HttpContext.Current.Session[SESSION_UV])
+                {
+                    ViewBag.UnsavedChanges = true;
+                }
+            }
+
             return View();
         }
         
@@ -49,6 +60,8 @@ namespace CineLogic.Controllers
         public ActionResult Create(SeanceViewModel seance)
         {
             seanceService.CreateSeance(seance);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
             return Json(new { success = true });
         }
@@ -70,6 +83,14 @@ namespace CineLogic.Controllers
 
             SeanceViewModel seance = seanceService.GetSeance(id.Value);
 
+            if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
+            {
+                if ((bool)System.Web.HttpContext.Current.Session[SESSION_UV])
+                {
+                    ViewBag.UnsavedChanges = true;
+                }
+            }
+
             return View(seance);
         }
 
@@ -83,7 +104,9 @@ namespace CineLogic.Controllers
                 {
                     seanceService.UpdateSeance(seance);
 
-                    return RedirectToAction("Index");
+                    System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+                    return RedirectToAction("Edit");
                 }
                 catch (ScheduleException ex)
                 {
@@ -104,6 +127,8 @@ namespace CineLogic.Controllers
         {
             seanceService.DeleteSeance(seanceID);
 
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
             return RedirectToAction("Index");
         }
 
@@ -113,12 +138,27 @@ namespace CineLogic.Controllers
         {
             seanceService.UpdateSeanceTimes(seanceVM);
 
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
             return Json(new { success = true });
         }
 
         public ActionResult Save()
         {
             seanceService.SaveChanges();
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = false;
+
+            return View("Index");
+        }
+
+        public ActionResult Annuler()
+        {
+            seanceService.Dispose();
+
+            System.Web.HttpContext.Current.Session[SESSION_SS] = null;
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = false;
 
             return View("Index");
         }

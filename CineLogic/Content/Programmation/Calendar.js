@@ -20,7 +20,7 @@ $(document).ready(function () {
         minTime: "06:00:00",
         maxTime: "24:00:00",
         events: events,
-        height: "parent",
+        height: "auto",
         eventTimeFormat: { // like '14:30:00'
             hour: '2-digit',
             minute: '2-digit',
@@ -36,8 +36,7 @@ $(document).ready(function () {
         }
     });
 
-
-
+    //  Appelé quand les heures d'un séance sont changé par le calendrier.
     function timesChanged(info) {
 
         var data = {
@@ -56,6 +55,7 @@ $(document).ready(function () {
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 console.log("Post success.");
+                $("#unsaved-alert").show();
                 animateSuccess();
             },
             error: function (e) {

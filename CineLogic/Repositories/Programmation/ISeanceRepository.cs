@@ -25,6 +25,8 @@ namespace CineLogic.Repositories
 
         int SaveChanges();
 
+        void Annuler();
+
         void Dispose();
     } 
 }

@@ -24,9 +24,38 @@
     <select class="form-control mr-2" id="salle-select"></select>
 </div>
 
-@Html.ActionLink("Save", "Save", "Seances")
+
 
 <hr />
+
+@if (ViewBag.UnsavedChanges != null)
+{
+    <div class="alert alert-danger" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Vous avez des changements non-enregistrés.</h3>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger collapse" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Vous avez des changements non-enregistrés.</h3>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -39,7 +68,7 @@
                 <div id="date-picker">
                 </div>
             </div>
-            
+
 
             <!-- Message d'erreur - Date -->
             <div id="alert-date" class="alert alert-danger collapse">

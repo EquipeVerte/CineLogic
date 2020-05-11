@@ -10,6 +10,35 @@
 
 <h2>Édition : Séance @Model.SeanceID - @Model.Titre</h2>
 
+@if (ViewBag.UnsavedChanges != null)
+{
+    <div class="alert alert-danger" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Vous avez des changements non-enregistrés.</h3>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger collapse" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Vous avez des changements non-enregistrés.</h3>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+
 <!-- Icon animé qui est affiché lors de l'execution du ajax-->
 <!-- Formulaire d'édition de la séance-->
 @using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
@@ -50,9 +79,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly="readonly", @placeholder="Aucun contenu assigné encore"})
+                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
                 <div class="d-flex">
-                    <input id="filter" class="form-control mb-1" placeholder="Recherche"/>
+                    <input id="filter" class="form-control mb-1" placeholder="Recherche" />
                     <div class="d-flex justify-content-center">
                         <div id="loading" class="pl-2">
                             <div class="loader-small">
@@ -62,7 +91,7 @@
                     </div>
                 </div>
 
-                <select id="film-select"  class="form-control mr-2" size="6">
+                <select id="film-select" class="form-control mr-2" size="6">
                 </select>
             </div>
         </div>

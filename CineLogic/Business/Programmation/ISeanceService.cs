@@ -23,6 +23,8 @@ namespace CineLogic.Business.Programmation
 
         void SaveChanges();
 
+        void Annuler();
+
         void Dispose();
     }
 }
