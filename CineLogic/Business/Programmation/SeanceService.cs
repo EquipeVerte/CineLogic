@@ -66,7 +66,7 @@ namespace CineLogic.Business.Programmation
             }
             else
             {
-                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+                throw new ScheduleException();
             }
         }
 
@@ -89,7 +89,22 @@ namespace CineLogic.Business.Programmation
             }
             else
             {
-                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+                throw new ScheduleException();
+            }
+        }
+
+        public void UpdateSeanceTimes(SeanceViewModel seanceVM)
+        {
+            if (seanceVM.Validate(this))
+            {
+                Seance seance = repository.GetSeance(seanceVM.SeanceID);
+
+                seance.HeureDebut = seanceVM.HeureDebut;
+                seance.HeureFin = seanceVM.HeureFin;
+            }
+            else
+            {
+                throw new ScheduleException();
             }
         }
 

@@ -26,8 +26,53 @@ $(document).ready(function () {
             minute: '2-digit',
             hour12: false
         },
-        //editable: true
+        editable: true,
+        eventOverlap: false,
+        eventDrop: function (info) {
+            timesChanged(info);
+        },
+        eventResize: function (info) {
+            timesChanged(info);
+        }
     });
+
+
+
+    function timesChanged(info) {
+
+        var data = {
+            seanceID: info.event.id,
+            heureDebut: new Date(info.event.start),
+            heureFin: new Date(info.event.end)
+        };
+
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["UpdateSeanceTimes"],
+            dataType: 'json',
+            data: '{seanceVM: ' + JSON.stringify(data) + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                animateSuccess();
+            },
+            error: function (e) {
+                console.log(e);
+                info.revert();
+                animateFailure();
+            }
+        })
+    }
+
+    function animateSuccess() {
+        console.log("Success");
+    };
+
+    function animateFailure() {
+        console.log("Fail");
+    };
 
     //  Créer le calendrier
     calendar.render();

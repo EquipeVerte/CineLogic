@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using AutoMapper;
 using CineLogic.Business.Programmation;
 using CineLogic.Controllers.Attributes;
@@ -104,6 +105,15 @@ namespace CineLogic.Controllers
             seanceService.DeleteSeance(seanceID);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
+        public ActionResult UpdateTimes(SeanceViewModel seanceVM)
+        {
+            seanceService.UpdateSeanceTimes(seanceVM);
+
+            return Json(new { success = true });
         }
 
         public ActionResult Save()
