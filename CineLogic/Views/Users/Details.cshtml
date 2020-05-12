@@ -1,6 +1,14 @@
 ﻿@model CineLogic.Models.User
 
 @{
+    if (Session["login"].Equals("admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
     ViewBag.Title = "Details";
 }
 
@@ -10,6 +18,14 @@
     <h4>User</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Motdepasse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Motdepasse)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.PasswordHash)
         </dt>
