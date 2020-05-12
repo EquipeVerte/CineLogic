@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acteur">
           <Key>
             <PropertyRef Name="Nom" />
@@ -107,8 +107,7 @@
             <PropertyRef Name="Login" />
           </Key>
           <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Motdepasse" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="PasswordHash" Type="binary" MaxLength="24" />
+          <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="HashIterations" Type="int" Nullable="false" />
           <Property Name="NomComplet" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -304,7 +303,8 @@
             <End Role="Seance" EntitySet="Seance" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -401,13 +401,12 @@
             <PropertyRef Name="Login" />
           </Key>
           <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="Salt" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="HashIterations" Type="Int32" Nullable="false" />
           <Property Name="NomComplet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
-          <Property Name="Motdepasse" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cinema_Responsable">
           <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
@@ -614,7 +613,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CineDBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Motdepasse" ColumnName="Motdepasse" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
