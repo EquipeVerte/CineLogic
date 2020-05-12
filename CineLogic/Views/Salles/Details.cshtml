@@ -1,0 +1,58 @@
+﻿@model CineLogic.Models.Salle
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Salle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeEcran)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeEcran)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SystemSon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SystemSon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnExploitation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnExploitation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cinema.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cinema.Nom)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SalleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

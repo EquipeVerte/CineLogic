@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CineLogic.Models.Cinema>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cinémas</h2>
+
+<div class="row">
+    <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+            @foreach (var item in Model)
+            {
+                <a class="list-group-item list-group-item-action" id="list-@Html.DisplayFor(modelItem => item.Nom)-list" data-toggle="list" href="#list-@Html.DisplayFor(modelItem => item.Nom)" role="tab" aria-controls="@Html.DisplayFor(modelItem => item.Nom)">@Html.DisplayFor(modelItem => item.Nom)</a>
+            }
+        </div>
+        <br />
+        @Html.ActionLink("Ajouter un nouveau cinéma", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col-6">
+        <div class="card tab-content" id="nav-tabContent">
+            @foreach (var item in Model)
+            {
+                <div class="tab-pane fade" id="list-@Html.DisplayFor(modelItem => item.Nom)" role="tabpanel" aria-labelledby="list-@Html.DisplayFor(modelItem => item.Nom)-list">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between">
+                        <div>
+                            Cinéma @Html.DisplayFor(modelItem => item.Nom)
+                        </div>
+                        <div>
+                            @Html.ActionLink("Éditer", "Edit", new { id = item.CinemaID }, new { @class = "btn btn-warning btn-sm text-white" })
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.CinemaID }, new { @class = "btn btn-danger btn-sm" })
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Adresse</h4>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.Adresse)
+                            </div>
+                        </div>
+                        <h4>En Exploitation</h4>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.EnExploitation)
+                            </div>
+                        </div>
+                        <h4>Nom du responsable</h4>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.Responsable.Nom)
+                            </div>
+                            <div>
+                                @Html.ActionLink("Détails", "Details", "Responsables", new { id = item.Responsable.ResponsableID }, new { @class = "btn btn-secondary btn-sm" })
+                            </div>
+                        </div>
+                        <h4>Nom du programmateur</h4>
+                        <div class="d-flex">
+                            <div class="col-5">
+                                @Html.DisplayFor(modelItem => item.User.NomComplet)
+                            </div>
+                            <div>
+                                @Html.ActionLink("Détails", "Details", "Users", new { id = item.User.Login }, new { @class = "btn btn-secondary btn-sm" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+
+</div>
+
