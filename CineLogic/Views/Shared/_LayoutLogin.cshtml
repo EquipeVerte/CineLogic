@@ -17,11 +17,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Accueil", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Accueil", "Accueil", "Home", new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>

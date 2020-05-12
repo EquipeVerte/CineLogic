@@ -36,6 +36,11 @@ namespace CineLogic.Controllers
             return View();
         }
 
+        public ActionResult User()
+        {
+            return View();
+        }
+
         public ActionResult Login()
         {
             ViewBag.Message = "Tapez votre login";
@@ -62,8 +67,8 @@ namespace CineLogic.Controllers
  
 
                     return userDetails.Type.Equals("admin")
-                        ? RedirectToAction("Index", "Admin")
-                        : RedirectToAction("Index", "Client");
+                        ? RedirectToAction("Admin", "Home")
+                        : RedirectToAction("User", "Home");
                 }
             }
         }
@@ -116,5 +121,11 @@ namespace CineLogic.Controllers
                 return View();
             }
         }
+        public ActionResult SessionDisconnect()
+        {
+            Session.Abandon();
+            return RedirectToAction("Accueil", "Home");
+        }
     }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -46,12 +47,29 @@ namespace CineLogic.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
+        public ActionResult Create([Bind(Include = "Login,Motdepasse,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                try
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var validationError in ex.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Object: {0} ", validationError.Entry.Entity.ToString());
+                        //Response.Write("Object: " + validationError.Entry.Entity.ToString());
+                        //Response.Write(" ");
+                        foreach (var err in validationError.ValidationErrors)
+                        {
+                            Console.WriteLine("Property: {0} Error: {1}", err.PropertyName, err.ErrorMessage);
+                            //Response.Write(err.ErrorMessage + " ");
+                        }
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +96,7 @@ namespace CineLogic.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Login,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
+        public ActionResult Edit([Bind(Include = "Login,Motdepasse,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
         {
             if (ModelState.IsValid)
             {

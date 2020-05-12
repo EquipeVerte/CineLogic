@@ -18,11 +18,25 @@
                 </button>
                 @Html.ActionLink("Admin", "Admin", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Accueil", "Accueil", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">@Html.ActionLink("Usager", "Index", "Users", null, new { @class = "nav-link" })</li>
+                    <li>
+                        <div class="dropdown show">
+                            <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="@Url.Action("Index", "Cinemas", new { @class = "nav-link" })">Cinéma</a>
+                                <a class="dropdown-item" href="@Url.Action( "Index", "Seances", new { @class = "nav-link" })">Seance</a>
+                                <a class="dropdown-item" href="@Url.Action( "Index", "Contenus", new { @class = "nav-link" })">Oeuvre</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Directeurs", new { @class = "nav-link" })">Directeur</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Acteurs", new { @class = "nav-link" })">Acteur</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">@Html.ActionLink("Deconnexion", "SessionDisconnect", "Home", null, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>
