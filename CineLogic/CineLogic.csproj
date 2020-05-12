@@ -191,13 +191,16 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
+    <Compile Include="Models\Hashing\Hash.cs" />
+    <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\Hashing\HashRequest.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
     <Compile Include="Business\Cinemas\SalleSelectionItem.cs" />
     <Compile Include="Business\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\PasswordChangeViewModel.cs" />
-
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -467,7 +470,6 @@
     <Content Include="Views\Salles\Edit.cshtml" />
     <Content Include="Views\Salles\Index.cshtml" />
     <Content Include="Views\Seances\Edit.cshtml" />
-
     <Content Include="Views\Shared\_LayoutAccueil.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
@@ -475,13 +477,7 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>

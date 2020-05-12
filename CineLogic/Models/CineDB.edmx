@@ -107,8 +107,7 @@
             <PropertyRef Name="Login" />
           </Key>
           <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Motdepasse" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="PasswordHash" Type="binary" MaxLength="24" />
+          <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="HashIterations" Type="int" Nullable="false" />
           <Property Name="NomComplet" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -401,13 +400,12 @@
             <PropertyRef Name="Login" />
           </Key>
           <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="Salt" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="HashIterations" Type="Int32" Nullable="false" />
           <Property Name="NomComplet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
-          <Property Name="Motdepasse" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cinema_Responsable">
           <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
@@ -614,7 +612,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CineDBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Motdepasse" ColumnName="Motdepasse" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />

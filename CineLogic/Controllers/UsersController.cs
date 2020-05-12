@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models;
+using CineLogic.Models.Hashing;
 
 namespace CineLogic.Controllers
 {
@@ -47,10 +48,23 @@ namespace CineLogic.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Motdepasse,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
+        public ActionResult Create([Bind(Include = "Login,Password,NomComplet")] UserViewModel userVM)
         {
             if (ModelState.IsValid)
             {
+                User user = new User();
+                user.Login = userVM.Login;
+                user.NomComplet = userVM.NomComplet;
+                user.Type = "admin";
+
+                Hasher hasher = new Hasher();
+
+                Hash hash = hasher.GenerateHash(userVM.Password);
+
+                user.PasswordHash = hash.HashedString;
+                user.Salt = hash.Salt;
+                user.HashIterations = hash.Iterations;
+
                 try
                 {
                     db.Users.Add(user);
@@ -73,7 +87,7 @@ namespace CineLogic.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(user);
+            return View(userVM);
         }
 
         // GET: Users/Edit/5

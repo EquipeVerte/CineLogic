@@ -6,6 +6,8 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models;
+using CineLogic.Models.Hashing;
+using System.Web.UI.WebControls;
 
 namespace CineLogic.Controllers
 {
@@ -49,12 +51,31 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginAutoriser(User userModel)
+        public ActionResult LoginAutoriser(LoginViewModel userModel)
         {
 
             using (CineDBEntities db = new CineDBEntities())
             {
+                var user = db.Users.Find(userModel.Login);
 
+                Hasher hasher = new Hasher();
+
+                Hash hash = new Hash(user.Salt, user.HashIterations, user.PasswordHash);
+
+                if (hasher.IsMatched(userModel.Password, hash))
+                {
+                    Session["login"] = user.Login;
+
+                    return user.Type.Equals("admin")
+                        ? RedirectToAction("Admin", "Home")
+                        : RedirectToAction("User", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
+                }
+
+                /*
                 var userDetails = db.Users.Where(x => x.Login == userModel.Login && x.Motdepasse == userModel.Motdepasse).FirstOrDefault();
 
                 if (userDetails == null)
@@ -70,8 +91,10 @@ namespace CineLogic.Controllers
                         ? RedirectToAction("Admin", "Home")
                         : RedirectToAction("User", "Home");
                 }
+                */
             }
         }
+
         [HttpPost]
         public ActionResult Login([Bind(Include = "Login, Password")] LoginViewModel loginUsers)
         {

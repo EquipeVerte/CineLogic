@@ -1,4 +1,4 @@
-﻿@model CineLogic.Models.User
+﻿@model CineLogic.Models.LoginViewModel
 
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
@@ -34,7 +34,7 @@
                         </td>
 
                         <td>
-                            @Html.EditorFor(model => model.Login)
+                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                     </tr>
                     <tr>
@@ -44,12 +44,12 @@
                     <tr>
 
                     <tr>
-                        <td>@Html.LabelFor(model => model.Motdepasse)</td>
-                        <td>@Html.EditorFor(model => model.Motdepasse)</td>
+                        <td>@Html.LabelFor(model => model.Password)</td>
+                        <td>@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>@Html.ValidationMessageFor(model => model.Motdepasse)</td>
+                        <td>@Html.ValidationMessageFor(model => model.Password)</td>
                     </tr>
 
 
