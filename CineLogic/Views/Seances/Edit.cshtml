@@ -14,8 +14,8 @@
 {
     <div class="alert alert-danger" id="unsaved-alert">
         <div class="row">
-            <div class="col-md-10">
-                <h3>Vous avez des changements non-enregistrés.</h3>
+            <div class="col-md-10  d-flex justify-content-start align-items-center">
+                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
                 @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
@@ -28,8 +28,8 @@ else
 {
     <div class="alert alert-danger collapse" id="unsaved-alert">
         <div class="row">
-            <div class="col-md-10">
-                <h3>Vous avez des changements non-enregistrés.</h3>
+            <div class="col-md-10  d-flex justify-content-start align-items-center">
+                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
                 @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })

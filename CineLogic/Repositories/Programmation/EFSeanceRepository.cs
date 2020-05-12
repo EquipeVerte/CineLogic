@@ -82,8 +82,10 @@ namespace CineLogic.Repositories
         {
             try
             {
+                db.SaveChanges();
                 GetTransaction().Commit();
                 GetTransaction().Dispose();
+                transaction = null;
                 return 1;
             }
             catch(Exception ex)
