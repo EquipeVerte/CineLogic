@@ -1,0 +1,62 @@
+﻿@model CineLogic.Models.PagedCinemaModel
+@{
+    ViewBag.Title = "WebGrid CRUD Operations";
+    WebGrid grid = new WebGrid(rowsPerPage: Model.PageSize);
+    grid.Bind(Model.cinema,
+              autoSortAndPage: false,
+              rowCount: Model.TotalRows
+    );
+}
+<script src="@Url.Content("~/jquery-1.7.1.min.js")" type="text/javascript"></script>
+
+
+
+<div id="divmsg" style="color: green; font-weight: bold"></div>
+<a href="#" class="add">Add New Cinema</a>
+<br />
+<br />
+@grid.GetHtml(
+htmlAttributes: new { id = "grid" },
+    fillEmptyRows: false,
+    mode: WebGridPagerModes.All,
+    firstText: "<< First",
+    previousText: "< Prev",
+    nextText: "Next >",
+    lastText: "Last >>",
+     columns: new[] {
+
+        grid.Column("CinemaID",
+
+                    header: "CinemaID", canSort: true),
+
+        grid.Column(header: "Nom",format: @<span>
+    <span id="spanNom_@item.CinemaID">@item.Nom</span> 
+    @Html.TextBox("Nom_"+(int)item.CinemaID,(string)item.Nom,new{@style="display:none"})
+</span>),
+
+grid.Column(header: "Adresse",format: @<span>
+    <span id="spanAdresse_@item.CinemaID">@item.Adresse</span>
+    @Html.TextBox("Adresse_"+(int)item.CinemaID,(string)item.Adresse,new{@style="display:none"})
+</span>),
+
+grid.Column(header: "En_Exploitation",format: @<span>
+    <span id="En_Exploitation_@item.CinemaID">@item.EnExploitation</span>
+    @Html.TextBox("En_Exploitation_"+(int)item.CinemaID,(string)item.EnExploitation,new{@style="display:none"})
+</span>),
+
+grid.Column(header: "Responsable_ID",format: @<span>
+    <span id="spanResponsable_ID_@item.CinemaID">@item.ResponsableID</span>
+    @Html.TextBox("Responsable_ID_"+(int)item.CinemaID,(string)item.Responsable_ID,new{@style="display:none"})
+</span>),
+
+  grid.Column(header: "Programmateur",format: @<span>
+    <span id="spanProgrammateur_@item.CinemaID">@item.Programmateur</span>
+    @Html.TextBox("Programmateur_"+(int)item.CinemaID,(string)item.Programmateur,new{@style="display:none"})
+</span>),
+
+grid.Column(header: "Action",format:@<text>
+    <a href="#" id="Edit_@item.CinemaID" class="edit">Edit</a>
+    <a href="#" id="Update_@item.CinemaID" style="display:none" class="update">Update</a><a href="#" id="Cancel_@item.CinemaID" style="display:none" class="cancel">Cancel</a>
+    <a href="#" id="Delete_@item.CinemaID" class="delete">Delete</a></text>)
+
+})

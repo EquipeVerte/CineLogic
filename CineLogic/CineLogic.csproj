@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
+    <Compile Include="Controllers\CinemasTableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResponsablesController.cs" />
     <Compile Include="Controllers\SallesController.cs" />
@@ -160,6 +161,9 @@
     <Compile Include="Models\Cinema.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cinemas\CinemaModel.cs" />
+    <Compile Include="Models\Cinemas\EFCinemaRepository.cs" />
+    <Compile Include="Models\Cinemas\ICinemaRepository.cs" />
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -365,6 +369,7 @@
     <Content Include="Views\Salles\Details.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
     <Content Include="Views\Salles\Index.cshtml" />
+    <Content Include="Views\CinemasTable\CinemaTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Datepicker\css\" />
