@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<CineLogic.Models.Contenu>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index des films";
 }
 
-<h2>Index</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Index des films</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="p-3, m-3">
+    @Html.ActionLink("Ajouter un Film", "Create")
 </p>
 <div>
     @{
@@ -79,9 +79,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Titre)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Annee)
         </th>
@@ -108,9 +108,9 @@
     <td>
         @Html.DisplayFor(modelItem => item.Titre)
     </td>
-    <td>
-        @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control"})
-    </td>
+    @*<td>
+        @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control" })
+    </td>*@
     <td>
         @Html.DisplayFor(modelItem => item.Annee)
     </td>
@@ -130,9 +130,9 @@
         @Html.DisplayFor(modelItem => item.MetaScore)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Titre }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Titre }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Titre })
+        @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new {@class = "btn btn-outline-info" }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
+        @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
     </td>
 </tr>
     }

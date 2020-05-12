@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Edition des films</h2>
 
 <div>
     @using (Html.BeginForm())
@@ -12,8 +12,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Contenu</h4>
-            <hr />
+            @*<h4>Contenu</h4>*@
+            @*<hr />*@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Titre)
 
@@ -83,7 +83,7 @@
 
                 <div class="">
                     <div class="list-group">
-                        <h6 class="list-group-item list-group-item-info">
+                        <h6 class="list-group-item list-group-item-info mt-4">
                             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                         </h6>
                         <div class="description">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="border border-info p-4">
+                    <div class="border border-info p-4 m-4 details">
                         <h6>Acteurs</h6>
                         <table class="table">
                             @foreach (var item in Model.Acteurs)
@@ -103,16 +103,16 @@
                                         @Html.DisplayFor(modelItem => item.Nom)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", "Acteurs", new { id = item.Nom }, null) |
-                                        @Html.ActionLink("Details", "Details", "Acteurs", new { id = item.Nom }, null) |
-                                        @Html.ActionLink("Delete", "SupprimerActeur", "Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
+                                        @Html.ActionLink("Editer", "Edit", "Acteurs", new { id = item.Nom }, null) |
+                                        @Html.ActionLink("Détails", "Details", "Acteurs", new { id = item.Nom }, null) |
+                                        @Html.ActionLink("Supprimer", "SupprimerActeur", "Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
                                     </td>
                                 </tr>
                             }
                         </table>
                     </div>
 
-                    <div class="border border-info p-4 m-1">
+                    <div class="border border-info p-4 m-4 details">
                         <h6>Directeurs</h6>
                         <table class="table">
                             @foreach (var item in Model.Directeurs)
@@ -122,9 +122,9 @@
                                         @Html.DisplayFor(modelItem => item.Nom)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", "Directeurs", new { id = item.Nom }, null) |
-                                        @Html.ActionLink("Details", "Details", "Directeurs", new { id = item.Nom }, null) |
-                                        @Html.ActionLink("Delete", "SupprimerDirecteur", "Contenus", new { DirecteurId = item.Nom, contenuId = Model.Titre }, null)
+                                        @Html.ActionLink("Editer", "Edit", "Directeurs", new { id = item.Nom }, null) |
+                                        @Html.ActionLink("Détails", "Details", "Directeurs", new { id = item.Nom }, null) |
+                                        @Html.ActionLink("Supprimer", "SupprimerDirecteur", "Contenus", new { DirecteurId = item.Nom, contenuId = Model.Titre }, null)
                                     </td>
                                 </tr>
                             }
@@ -138,7 +138,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Sauvegarder" class="btn btn-outline-success"/>
                 </div>
             </div>
         </div>
@@ -198,5 +198,5 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Index des films", "Index")
 </div>

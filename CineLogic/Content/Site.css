@@ -27,4 +27,6 @@ textarea {
     width: 300px !important;
     height: 300px !important;
 }
-
+.details{
+    width: 450px !important;
+}
