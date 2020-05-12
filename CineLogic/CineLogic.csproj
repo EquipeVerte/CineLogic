@@ -456,14 +456,9 @@
     <Content Include="Views\Salles\Details.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
     <Content Include="Views\Salles\Index.cshtml" />
+    <Content Include="Views\Seances\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
