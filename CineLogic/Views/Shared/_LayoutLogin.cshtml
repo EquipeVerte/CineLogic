@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - CineLogic</title>
+    <title>@ViewBag.Title - Login</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -16,15 +16,12 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Espace membre", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Usager", "Index", "Users", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Cinéma", "Index", "Cinemas", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Seance", "Index", "Seances", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Oeuvre", "Index", "Contenus", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Deconnexion", "SessionDisconnect", "Home", null, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Accueil", "Accueil", "Home", new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>
