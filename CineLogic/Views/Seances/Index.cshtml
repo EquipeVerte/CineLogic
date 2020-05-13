@@ -17,6 +17,10 @@
     </div>
 </div>
 
+<div id="sf-animation" class="float-right">
+
+</div>
+
 <h4>Selectionner le cinéma et salle:</h4>
 
 <div class="d-flex">
@@ -25,6 +29,35 @@
 </div>
 
 <hr />
+
+@if (ViewBag.UnsavedChanges != null)
+{
+    <div class="alert alert-danger" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10  d-flex justify-content-start align-items-center">
+                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger collapse" id="unsaved-alert">
+        <div class="row">
+            <div class="col-md-10  d-flex justify-content-start align-items-center">
+                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
+                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -37,7 +70,7 @@
                 <div id="date-picker">
                 </div>
             </div>
-            
+
 
             <!-- Message d'erreur - Date -->
             <div id="alert-date" class="alert alert-danger collapse">
@@ -173,7 +206,8 @@
             "EditSeance": "@Url.Action("Edit")",
             "CreateSeance": "@Url.Action("Create")",
             "GetCinemas": "@Url.Action("Cinemas")",
-            "GetSalles": "@Url.Action("Salles")"
+            "GetSalles": "@Url.Action("Salles")",
+            "UpdateSeanceTimes": "@Url.Action("UpdateTimes")"
         }
     </script>
 

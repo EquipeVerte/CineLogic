@@ -35,6 +35,11 @@ namespace CineLogic.Business.Programmation
                 return false;
             }
 
+            if (HeureDebut.Date != HeureFin.Date)
+            {
+                return false;
+            }
+
             if 
             (
                 seanceService.GetSeancesBySalle(SalleID)

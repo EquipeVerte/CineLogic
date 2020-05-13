@@ -14,9 +14,26 @@ namespace CineLogic.Repositories
     {
         private CineDBEntities db;
 
+        private DbContextTransaction transaction;
+
+        private DbContextTransaction GetTransaction()
+        {
+            if(transaction == null)
+            {
+                transaction = db.Database.BeginTransaction();
+                return transaction;
+            }
+            else
+            {
+                return transaction;
+            }
+        }
+
         public EFSeanceRepository()
         {
             db = new CineDBEntities();
+
+            transaction = db.Database.BeginTransaction();
         }
 
         public EFSeanceRepository(CineDBEntities db)
@@ -27,6 +44,8 @@ namespace CineLogic.Repositories
         public void CreateSeance(Seance seance)
         {
             db.Seances.Add(seance);
+
+            db.SaveChanges();
         }
 
         public void DeleteSeance(Seance seance)
@@ -63,13 +82,23 @@ namespace CineLogic.Repositories
         {
             try
             {
-                return db.SaveChanges();
+                db.SaveChanges();
+                GetTransaction().Commit();
+                GetTransaction().Dispose();
+                transaction = null;
+                return 1;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
                 return 0;
             }
+        }
+
+        public void Annuler()
+        {
+            GetTransaction().Rollback();
+            GetTransaction().Dispose();
         }
 
         public void Dispose()

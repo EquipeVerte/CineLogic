@@ -57,6 +57,7 @@ namespace CineLogic
                 ));
 
             bundles.Add(new ScriptBundle("~/Content/Programmation").Include(
+                    "~/Content/Programmation/ChangeManagement.js",
                     "~/Content/Programmation/AjaxLoader.js",
                     "~/Content/Programmation/DatePicker.js",
                     "~/Content/Programmation/Calendar.js",

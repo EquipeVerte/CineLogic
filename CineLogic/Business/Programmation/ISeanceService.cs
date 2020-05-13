@@ -17,7 +17,13 @@ namespace CineLogic.Business.Programmation
 
         SeanceViewModel UpdateSeance(SeanceViewModel seance);
 
+        void UpdateSeanceTimes(SeanceViewModel seance);
+
         void DeleteSeance(int id);
+
+        void SaveChanges();
+
+        void Annuler();
 
         void Dispose();
     }

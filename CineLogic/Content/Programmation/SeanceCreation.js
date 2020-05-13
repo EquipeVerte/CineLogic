@@ -65,16 +65,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 console.log("Post success.");
-                console.log(seanceData);
-
-                //  Vider les inputs.
-                $('input[name = "titre"]').val(null);
-                $('input[name="debut-hours"]').val(null);
-                $('input[name="debut-mins"]').val(null);
-                $('input[name="fin-hours"]').val(null);
-                $('input[name="fin-mins"]').val(null);
-
-                //  Cacher le modal.
+                $("#unsaved-alert").show();
                 $("#confirmationModal").modal('hide');
 
                 //  Montrer l'alert success et cacher l'alert d'erreur.

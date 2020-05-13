@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     //  Définir les options pour le calendrier.
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['timeGrid', 'bootstrap'],
+        plugins: ['timeGrid', 'interaction', 'bootstrap'],
         defaultView: 'timeGridWeek',
         themeSystem: 'bootstrap',
         locale: 'fr',
@@ -20,13 +20,59 @@ $(document).ready(function () {
         minTime: "06:00:00",
         maxTime: "24:00:00",
         events: events,
-        height: "parent",
+        height: "auto",
         eventTimeFormat: { // like '14:30:00'
             hour: '2-digit',
             minute: '2-digit',
             hour12: false
+        },
+        editable: true,
+        eventOverlap: false,
+        eventDrop: function (info) {
+            timesChanged(info);
+        },
+        eventResize: function (info) {
+            timesChanged(info);
         }
     });
+
+    //  Appelé quand les heures d'un séance sont changé par le calendrier.
+    function timesChanged(info) {
+
+        var data = {
+            seanceID: info.event.id,
+            heureDebut: new Date(info.event.start),
+            heureFin: new Date(info.event.end)
+        };
+
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["UpdateSeanceTimes"],
+            dataType: 'json',
+            data: '{seanceVM: ' + JSON.stringify(data) + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                $("#unsaved-alert").show();
+                animateSuccess();
+            },
+            error: function (e) {
+                console.log(e);
+                info.revert();
+                animateFailure();
+            }
+        })
+    }
+
+    function animateSuccess() {
+        console.log("Success");
+    };
+
+    function animateFailure() {
+        console.log("Fail");
+    };
 
     //  Créer le calendrier
     calendar.render();

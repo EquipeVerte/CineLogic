@@ -3,6 +3,7 @@ using CineLogic.Models;
 using CineLogic.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
@@ -55,8 +56,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.CreateSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -67,7 +66,7 @@ namespace CineLogic.Business.Programmation
             }
             else
             {
-                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+                throw new ScheduleException();
             }
         }
 
@@ -80,8 +79,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.UpdateSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -92,7 +89,22 @@ namespace CineLogic.Business.Programmation
             }
             else
             {
-                throw new ScheduleException("Les heures de début et fin ne sont pas valides. Vérifier que l'heure de début est avant l'heure de fin et qu'il n'y a pas de conflits pour la salle.");
+                throw new ScheduleException();
+            }
+        }
+
+        public void UpdateSeanceTimes(SeanceViewModel seanceVM)
+        {
+            if (seanceVM.Validate(this))
+            {
+                Seance seance = repository.GetSeance(seanceVM.SeanceID);
+
+                seance.HeureDebut = seanceVM.HeureDebut;
+                seance.HeureFin = seanceVM.HeureFin;
+            }
+            else
+            {
+                throw new ScheduleException();
             }
         }
 
@@ -105,8 +117,6 @@ namespace CineLogic.Business.Programmation
                 try
                 {
                     repository.DeleteSeance(seance);
-
-                    repository.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -117,6 +127,16 @@ namespace CineLogic.Business.Programmation
             {
                 throw new NotFoundException($"La séance avec ID {id} n'existe pas dans la base de données.");
             }
+        }
+
+        public void SaveChanges()
+        {
+            repository.SaveChanges();
+        }
+
+        public void Annuler()
+        {
+            repository.Annuler();
         }
 
         public void Dispose()
