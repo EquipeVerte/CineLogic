@@ -20,7 +20,7 @@ $(document).ready(function () {
         minTime: "06:00:00",
         maxTime: "24:00:00",
         events: events,
-        height: "auto",
+        height: "parent",
         eventTimeFormat: { // like '14:30:00'
             hour: '2-digit',
             minute: '2-digit',
