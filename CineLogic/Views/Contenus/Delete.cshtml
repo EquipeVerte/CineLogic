@@ -4,84 +4,116 @@
     ViewBag.Title = "Delete";
 }
 
-<h2 class="border-left border-bottom border-info m-4 p-4">Supprimer un/des film(s)</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Supprimer un film</h2>
 
-<h3>Voulez-vous vraiment supprimer ce film ?</h3>
+<h3 class="alert alert-danger m-4">Voulez-vous vraiment supprimer ce film ?</h3>
+<div class="d-flex justify-content-around">
+    <div class="m-4">
+        <dl class="dl-horizontal m-4">
+            <dt>
+                @Html.DisplayNameFor(model => model.Titre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Titre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Annee)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Annee)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.RuntimeMins)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RuntimeMins)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Rating)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rating)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Votes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Votes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Revenue)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Revenue)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MetaScore)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MetaScore)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="d-flex justify-content-center">>
+        <div class="d-flex justify-content-center">
+            <div class="border-bottom border-left border-info m-4">
+                <h6 class="alert-info">Liste des acteurs</h6>
+                <table class="table">
+                    @foreach (var item in Model.Acteurs)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="border-bottom border-left border-info m-4">
+                <h6 class="alert-info">Liste des directeurs</h6>
+                <table class="table">
+                    @foreach (var item in Model.Directeurs)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="m-4">
-   
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Annee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Annee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RuntimeMins)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RuntimeMins)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Votes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Votes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Revenue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Revenue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MetaScore)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MetaScore)
-        </dd>
-
-    </dl>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-outline-danger" /> |
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger" /> |
             @Html.ActionLink("Index des films", "Index")
         </div>
     }

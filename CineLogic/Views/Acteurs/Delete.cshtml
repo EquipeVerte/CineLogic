@@ -4,13 +4,12 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Supprimer un acteur</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3 class="alert alert-danger m-4">Voulez-vous vraiment supprimer cet acteur ?</h3>
 <div>
-    <h4>Acteur</h4>
-    <hr />
-    <dl class="dl-horizontal">
+
+    <dl class="dl-horizontal m-4">
 
         <dt>
             @Html.DisplayNameFor(model => model.Nom)
@@ -25,9 +24,9 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-actions no-color m-4">
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger" /> |
+            @Html.ActionLink("Index des acteurs", "Index")
         </div>
     }
 </div>

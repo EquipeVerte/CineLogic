@@ -108,9 +108,30 @@ namespace CineLogic.Controllers
         // POST: Contenus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id, string DirecteurId , string ActeurId)
         {
             Contenu contenu = db.Contenus.Find(id);
+            ////**********Supprimer directeurs*****
+
+            
+            //Directeur directeur = db.Directeurs.Find(DirecteurId);
+            //if (directeur == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //contenu.Directeurs.Remove(directeur);
+            //db.SaveChanges();
+
+            ////**********Supprimer Acteurs*****
+
+            //Acteur acteur = db.Acteurs.Find(ActeurId);
+            //if (acteur == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //contenu.Acteurs.Remove(acteur);
+
+            ////*******************
             db.Contenus.Remove(contenu);
             db.SaveChanges();
             return RedirectToAction("Index");

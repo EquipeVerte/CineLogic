@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2 class="border-left border-bottom border-info m-4 p-4">Edition des films</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Edition un film</h2>
 
 <div>
     @using (Html.BeginForm())
@@ -12,8 +12,6 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            @*<h4>Contenu</h4>*@
-            @*<hr />*@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Titre)
 
@@ -132,21 +130,13 @@
                     </div>
 
                 </div>
-
-
-
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Sauvegarder" class="btn btn-outline-success"/>
+                    <input type="submit" value="Sauvegarder" class="btn btn-outline-success" />
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
-
-            
-        </div>
-
     }
 </div>
 
@@ -194,7 +184,6 @@
             </div>
         }
     </div>
-
 </div>
 
 <div>
