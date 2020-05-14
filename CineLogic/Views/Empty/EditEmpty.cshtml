@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "EditEmpty";
+}
+
+<h2>EditEmpty (Cinema?)</h2>
+
+<table>
+    <tr>
+        <td>CinemaID</td>
+        <td><input type="text" ng-model="Cinema.CinemaID" />  </td>
+    </tr>
+    <tr>
+        <td>Nom</td>
+        <td><input type="text" ng-model="Cinema.Nom" />  </td>
+    </tr>
+    <tr>
+        <td>Adresse</td>
+        <td><input type="text" ng-model="Cinema.Adresse" />  </td>
+    </tr>
+    <tr>
+        <td>EnExploitation</td>
+        <td><input type="text" ng-model="Cinema.EnExploitation" />  </td>
+    </tr>
+    <tr>
+        <td>ResponsableID</td>
+        <td><input type="text" ng-model="Cinema.ResponsableID" />  </td>
+    </tr>
+    <tr>
+        <td>Programmateur</td>
+        <td><input type="text" ng-model="Cinema.Programmateur" />  </td>
+    </tr>
+</table>
+<input type="button" value="Save" ng-click="save()" />
+<div>{{error}}</div>
+

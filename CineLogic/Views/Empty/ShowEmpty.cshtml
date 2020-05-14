@@ -1,0 +1,33 @@
+﻿<h2>List of Cinemas</h2>
+<a ng-click="addCinema()"> Add Empty (Cinema?) </a>
+<br />
+<table>
+    <thead>
+        <tr>
+            <th>CinemaID</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>EnExploitation</th>
+            <th>ResponsableID</th>
+            <th>Programmateur</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="Cinema in Cinemas">
+            <td>{{Cinema.CinemaID}}</td>
+            <td>{{Cinema.Nom}}</td>
+            <td>{{Cinema.Adresse}}</td>
+            <td>{{Cinema.EnExploitation}}</td>
+            <td>{{Cinema.ResponsableID}}</td>
+            <td>{{Cinema.Programmateur}}</td>
+            <td><a ng-click="editCinema(Cinema.CinemaID)">Edit</a></td>
+            <td><a ng-click="deleteCinema(Cinema.CinemaID)">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<div>{{error}}</div>
