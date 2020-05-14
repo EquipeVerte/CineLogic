@@ -1,19 +1,18 @@
 ﻿@model CineLogic.Models.Genre
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Ajouter un genre";
 }
 
-<h2>Create</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Ajouter un genre</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Genre</h4>
-        <hr />
+
+    <div class="form-horizontal m-4">
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -25,14 +24,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Ajouter le genre" class="btn btn btn-outline-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="m-4">
+    @Html.ActionLink("Index  des genres", "Index")
 </div>
 
 @section Scripts {

@@ -170,6 +170,9 @@
     <Compile Include="Models\Genre.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\ValidationLibrary.cs" />
+    <Compile Include="Models\MetaData\Contenu.cs" />
     <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Models\Programmation\ISeanceRepository.cs" />
     <Compile Include="Models\Responsable.cs">

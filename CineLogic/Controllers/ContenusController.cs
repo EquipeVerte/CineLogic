@@ -112,24 +112,9 @@ namespace CineLogic.Controllers
         {
             Contenu contenu = db.Contenus.Find(id);
             ////**********Supprimer directeurs*****
-
-            
-            //Directeur directeur = db.Directeurs.Find(DirecteurId);
-            //if (directeur == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //contenu.Directeurs.Remove(directeur);
-            //db.SaveChanges();
-
-            ////**********Supprimer Acteurs*****
-
-            //Acteur acteur = db.Acteurs.Find(ActeurId);
-            //if (acteur == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //contenu.Acteurs.Remove(acteur);
+            contenu.Acteurs.Clear();
+            contenu.Directeurs.Clear();
+            contenu.Genres.Clear();
 
             ////*******************
             db.Contenus.Remove(contenu);

@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.RuntimeMins, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.RuntimeMins, htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.RuntimeMins, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.RuntimeMins, "", new { @class = "text-danger" })
@@ -72,7 +72,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Ajouter film" class="btn btn-outline-success" />
+                    <input type="submit" value="Ajouter le film" class="btn btn-outline-success" />
                 </div>
             </div>
         </div>
@@ -81,7 +81,9 @@
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 description">
                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                <div>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>

@@ -1,18 +1,23 @@
 ﻿@model CineLogic.Models.Genre
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details du genre";
 }
 
-<h2>Details</h2>
+<h2 class="border-left border-bottom border-info m-4 p-4">Details du genre</h2>
 
-<div>
-    <h4>Genre</h4>
-    <hr />
-    <dl class="dl-horizontal">
+<div class="m-4">
+    <dl class="dl-horizontal m-4">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Nom }) |
-    @Html.ActionLink("Back to List", "Index")
+<p class="m-4">
+    @Html.ActionLink("Editer", "Edit", new { id = Model.Nom }) |
+    @Html.ActionLink("Index des genres", "Index")
 </p>

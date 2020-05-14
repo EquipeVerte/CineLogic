@@ -12,7 +12,7 @@
 <div>
     @{
         List<object> lst_url = new List<object>();
-        
+
         lst_url.Add("https://static.actu.fr/uploads/2019/10/affiche-gemini-man-752x1024.jpg");
         lst_url.Add("https://m.media-amazon.com/images/I/91QRZ50m9ML._SS500_.jpg");
         lst_url.Add("https://images-na.ssl-images-amazon.com/images/I/61XO6Euk-RL._SL500_AC_SS350_.jpg");
@@ -24,7 +24,7 @@
 
         // Un tableau qui va contenir toutes tes images.
        var images = new Array();
-    
+
         @foreach(var imageUrl in lst_url)
         {
             <text>
@@ -65,9 +65,9 @@
     <div class="col-md-4">
         <div class="card m-2 border-0">
             <div class="card-img-caption d-flex justify-content-between">
-                <img class="mr-lg-5 mw-100 w-100 rounded-pill col-4" src="@lst_url[0]" id="film1" />
-                <img class="mr-lg-5 mw-100 w-100 rounded-pill col-4" src="@lst_url[0]" id="film2" />
-                <img class="mr-lg-5 mw-100 w-100 rounded-pill col-4" src="@lst_url[0]" id="film3" />
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film1" /></div>
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film2" /></div>
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film3" /></div>
             </div>
         </div>
     </div>
@@ -80,8 +80,8 @@
             @Html.DisplayNameFor(model => model.Titre)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Description)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Annee)
         </th>
@@ -104,37 +104,37 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Titre)
-    </td>
-    @*<td>
-        @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control" })
-    </td>*@
-    <td>
-        @Html.DisplayFor(modelItem => item.Annee)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RuntimeMins)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Rating)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Votes)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Revenue)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.MetaScore)
-    </td>
-    <td>
-        @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new {@class = "btn btn-outline-info" }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
-        @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titre)
+            </td>
+            @*<td>
+                    @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control" })
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Annee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RuntimeMins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Votes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Revenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetaScore)
+            </td>
+            <td>
+                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
+            </td>
+        </tr>
     }
 
 </table>
