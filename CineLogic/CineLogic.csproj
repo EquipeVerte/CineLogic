@@ -150,6 +150,7 @@
     <Compile Include="Business\Programmation\SeanceService.cs" />
     <Compile Include="Controllers\Attributes\AjaxError.cs" />
     <Compile Include="Controllers\Attributes\HandleErrorJsonAttribute.cs" />
+    <Compile Include="Controllers\Attributes\SessionActiveOnlyAttribute.cs" />
     <Compile Include="Controllers\Attributes\ValidateAjaxAttribute.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

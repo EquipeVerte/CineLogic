@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class SeancesController : Controller
     {
         private const string SESSION_SS = "SeanceService";
@@ -121,6 +122,7 @@ namespace CineLogic.Controllers
             }
         }
 
+        
         [HttpPost]
         [HandleError]
         public ActionResult Delete(int seanceID)
