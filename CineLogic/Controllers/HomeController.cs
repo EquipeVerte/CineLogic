@@ -58,6 +58,10 @@ namespace CineLogic.Controllers
             {
                 var user = db.Users.Find(userModel.Login);
 
+                if (user == null)
+                {
+                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
+                }
                 Hasher hasher = new Hasher();
 
                 Hash hash = new Hash(user.Salt, user.HashIterations, user.PasswordHash);
