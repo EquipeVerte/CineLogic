@@ -1,0 +1,24 @@
+﻿@model CineLogic.Models.Directeur
+
+@{
+    ViewBag.Title = "Details du directeur";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Details du directeur</h2>
+
+<div>
+
+    <dl class="dl-horizontal m-4">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+    </dl>
+</div>
+<p class="m-4">
+    @Html.ActionLink("Editer", "Edit", new { id = Model.Nom }) |
+    @Html.ActionLink("Index des Directeurs", "Index")
+</p>

@@ -61,6 +61,7 @@
     </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -143,6 +144,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\ContenusController.cs" />
+    <Compile Include="Controllers\DirecteursController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Business\DBException.cs" />
     <Compile Include="Business\NotFoundException.cs" />
     <Compile Include="Business\Programmation\ISeanceService.cs" />
@@ -191,6 +196,11 @@
     <Compile Include="Models\Genre.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\ValidationLibrary.cs" />
+    <Compile Include="Models\MetaData\Contenu.cs" />
+    <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
+    <Compile Include="Models\Programmation\ISeanceRepository.cs" />
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
@@ -450,6 +460,26 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Contenus\Create.cshtml" />
+    <Content Include="Views\Contenus\Delete.cshtml" />
+    <Content Include="Views\Contenus\Details.cshtml" />
+    <Content Include="Views\Contenus\Edit.cshtml" />
+    <Content Include="Views\Contenus\Index.cshtml" />
+    <Content Include="Views\Acteurs\Create.cshtml" />
+    <Content Include="Views\Acteurs\Delete.cshtml" />
+    <Content Include="Views\Acteurs\Details.cshtml" />
+    <Content Include="Views\Acteurs\Edit.cshtml" />
+    <Content Include="Views\Acteurs\Index.cshtml" />
+    <Content Include="Views\Directeurs\Create.cshtml" />
+    <Content Include="Views\Directeurs\Delete.cshtml" />
+    <Content Include="Views\Directeurs\Details.cshtml" />
+    <Content Include="Views\Directeurs\Edit.cshtml" />
+    <Content Include="Views\Directeurs\Index.cshtml" />
+    <Content Include="Views\Genres\Create.cshtml" />
+    <Content Include="Views\Genres\Delete.cshtml" />
+    <Content Include="Views\Genres\Details.cshtml" />
+    <Content Include="Views\Genres\Edit.cshtml" />
+    <Content Include="Views\Genres\Index.cshtml" />
     <Content Include="Views\Seances\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />

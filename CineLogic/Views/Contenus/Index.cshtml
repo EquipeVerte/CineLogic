@@ -1,0 +1,142 @@
+﻿@model IEnumerable<CineLogic.Models.Contenu>
+
+@{
+    ViewBag.Title = "Index des films";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Index des films</h2>
+
+<p class="p-3, m-3">
+    @Html.ActionLink("Ajouter un Film", "Create")
+</p>
+<div>
+    @{
+        List<object> lst_url = new List<object>();
+
+        lst_url.Add("https://static.actu.fr/uploads/2019/10/affiche-gemini-man-752x1024.jpg");
+        lst_url.Add("https://m.media-amazon.com/images/I/91QRZ50m9ML._SS500_.jpg");
+        lst_url.Add("https://images-na.ssl-images-amazon.com/images/I/61XO6Euk-RL._SL500_AC_SS350_.jpg");
+
+    }
+</div>
+
+<SCRIPT language="JavaScript" type="text/javascript">
+
+        // Un tableau qui va contenir toutes tes images.
+       var images = new Array();
+
+        @foreach(var imageUrl in lst_url)
+        {
+            <text>
+                images.push("@imageUrl");
+            </text>
+        }
+
+
+        var index = 0;
+
+        function ChangerImage1() {
+            index = Math.floor(Math.random() *@lst_url.Count);
+            console.log(index);
+            document.getElementById("film1").src = images[index];
+        }
+
+        function ChangerImage2() {
+            index = Math.floor(Math.random() * @lst_url.Count);
+            document.getElementById("film2").src = images[index];
+        }
+
+         function ChangerImage3() {
+            index = Math.floor(Math.random() * @lst_url.Count);
+           document.getElementById("film3").src = images[index];
+        }
+
+        // Charge la fonction
+        window.onload = function () {
+            console.log("Length : " + @lst_url.Count);
+
+            this.ChangerImage1();
+            this.setInterval(this.ChangerImage1, 1500);
+            this.setInterval(this.ChangerImage2, 2000);
+            this.setInterval(this.ChangerImage3, 2500)
+        }
+</SCRIPT>
+<div class="row mb-3 d-flex justify-content-md-between">
+    <div class="col-md-4">
+        <div class="card m-2 border-0">
+            <div class="card-img-caption d-flex justify-content-between">
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film1" /></div>
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film2" /></div>
+                <div class="affiche"> <img class="mr-lg-5 mw-100 w-100 h-100 rounded-pill col-4" src="@lst_url[0]" id="film3" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titre)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Annee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Votes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Revenue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetaScore)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titre)
+            </td>
+            @*<td>
+                    @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control" })
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Annee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RuntimeMins)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Votes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Revenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetaScore)
+            </td>
+            <td>
+                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+

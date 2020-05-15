@@ -22,3 +22,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.description textarea {
+    width: 300px !important;
+    height: 300px !important;
+}
+
+.details {
+    width: 450px !important;
+}
+
+.affiche {
+    width: 140px !important;
+    height: 200px !important;
+    flex-shrink: 0;
+}
+
+    .affiche img {
+        object-fit: cover;
+    }

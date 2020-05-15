@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CineLogic.Models.Acteur>
+
+@{
+    ViewBag.Title = "Index des acteurs";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Index des acteurs</h2>
+
+<p class="p-3, m-3">
+    @Html.ActionLink("Ajouter un acteur", "Create")
+</p>
+<table class="table m-4">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=>model.Nom)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Nom)
+    </td>
+    <td>
+        @Html.ActionLink("Editer", "Edit", new { id = item.Nom }, new { @class = "btn btn-outline-info" }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Nom }, new { @class = "btn btn-outline-warning" })
+        @*@Html.ActionLink("Supprimer", "Delete", new { id = item.Nom }, new { @class = "btn  btn-outline-danger" })*@
+    </td>
+</tr>
+}
+
+</table>
