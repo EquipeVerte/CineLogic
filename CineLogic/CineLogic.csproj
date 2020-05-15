@@ -199,6 +199,8 @@
     <Compile Include="Models\Libraries\NameLibrary.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
+    <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
+    <Compile Include="Models\Programmation\ISeanceRepository.cs" />
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
