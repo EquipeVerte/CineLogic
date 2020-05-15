@@ -505,6 +505,14 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Contenus\CreateCsv.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Datepicker\css\" />
+    <Folder Include="Content\Datepicker\js\" />
+    <Folder Include="Content\Datepicker\locales\" />
+    <Folder Include="Content\FontAwesome\" />
+    <Folder Include="Content\Fullcalendar\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

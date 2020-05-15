@@ -59,6 +59,25 @@ namespace CineLogic.Controllers
             return View(contenu);
         }
 
+        public ActionResult CreateCsv()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCsv([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Contenus.Add(contenu);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(contenu);
+        }
+
         // GET: Contenus/Edit/5
         public ActionResult Edit(string id)
         {
