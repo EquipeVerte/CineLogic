@@ -9,6 +9,9 @@
 <p class="p-3, m-3">
     @Html.ActionLink("Ajouter un Film", "Create")
 </p>
+<p class="p-3, m-3">
+    @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
+</p>
 <div>
     @{
         List<object> lst_url = new List<object>();
@@ -16,6 +19,7 @@
         lst_url.Add("https://static.actu.fr/uploads/2019/10/affiche-gemini-man-752x1024.jpg");
         lst_url.Add("https://m.media-amazon.com/images/I/91QRZ50m9ML._SS500_.jpg");
         lst_url.Add("https://images-na.ssl-images-amazon.com/images/I/61XO6Euk-RL._SL500_AC_SS350_.jpg");
+        lst_url.Add("https://i.ebayimg.com/images/g/FaoAAOSwz-ldZ9SH/s-l1600.jpg");
 
     }
 </div>
@@ -25,7 +29,7 @@
         // Un tableau qui va contenir toutes tes images.
        var images = new Array();
 
-        @foreach(var imageUrl in lst_url)
+        @foreach (var imageUrl in lst_url)
         {
             <text>
                 images.push("@imageUrl");

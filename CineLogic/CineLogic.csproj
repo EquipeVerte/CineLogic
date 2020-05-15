@@ -370,6 +370,7 @@
     <Content Include="Views\Genres\Edit.cshtml" />
     <Content Include="Views\Genres\Index.cshtml" />
     <Content Include="Views\Seances\Index.cshtml" />
+    <Content Include="Views\Contenus\CreateCsv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Datepicker\css\" />
