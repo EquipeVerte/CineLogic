@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using CineLogic.Models;
+using CineLogic.Models.Programmation;
+using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
@@ -122,6 +125,20 @@ namespace CineLogic.Controllers
             db.Cinemas.Remove(cinema);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        
+        //  Ajax get cinemas.
+        [HttpGet]
+        public ContentResult Cinemas()
+        {
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
         }
 
         protected override void Dispose(bool disposing)

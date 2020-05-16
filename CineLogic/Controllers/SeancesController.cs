@@ -173,40 +173,5 @@ namespace CineLogic.Controllers
             }
             base.Dispose(disposing);
         }
-
-        //  Méthodes à remplacer dans les autres controlleurs.
-        [HttpGet]
-        public ContentResult Cinemas()
-        {
-            CineDBEntities db = new CineDBEntities();
-
-            IMapper mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Cinema, CinemaSelectionItem>();
-            }).CreateMapper();
-
-            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas)), "application/json");
-        }
-
-        [HttpGet]
-        public ContentResult Salles(int cinemaID)
-        {
-            CineDBEntities db = new CineDBEntities();
-
-            IMapper mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Salle, SalleSelectionItem>();
-            }).CreateMapper();
-
-            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Salle>, IEnumerable<SalleSelectionItem>>(db.Salles.Where(s => s.CinemaID == cinemaID))), "application/json");
-        }
-
-        [HttpGet]
-        public ContentResult Contenus(string filter)
-        {
-            CineDBEntities db = new CineDBEntities();
-
-            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
-        }
     }
 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows;
 using CineLogic.Models;
+using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
@@ -216,6 +217,15 @@ namespace CineLogic.Controllers
             contenu.Directeurs.Remove(directeur);
             db.SaveChanges();
             return Redirect(Url.Action("Edit", "Contenus", new { id = contenuId }));
+        }
+
+        //  Ajax get contenus
+        [HttpGet]
+        public ContentResult Contenus(string filter)
+        {
+            CineDBEntities db = new CineDBEntities();
+
+            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
         }
     }
 }

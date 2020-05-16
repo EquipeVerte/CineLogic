@@ -160,7 +160,7 @@ else
             });
 
             function getFilms() {
-                $.get("@Url.Action("Contenus")", { filter: $("#filter").val() }, function (data) {
+                $.get("@Url.Action("Contenus", "Contenus")", { filter: $("#filter").val() }, function (data) {
                     $("#film-select").empty();
                     $("#film-select").append('<option value="">N/A</option>');
                     $.each(data, function (i, item) {
