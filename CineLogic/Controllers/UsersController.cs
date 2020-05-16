@@ -102,7 +102,14 @@ namespace CineLogic.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+
+            //  Extraire les données nécessaires pour faire l'édition.
+            UserViewModel userVM = new UserViewModel();
+            userVM.Login = user.Login;
+            userVM.NomComplet = user.NomComplet;
+            userVM.Type = user.Type;
+
+            return View(userVM);
         }
 
         // POST: Users/Edit/5
@@ -110,15 +117,31 @@ namespace CineLogic.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Login,Motdepasse,PasswordHash,Salt,HashIterations,NomComplet,Type")] User user)
+        public ActionResult Edit([Bind(Include = "Login,Password,NomComplet,Type")] UserViewModel userVM)
         {
             if (ModelState.IsValid)
             {
+                //  Chercher le user.
+                User user = db.Users.Find(userVM.Login);
+
+                //  Changer les données pour l'utilisateur.
+                user.Login = userVM.Login;
+                user.NomComplet = userVM.NomComplet;
+                user.Type = userVM.Type;
+
+                //  Hasher le nouveau mot de passe.
+                Hasher hasher = new Hasher();
+                Hash hash = hasher.GenerateHash(userVM.Password);
+
+                user.PasswordHash = hash.HashedString;
+                user.Salt = hash.Salt;
+                user.HashIterations = hash.Iterations;
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(user);
+            return View(userVM);
         }
 
         // GET: Users/Delete/5
