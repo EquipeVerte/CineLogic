@@ -1,44 +1,23 @@
 ﻿@model IEnumerable<CineLogic.Models.User>
 
 @{
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    ViewBag.Title = "Admin";
+    ViewBag.Title = "Page administration";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Page administration</title>
-    <style>
-
-        .field-validation-error {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <div class="jumbotron">
-        <div>
-            @using (CineLogic.Models.CineDBEntities db = new CineLogic.Models.CineDBEntities())
+<div class="jumbotron">
+    <div>
+        @using (CineLogic.Models.CineDBEntities db = new CineLogic.Models.CineDBEntities())
+        {
+            foreach (var item in db.Users)
             {
-                foreach (var item in db.Users)
-                {
 
-                    if (item.Login.Equals((string)Session["Login"]))
-                    {
-                        <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
-                    }
+                if (item.Login.Equals((string)Session["Login"]))
+                {
+                    <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
                 }
             }
-        </div>
+        }
     </div>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</body>
-</html>
-
+</div>
 
 

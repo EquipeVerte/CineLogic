@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using CineLogic.Models;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
 
@@ -16,7 +15,7 @@ namespace CineLogic.Controllers
         private CineDBEntities db = new CineDBEntities();
         public ActionResult Accueil()
         {
-            return View(db.Contenus.ToList());
+            return View();
         }
 
         public ActionResult About()
@@ -38,10 +37,12 @@ namespace CineLogic.Controllers
             return View();
         }
 
+        /*
         public ActionResult User()
         {
             return View();
         }
+        */
 
         public ActionResult Login()
         {
@@ -69,6 +70,7 @@ namespace CineLogic.Controllers
                 if (hasher.IsMatched(userModel.Password, hash))
                 {
                     Session["login"] = user.Login;
+                    Session["type"] = user.Type;
 
                     return user.Type.Equals("admin")
                         ? RedirectToAction("Admin", "Home")
@@ -119,35 +121,6 @@ namespace CineLogic.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Edit([Bind(Include = "Login, Password, NewPassword, NewPasswordConfirm")] PasswordChangeViewModel userPass, string Type)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = new User()
-                {
-
-                };
-
-                using (CineDBEntities db = new CineDBEntities())
-                {
-                    try
-                    {
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                        return RedirectToAction("Connect", "Home");
-                    }
-                    catch
-                    {
-                        return RedirectToAction("Register", "Home", new { Erreur = "Incapable de registrer l'utilisateur." });
-                    }
-                }
-            }
-            else
-            {
-                return View();
-            }
-        }
         public ActionResult SessionDisconnect()
         {
             Session.Abandon();

@@ -1,16 +1,6 @@
 ﻿@model CineLogic.Models.User
 
-@{
-    if (Session["login"].Equals("admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    ViewBag.Title = "Details";
-}
+@ViewBag.Title = "Details";
 
 <h2>Details</h2>
 

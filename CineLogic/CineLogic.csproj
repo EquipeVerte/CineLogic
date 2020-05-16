@@ -206,7 +206,6 @@
     <Compile Include="Business\Cinemas\SalleSelectionItem.cs" />
     <Compile Include="Business\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\PasswordChangeViewModel.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -216,8 +215,6 @@
     <Compile Include="Models\Seance.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usagers\EF_UserRepository.cs" />
-    <Compile Include="Models\Usagers\IUserRepository.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -288,8 +285,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\1917_.png" />
     <Content Include="Images\accueil.png" />
+    <Content Include="Images\CineLogicFull.png" />
     <Content Include="Images\Doc-Dulittl.png" />
+    <Content Include="Images\EVLogo.png" />
+    <Content Include="Images\evlogomini.png" />
     <Content Include="Images\Oiseaux de proie.png" />
+    <Content Include="Images\ScreenshotCalendar.png" />
+    <Content Include="Images\ScreenshotCinemas.png" />
+    <Content Include="Images\ScreenshotFilms.png" />
+    <Content Include="Images\Small.png" />
     <Content Include="Models\CineDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CineDB.Context.cs</LastGenOutput>

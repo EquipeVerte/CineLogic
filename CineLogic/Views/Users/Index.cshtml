@@ -1,14 +1,6 @@
 ﻿@model IEnumerable<CineLogic.Models.User>
 
 @{
-    if (Session["login"].Equals("admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
     ViewBag.Title = "Index";
 }
 
@@ -16,20 +8,14 @@
 
 
 <table class="table">
-    @if (Session["login"].Equals("admin"))
+    @if (Session["type"].Equals("admin"))
     {
         <tr>
             <th>@Html.ActionLink("Create New", "Create")</th>
         </tr>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HashIterations)
+                @Html.DisplayNameFor(model => model.Login)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
@@ -44,13 +30,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PasswordHash)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HashIterations)
+                    @Html.DisplayFor(modelItem => item.Login)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NomComplet)
@@ -70,13 +50,7 @@
     {
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HashIterations)
+                @Html.DisplayNameFor(model => model.Login)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
@@ -93,13 +67,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PasswordHash)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Salt)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HashIterations)
+                        @Html.DisplayFor(modelItem => item.Login)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NomComplet)
