@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
@@ -115,7 +116,20 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Salle salle = db.Salles.Find(id);
-            db.Salles.Remove(salle);
+            if (salle.Seances.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Cette salle contient des séances programmées. Voulez-vous vraiment la supprimer?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.Yes)
+                {
+                    var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                    db.Seances.RemoveRange(seances);
+
+                    db.Salles.Remove(salle);
+                }
+            }
+            else
+                db.Salles.Remove(salle);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

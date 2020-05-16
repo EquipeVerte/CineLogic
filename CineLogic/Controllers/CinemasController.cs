@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
@@ -119,7 +120,41 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Cinema cinema = db.Cinemas.Find(id);
-            db.Cinemas.Remove(cinema);
+            if (cinema.Salles.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Ce cinéma contient des salles. Voulez-vous vraiment le supprimer?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.Yes)
+                {
+                    bool contientSeances = false;
+                    List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
+                    foreach (Salle salle in salles)
+                    {
+                        if (salle.Seances.Count > 0)
+                            contientSeances = true;
+                    }
+
+                    if (contientSeances)
+                    {
+                        DialogResult resultSalles = MessageBox.Show("Vous avez des séances de programmées dans ces salles. Voulez-vous vraiment supprimer ce cinéma?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+                        if (resultSalles == DialogResult.Yes)
+                        {
+                            var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                            db.Seances.RemoveRange(seances);
+                            db.Salles.RemoveRange(salles);
+                            db.Cinemas.Remove(cinema);
+                        }
+                    }
+                    else
+                    {
+                        db.Salles.RemoveRange(salles);
+                        db.Cinemas.Remove(cinema);
+                    }
+                }
+            }
+            else
+                db.Cinemas.Remove(cinema);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
