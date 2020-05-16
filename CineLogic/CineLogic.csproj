@@ -152,9 +152,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CinemasAPIController.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
-    <Compile Include="Controllers\EmptyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResponsablesController.cs" />
     <Compile Include="Controllers\SallesController.cs" />
@@ -185,8 +183,6 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cinemas\CinemaModel.cs" />
-    <Compile Include="Models\Cinemas\EFCinemaRepository.cs" />
-    <Compile Include="Models\Cinemas\ICinemaRepository.cs" />
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -236,12 +232,6 @@
       <DependentUpon>CineDB.edmx</DependentUpon>
       <LastGenOutput>CineDB.cs</LastGenOutput>
     </Content>
-    <Content Include="MyScripts\AddEmpController.js" />
-    <Content Include="MyScripts\DeleteEmptyController.js" />
-    <Content Include="MyScripts\EditEmptyController.js" />
-    <Content Include="MyScripts\Module.js" />
-    <Content Include="MyScripts\Services.js" />
-    <Content Include="MyScripts\ShowEmptyController.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
@@ -402,14 +392,8 @@
     <Content Include="Views\Cinemas\Index.cshtml" />
     <Content Include="Views\Salles\Create.cshtml" />
     <Content Include="Views\Salles\Delete.cshtml" />
-    <Content Include="Views\Salles\Details.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
     <Content Include="Views\Salles\Index.cshtml" />
-    <Content Include="Views\Empty\Index.cshtml" />
-    <Content Include="Views\Empty\AddEmpty.cshtml" />
-    <Content Include="Views\Empty\DeleteEmpty.cshtml" />
-    <Content Include="Views\Empty\EditEmpty.cshtml" />
-    <Content Include="Views\Empty\ShowEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Datepicker\css\" />

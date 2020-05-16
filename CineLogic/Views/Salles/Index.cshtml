@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Index des Salles</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -29,29 +29,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeEcran)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SystemSon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EnExploitation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cinema.Nom)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SalleID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SalleID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SalleID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeEcran)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SystemSon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnExploitation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cinema.Nom)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SalleID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SalleID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SalleID })
+            </td>
+        </tr>
+    }
 
 </table>
