@@ -142,6 +142,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
+    <Compile Include="Controllers\Attributes\RedirectIfSessionActiveAttribute.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
     <Compile Include="Controllers\DirecteursController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
@@ -200,6 +202,8 @@
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\MetaData\Responsable.cs" />
+    <Compile Include="Models\MetaData\User.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />

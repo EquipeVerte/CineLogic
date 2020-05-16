@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class SallesController : Controller
     {
         private CineDBEntities db = new CineDBEntities();

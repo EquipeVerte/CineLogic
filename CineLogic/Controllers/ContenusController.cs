@@ -11,9 +11,11 @@ using CineLogic.Models;
 using Newtonsoft.Json;
 using Microsoft.Win32;
 using System.IO;
+using CineLogic.Controllers.Attributes;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class ContenusController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -62,13 +64,17 @@ namespace CineLogic.Controllers
 
             return View(contenu);
         }
+
+
         //Get CreateCsv
+        [DontAllowAccess]
         public ActionResult CreateCsv()
         {
             return View();
         }
 
         //Charger le fichier csv
+        [DontAllowAccess]
         private ActionResult ChargerCsv(HttpPostedFileBase postedFile)
         {
             csvData = new CsvData();
@@ -105,7 +111,7 @@ namespace CineLogic.Controllers
         }
 
 
-
+        [DontAllowAccess]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCsv([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)

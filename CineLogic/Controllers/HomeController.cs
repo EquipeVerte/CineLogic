@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
+using CineLogic.Controllers.Attributes;
 
 namespace CineLogic.Controllers
 {
@@ -32,6 +33,7 @@ namespace CineLogic.Controllers
             return View();
         }
 
+        [SessionActiveOnly]
         public ActionResult Admin()
         {
             return View();
@@ -44,6 +46,7 @@ namespace CineLogic.Controllers
         }
         */
 
+        [RedirectIfSessionActive]
         public ActionResult Login()
         {
             ViewBag.Message = "Tapez votre login";
@@ -80,45 +83,7 @@ namespace CineLogic.Controllers
                 {
                     return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
                 }
-
-                /*
-                var userDetails = db.Users.Where(x => x.Login == userModel.Login && x.Motdepasse == userModel.Motdepasse).FirstOrDefault();
-
-                if (userDetails == null)
-                {
-                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
-                }
-                else
-                {
-                    Session["login"] = userDetails.Login;
- 
-
-                    return userDetails.Type.Equals("admin")
-                        ? RedirectToAction("Admin", "Home")
-                        : RedirectToAction("User", "Home");
-                }
-                */
             }
-        }
-
-        [HttpPost]
-        public ActionResult Login([Bind(Include = "Login, Password")] LoginViewModel loginUsers)
-        {
-            if (loginUsers.Login == "admin")
-            {
-                Session["login"] = loginUsers.Login;
-                return RedirectToAction("Index", "Admin");
-            }
-   
-            else
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Manage()
-        {
-            return View();
         }
 
         public ActionResult SessionDisconnect()

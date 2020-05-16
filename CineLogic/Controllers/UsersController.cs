@@ -7,11 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Hashing;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class UsersController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -25,15 +27,18 @@ namespace CineLogic.Controllers
         // GET: Users/Details/5
         public ActionResult Details(string id)
         {
+            
+
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = (string)Session["login"];
             }
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 

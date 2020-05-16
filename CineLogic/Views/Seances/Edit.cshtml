@@ -59,6 +59,53 @@ else
             </div>
         </div>
 
+        <!-- Selection et boit de récherche pour les films-->
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
+            </div>
+            <div class="col-md-10">
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#filmSelection">
+                    Selectionner un film
+                </button>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="filmSelection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Selectionner un film</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
+                        <p>Pour retirer un film, sélectionner N/A.</p>
+                        <div class="form-group">
+                            <input id="filter" class="form-control mb-1" placeholder="Recherche" />
+                            <div class="d-flex justify-content-center">
+                                <div id="loading" class="pl-2">
+                                    <div class="loader-small">
+                                        <i class="fas fa-film"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <select id="film-select" class="form-control mr-2" size="6">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.HeureDebut, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -75,26 +122,7 @@ else
             </div>
         </div>
 
-        <!-- Selection et boit de récherche pour les films-->
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
-                <div class="d-flex">
-                    <input id="filter" class="form-control mb-1" placeholder="Recherche" />
-                    <div class="d-flex justify-content-center">
-                        <div id="loading" class="pl-2">
-                            <div class="loader-small">
-                                <i class="fas fa-film"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <select id="film-select" class="form-control mr-2" size="6">
-                </select>
-            </div>
-        </div>
 
         @if (ViewBag.ScheduleError != null)
         {
@@ -135,7 +163,7 @@ else
 <div class="form-group">
     <div class="col-md-10">
         <input type="submit" value="Supprimer" class="btn btn-outline-danger mr-3" form="delete" />
-        <input type="submit" value="Sauvegarder" class="btn btn-outline-success" form="edit" />
+        <input type="submit" value="Actualiser" class="btn btn-outline-success" form="edit" />
     </div>
 </div>
 

@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<CineLogic.Models.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usagers";
 }
 
-<h2>Index</h2>
+<h2>Usagers</h2>
 
 
 <table class="table">
     @if (Session["type"].Equals("admin"))
     {
         <tr>
-            <th>@Html.ActionLink("Create New", "Create")</th>
+            <th>@Html.ActionLink("Ajouter un usager", "Create")</th>
         </tr>
         <tr>
             <th>
@@ -19,9 +19,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th></th>
         </tr>
@@ -36,12 +33,9 @@
                     @Html.DisplayFor(modelItem => item.NomComplet)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Login }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Login }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Login })
+                    @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                    @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
+                    @Html.ActionLink("Suprimmer", "Delete", new { id = item.Login })
                 </td>
             </tr>
         }
@@ -76,8 +70,8 @@
                         @Html.DisplayFor(modelItem => item.Type)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Login }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Login }) |
+                        @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                        @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
                     </td>
                 </tr>
             }

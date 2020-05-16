@@ -1,10 +1,10 @@
 ﻿@model CineLogic.Models.UserViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Éditer";
 }
 
-<h2>Edit</h2>
+<h2>Éditer</h2>
 
 
 @using (Html.BeginForm())
@@ -40,35 +40,16 @@
             @Html.ValidationMessageFor(model => model.NomComplet, "", new { @class = "text-danger" })
         </div>
     </div>
-    @if (Session["login"].Equals("admin"))
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    }
-    else
-    { <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.HiddenFor(model => model.Type)
-            </div>
-        </div>
-    }
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-outline-success" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retourner à la liste", "Index")
 </div>
 
 @section Scripts {
