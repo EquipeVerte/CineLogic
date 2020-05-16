@@ -182,7 +182,6 @@
     <Compile Include="Models\Cinema.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cinemas\CinemaModel.cs" />
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
