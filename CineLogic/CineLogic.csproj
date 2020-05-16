@@ -393,7 +393,7 @@
     <Content Include="Views\Salles\Create.cshtml" />
     <Content Include="Views\Salles\Delete.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
-    <Content Include="Views\Salles\Index.cshtml" />
+    <Content Include="Views\Cinemas\Assigner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Datepicker\css\" />

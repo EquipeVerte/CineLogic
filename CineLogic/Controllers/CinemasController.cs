@@ -132,5 +132,40 @@ namespace CineLogic.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // GET: Cinemas/Assigner/5
+        public ActionResult Assigner(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cinema cinema = db.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
+            ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
+            return View(cinema);
+        }
+
+        // POST: Cinemas/Assigner/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Assigner([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] Cinema cinema)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(cinema).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
+            ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
+            return View(cinema);
+        }
     }
 }
