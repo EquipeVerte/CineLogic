@@ -76,15 +76,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.7.0\lib\net45\System.Web.Http.OData.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -308,11 +299,6 @@
       <DependentUpon>CineDB.edmx</DependentUpon>
       <LastGenOutput>CineDB.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -509,11 +495,6 @@
     <Content Include="Views\Cinemas\Assigner.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
     <Content Include="Views\Salles\Index.cshtml" />
     <Content Include="Views\Seances\Edit.cshtml" />
     <Content Include="Views\Shared\_LayoutAccueil.cshtml" />
