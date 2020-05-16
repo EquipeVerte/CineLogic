@@ -202,7 +202,6 @@
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
-    <Compile Include="Models\Hashing\HashRequest.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
@@ -507,13 +506,7 @@
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

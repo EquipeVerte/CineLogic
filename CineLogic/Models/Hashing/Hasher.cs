@@ -22,22 +22,6 @@ namespace CineLogic.Models.Hashing
             return new Hash(salt, iterations,hash);
         }
 
-        public Hash GenerateHash(HashRequest hashRequest)
-        {
-            int iterations = hashRequest.Iterations == null ? 1000 : hashRequest.Iterations.Value;
-
-            //  Generate salt.
-            var salt = new byte[24];
-            new RNGCryptoServiceProvider().GetBytes(salt);
-
-            //  Generate hash.
-            var pbkdf2 = new Rfc2898DeriveBytes(hashRequest.StringToHash, salt, iterations);
-            byte[] hash = pbkdf2.GetBytes(24);
-
-            //  Return concatenation : salt|iterations|hash.
-            return new Hash(salt, iterations, hash);
-        }
-
         private byte[] Generate(string testString, byte[] salt, int iterations)
         {
             //  Generate hash.
