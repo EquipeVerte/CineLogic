@@ -500,6 +500,9 @@
     <Content Include="Views\Cinemas\Edit.cshtml" />
     <Content Include="Views\Cinemas\Index.cshtml" />
     <Content Include="Views\Cinemas\Assigner.cshtml" />
+    <Content Include="Views\Salles\Create.cshtml" />
+    <Content Include="Views\Salles\Delete.cshtml" />
+    <Content Include="Views\Salles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Seances\Edit.cshtml" />
