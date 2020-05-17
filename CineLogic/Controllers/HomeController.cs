@@ -55,7 +55,7 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginAutoriser(LoginViewModel userModel)
+        public ActionResult Login(LoginViewModel userModel)
         {
 
             using (CineDBEntities db = new CineDBEntities())
@@ -81,7 +81,8 @@ namespace CineLogic.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
+                    ViewBag.Error = "Vérifier l'identifiant ou mot de passe";
+                    return View();
                 }
             }
         }

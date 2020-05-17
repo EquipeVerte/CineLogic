@@ -20,7 +20,7 @@ namespace CineLogic.Models
         [Required(ErrorMessage = ValidationLibrary.ERR_REQUIS)]
         public string Description { get; set; }
         [Required(ErrorMessage = ValidationLibrary.ERR_REQUIS)]
-        [DisplayFormat(DataFormatString = "{0:yyyy}")]
+        //[DisplayFormat(DataFormatString = "{0:yyyy}")]
         [Range(1895, 2020, ErrorMessage = "L'année de production doit être entre {1} and {2}.")]
         [Display(Name = NameLibrary.CONTENU_DISP_Annee)]
         public int Annee { get; set; }

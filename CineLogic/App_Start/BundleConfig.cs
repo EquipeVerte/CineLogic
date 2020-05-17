@@ -8,6 +8,8 @@ namespace CineLogic
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = false;
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -27,42 +29,42 @@ namespace CineLogic
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/fullcalendarcss").Include(
-                    "~/Content/Fullcalendar/core/main.css",
-                    "~/Content/Fullcalendar/daygrid/main.css",
-                    "~/Content/Fullcalendar/timegrid/main.css",
-                    "~/Content/Fullcalendar/interaction/main.css",
-                    "~/Content/Fullcalendar/bootstrap/main.css"
+                    "~/Scripts/Fullcalendar/core/main.css",
+                    "~/Scripts/Fullcalendar/daygrid/main.css",
+                    "~/Scripts/Fullcalendar/timegrid/main.css",
+                    "~/Scripts/Fullcalendar/interaction/main.css",
+                    "~/Scripts/Fullcalendar/bootstrap/main.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/Content/fullcalendarjs").Include(
-                    "~/Content/Fullcalendar/core/main.js",
-                    "~/Content/Fullcalendar/daygrid/main.js",
-                    "~/Content/Fullcalendar/timegrid/main.js",
-                    "~/Content/Fullcalendar/interaction/main.js",
-                    "~/Content/Fullcalendar/bootstrap/main.js",
-                     "~/Content/Fullcalendar/core/locales-all.js"
+                    "~/Scripts/Fullcalendar/core/main.js",
+                    "~/Scripts/Fullcalendar/daygrid/main.js",
+                    "~/Scripts/Fullcalendar/timegrid/main.js",
+                    "~/Scripts/Fullcalendar/interaction/main.js",
+                    "~/Scripts/Fullcalendar/bootstrap/main.js",
+                     "~/Scripts/Fullcalendar/core/locales-all.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepickercss").Include(
-                    "~/Content/Datepicker/css/bootstrap-datepicker.css"
+                    "~/Scripts/Datepicker/css/bootstrap-datepicker.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/Content/bootstrapdatepickerjs").Include(
-                    "~/Content/Datepicker/js/bootstrap-datepicker.js",
-                    "~/Content/Datepicker/locales/bootstrap-datepicker.fr.min.js"
+                    "~/Scripts/Datepicker/js/bootstrap-datepicker.js",
+                    "~/Scripts/Datepicker/locales/bootstrap-datepicker.fr.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Content/fontawesomejs").Include(
-                    "~/Content/FontAwesome/all.js"
+                    "~/Scripts/FontAwesome/all.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Content/Programmation").Include(
-                    "~/Content/Programmation/ChangeManagement.js",
-                    "~/Content/Programmation/AjaxLoader.js",
-                    "~/Content/Programmation/DatePicker.js",
-                    "~/Content/Programmation/Calendar.js",
-                    "~/Content/Programmation/SalleSelection.js",
-                    "~/Content/Programmation/SeanceCreation.js"
+                    "~/Scripts/Programmation/ChangeManagement.js",
+                    "~/Scripts/Programmation/AjaxLoader.js",
+                    "~/Scripts/Programmation/DatePicker.js",
+                    "~/Scripts/Programmation/Calendar.js",
+                    "~/Scripts/Programmation/SalleSelection.js",
+                    "~/Scripts/Programmation/SeanceCreation.js"
                 ));
         }
     }

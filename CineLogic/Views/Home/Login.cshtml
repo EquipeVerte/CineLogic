@@ -5,7 +5,7 @@
 }
 
 <div class="jumbotron">
-    @using (Html.BeginForm("LoginAutoriser", "Home", FormMethod.Post))
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -22,6 +22,13 @@
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <h4>@ViewBag.Error</h4>
+            </div>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
