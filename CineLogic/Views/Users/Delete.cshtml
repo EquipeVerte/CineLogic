@@ -1,0 +1,49 @@
+﻿@model CineLogic.Models.User
+
+@{
+    ViewBag.Title = "Suppression";
+}
+
+<h2>Suppression</h2>
+
+<h3>Êtes-vous sur que vous voulez suprimmer cet usager?</h3>
+<div>
+    <h4>Usager</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomComplet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomComplet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Login)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger" /> |
+            @Html.ActionLink("Liste des usagers", "Index")
+        </div>
+    }
+</div>

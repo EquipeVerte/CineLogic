@@ -84,9 +84,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Titre)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Annee)
         </th>
@@ -105,6 +102,9 @@
         <th>
             @Html.DisplayNameFor(model => model.MetaScore)
         </th>
+        <th>
+
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -113,9 +113,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Titre)
             </td>
-            @*<td>
-                    @Html.TextAreaFor(modelItem => item.Description, new { @class = "form-control" })
-                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Annee)
             </td>

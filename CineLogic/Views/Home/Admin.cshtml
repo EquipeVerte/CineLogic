@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CineLogic.Models.User>
+
+@{
+    ViewBag.Title = "Page administration";
+}
+
+<div class="jumbotron">
+    <div>
+        @using (CineLogic.Models.CineDBEntities db = new CineLogic.Models.CineDBEntities())
+        {
+            foreach (var item in db.Users)
+            {
+
+                if (item.Login.Equals((string)Session["Login"]))
+                {
+                    <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
+                }
+            }
+        }
+    </div>
+</div>
+
+

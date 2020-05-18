@@ -1,0 +1,43 @@
+﻿@model CineLogic.Models.Responsable
+
+@{
+    ViewBag.Title = "Détails";
+}
+
+<h2>Détails</h2>
+
+<div>
+    <h4>Responsable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Éditer", "Edit", new { id = Model.ResponsableID }) |
+    @Html.ActionLink("Liste des responsables", "Index") |
+    @Html.ActionLink("Cinémas", "Index", "Cinemas")
+</p>

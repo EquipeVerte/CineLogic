@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Accueil";
+}
+
+
+    <div class="row">
+        <div class="col-md-6 d-flex flex-column">
+            <h3>Bienvenue sur le site CineLogic!</h3>
+            <p>Ici vous allez trouvez tous les outils pour gèrer votre parc des cinémas!</p>
+            <p>Identifiez-vous en cliquant sur le bouton en dessous et commencer l'administration de votre programmation en tout facilité!</p>
+            
+            <p>@Html.ActionLink("Se Connecter", "Login", "Home", new { area = "" }, new { @class = "btn btn-outline-success btn-lg" })</p>
+        </div>
+
+        <div class="col-md-6">
+            <marquee behavior="alternate" scroledelay="3" scrollamount="3" class="float-right">
+                <img src="~/Images/ScreenshotFilms.png" style="height:250px" />
+                <img src="~/Images/ScreenshotCinemas.png" style="height:250px" />
+                <img src="~/Images/ScreenshotCalendar.png" style="height:250px" />
+            </marquee>
+        </div>
+    </div>
+

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class GenresController : Controller
     {
         private CineDBEntities db = new CineDBEntities();

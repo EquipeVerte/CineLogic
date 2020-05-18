@@ -8,6 +8,8 @@ namespace CineLogic
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = false;
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -25,6 +27,45 @@ namespace CineLogic
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fullcalendarcss").Include(
+                    "~/Scripts/Fullcalendar/core/main.css",
+                    "~/Scripts/Fullcalendar/daygrid/main.css",
+                    "~/Scripts/Fullcalendar/timegrid/main.css",
+                    "~/Scripts/Fullcalendar/interaction/main.css",
+                    "~/Scripts/Fullcalendar/bootstrap/main.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/fullcalendarjs").Include(
+                    "~/Scripts/Fullcalendar/core/main.js",
+                    "~/Scripts/Fullcalendar/daygrid/main.js",
+                    "~/Scripts/Fullcalendar/timegrid/main.js",
+                    "~/Scripts/Fullcalendar/interaction/main.js",
+                    "~/Scripts/Fullcalendar/bootstrap/main.js",
+                     "~/Scripts/Fullcalendar/core/locales-all.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrapdatepickercss").Include(
+                    "~/Scripts/Datepicker/css/bootstrap-datepicker.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/bootstrapdatepickerjs").Include(
+                    "~/Scripts/Datepicker/js/bootstrap-datepicker.js",
+                    "~/Scripts/Datepicker/locales/bootstrap-datepicker.fr.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/fontawesomejs").Include(
+                    "~/Scripts/FontAwesome/all.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/Programmation").Include(
+                    "~/Scripts/Programmation/ChangeManagement.js",
+                    "~/Scripts/Programmation/AjaxLoader.js",
+                    "~/Scripts/Programmation/DatePicker.js",
+                    "~/Scripts/Programmation/Calendar.js",
+                    "~/Scripts/Programmation/SalleSelection.js",
+                    "~/Scripts/Programmation/SeanceCreation.js"
+                ));
         }
     }
 }
