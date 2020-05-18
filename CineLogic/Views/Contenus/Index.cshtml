@@ -5,13 +5,15 @@
 }
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Index des films</h2>
+<div class="d-flex justify-content-lg-start">
+    <p class="p-3, m-3">
+        @Html.ActionLink("Ajouter un Film", "Create")
+    </p>
+    <p class="p-3, m-3">
+        @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
+    </p>
+</div>
 
-<p class="p-3, m-3">
-    @Html.ActionLink("Ajouter un Film", "Create")
-</p>
-<p class="p-3, m-3">
-    @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
-</p>
 <div>
     @{
         List<object> lst_url = new List<object>();
