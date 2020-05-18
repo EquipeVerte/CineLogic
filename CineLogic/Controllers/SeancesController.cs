@@ -151,7 +151,9 @@ namespace CineLogic.Controllers
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = false;
 
-            return View("Index");
+            //return View("Index");
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Annuler()
@@ -162,7 +164,8 @@ namespace CineLogic.Controllers
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = false;
 
-            return View("Index");
+            //return View("Index");
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

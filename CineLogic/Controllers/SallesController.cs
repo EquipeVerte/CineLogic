@@ -59,7 +59,7 @@ namespace CineLogic.Controllers
             {
                 db.Salles.Add(salle);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cinemas");
             }
 
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
@@ -122,7 +122,7 @@ namespace CineLogic.Controllers
             Salle salle = db.Salles.Find(id);
             db.Salles.Remove(salle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Salles");
         }
 
         //  Ajax get salles.

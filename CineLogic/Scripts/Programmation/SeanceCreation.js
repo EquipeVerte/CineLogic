@@ -65,8 +65,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 console.log("Post success.");
-                console.log($("#unsaved-alert").show());
-                $("#unsaved-alert").show();
+                $(".unsaved-alert").show();
                 $("#confirmationModal").modal('hide');
                 $("#alert-seance-container").hide();
 
