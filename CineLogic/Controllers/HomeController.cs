@@ -12,7 +12,7 @@ namespace CineLogic.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Accueil()
         {
             return View();
         }
