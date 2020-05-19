@@ -1,11 +1,15 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="fr-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - CineLogic</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/Content/fontawesomejs")
+
+    @RenderSection("css", required: false)
 </head>
 <body>
     <div class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -14,14 +18,43 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Accueil", "Home")" class="navbar-brand">
+                    <img class="logo" src="~/Images/CineLogicFull.png" />
+                </a>
             </div>
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">@Html.ActionLink("Mes détails", "Details", "Users", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Usagers", "Index", "Users", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownCinemaLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cinémas
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownCinemaLink">
+                            <a class="dropdown-item" href="@Url.Action( "Index", "Cinemas")">Cinémas</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Responsables")">Responsables</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Oeuvres
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action( "Index", "Contenus")">Oeuvres</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Directeurs")">Directeurs</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Acteurs")">Acteurs</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Genres")">Genres</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Programmation", "Index", "Seances", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
                 </ul>
+            </div>
+            <div class="ml-auto">
+                @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home", new { @class = "btn btn-danger" })
             </div>
         </div>
     </div>
@@ -29,7 +62,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year Cinelogic - Un produit Équipe Verte <img src="~/Images/evlogomini.png" /></p>
         </footer>
     </div>
 

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CineLogic.Models.User>
+
+@{
+    ViewBag.Title = "Usagers";
+}
+
+<h2>Usagers</h2>
+
+
+<table class="table">
+    @if (Session["type"].Equals("admin"))
+    {
+        <tr>
+            <th>@Html.ActionLink("Ajouter un usager", "Create")</th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomComplet)
+            </th>
+            <th></th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomComplet)
+                </td>
+                <td>
+                    @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                    @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
+                    @Html.ActionLink("Suprimmer", "Delete", new { id = item.Login })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomComplet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            if (item.Login.Equals((string)Session["login"]))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Login)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomComplet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                        @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>

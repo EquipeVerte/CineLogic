@@ -1,0 +1,48 @@
+﻿@model CineLogic.Models.Responsable
+
+@{
+    ViewBag.Title = "Suppression";
+}
+
+<h2>Suppression</h2>
+
+<h3>Êtes-vous certain que vous voulez supprimer ce responsable?</h3>
+<div>
+    <h4>Responsable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumTel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumTel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Supprimer" class="btn btn-default" /> |
+            @Html.ActionLink("Liste des responsables", "Index")
+        </div>
+    }
+</div>

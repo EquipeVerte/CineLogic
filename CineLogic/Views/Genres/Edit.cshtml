@@ -1,0 +1,40 @@
+﻿@model CineLogic.Models.Genre
+
+@{
+    ViewBag.Title = "Editer un genre";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Editer un genre de film</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal m-4">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(model => model.Nom)*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="card-title">
+                @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Mettre à jour" class="btn btn-outline-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="m-4">
+    @Html.ActionLink("Index des genres", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

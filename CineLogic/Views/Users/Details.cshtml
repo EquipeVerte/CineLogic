@@ -1,0 +1,34 @@
+﻿@model CineLogic.Models.User
+
+@{
+    ViewBag.Title = "Détails";
+}
+
+<h2>Détails</h2>
+
+<div>
+    <h4>Usager</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomComplet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomComplet)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Éditer", "Edit", new { id = Model.Login }) |
+    @Html.ActionLink("Liste des usagers", "Index")
+</p>
