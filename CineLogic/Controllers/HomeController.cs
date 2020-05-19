@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
 using CineLogic.Controllers.Attributes;
+using CineLogic.Models;
 
 namespace CineLogic.Controllers
 {
@@ -26,6 +27,9 @@ namespace CineLogic.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
 
         [SessionActiveOnly]
         public ActionResult Admin()
