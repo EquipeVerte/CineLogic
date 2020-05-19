@@ -18,8 +18,8 @@
                 <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                <button class="btn btn-success" id="save-changes">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -32,8 +32,8 @@ else
                 <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                <button class="btn btn-success" id="save-changes">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -175,6 +175,24 @@ else
 
 
 @section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#save-changes").on('click', function () {
+                console.log("save changes clicked");
+                var jqxhr = $.get("@Url.Action("Save")", function (data) {
+                    console.log("hide");
+                    $("#unsaved-alert").hide();
+                });
+            });
+
+            $("#annuler-changes").on('click', function () {
+                $.get("@Url.Action("Annuler")", function (data) {
+                    $("#unsaved-alert").hide();
+                });
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
 
