@@ -16,11 +16,12 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Login)
+    @Html.HiddenFor(model => model.Type)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @readonly = "true", @class = "form-control" } })
+            @Html.DisplayFor(model => model.Login, new { htmlAttributes = new { @readonly = "true", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
         </div>
     </div>
