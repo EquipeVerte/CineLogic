@@ -84,21 +84,21 @@ namespace CineLogic.Controllers
             {
                 lignes = new List<string>(System.IO.File.ReadAllLines(openFileDialog.FileName));
                 lignes.RemoveAt(0);
-              
+
                 foreach (string ligne in lignes)
                 {
                     string[] colones = ligne.Split(';');
-                    try { csvData.AjouterTitle(colones[01]); } catch { MessageBox.Show("Erreur de chargement du titre"); }
-                    try { csvData.AjouterGenre(colones[02]); } catch { MessageBox.Show("Erreur de chargement du genre"); }
-                    try { csvData.AjouterDescription(colones[03]); } catch { MessageBox.Show("Erreur de chargement de la description"); }
-                    try { csvData.AjouterDirector(colones[04]); } catch { MessageBox.Show("Erreur de chargement du directeur"); }
-                    try { csvData.AjouterActor(colones[05]); } catch { MessageBox.Show("Erreur de chargement des acteurs"); }
-                    try { csvData.AjouterYear(colones[06]); } catch { MessageBox.Show("Erreur de chargement de l'année"); }
-                    try { csvData.AjouterRuntime(colones[07]); } catch { MessageBox.Show("Erreur de chargement du runtime"); }
-                    try { csvData.AjouterRating(colones[08]); } catch { MessageBox.Show("Erreur de chargement du rating"); }
-                    try { csvData.AjouterVote(colones[09]); } catch { MessageBox.Show("Erreur de chargement des votes"); }
-                    try { csvData.AjouterRevenu(colones[10]); } catch { MessageBox.Show("Erreur de chargement du revenu"); }
-                    try { csvData.AjouterMetascore(colones[11]); } catch { MessageBox.Show("Erreur de chargement du metascore"); }
+                    csvData.AjouterTitle(colones[01]);
+                    csvData.AjouterGenre(colones[02]);
+                    csvData.AjouterDescription(colones[03]);
+                    csvData.AjouterDirector(colones[04]);
+                    csvData.AjouterActor(colones[05]);
+                    csvData.AjouterYear(colones[06]);
+                    csvData.AjouterRuntime(colones[07]);
+                    csvData.AjouterRating(colones[08]);
+                    csvData.AjouterVote(colones[09]);
+                    csvData.AjouterRevenu(colones[10]);
+                    csvData.AjouterMetascore(colones[11]);
 
 
                     //csvView.Text += colones[1] + " | " + colones[2] + "\n";
@@ -202,17 +202,20 @@ namespace CineLogic.Controllers
         public ActionResult AjouterActeur(string titre, string nomActeur)
         {
             Contenu contenu = db.Contenus.Find(titre);
-            if (nomActeur != null || nomActeur != "")
+            if (nomActeur != null)
             {
-                Acteur acteur = db.Acteurs.Find(nomActeur);
-                if (acteur == null)
+                if (nomActeur.Trim().Length != 0)
                 {
-                    acteur = new Acteur();
-                    acteur.Nom = nomActeur;
-                    db.Acteurs.Add(acteur);
+                    Acteur acteur = db.Acteurs.Find(nomActeur);
+                    if (acteur == null)
+                    {
+                        acteur = new Acteur();
+                        acteur.Nom = nomActeur;
+                        db.Acteurs.Add(acteur);
+                    }
+                    contenu.Acteurs.Add(acteur);
+                    db.SaveChanges();
                 }
-                contenu.Acteurs.Add(acteur);
-                db.SaveChanges();
             }
             return Redirect(Url.Action("Edit", "Contenus", new { id = titre }));
         }
@@ -236,17 +239,20 @@ namespace CineLogic.Controllers
         public ActionResult AjouterDirecteur(string titre, string nomDirecteur)
         {
             Contenu contenu = db.Contenus.Find(titre);
-            if (nomDirecteur != null || nomDirecteur != "")
+            if (nomDirecteur != null)
             {
-                Directeur directeur = db.Directeurs.Find(nomDirecteur);
-                if (directeur == null)
+                if (nomDirecteur.Trim().Length != 0)
                 {
-                    directeur = new Directeur();
-                    directeur.Nom = nomDirecteur;
-                    db.Directeurs.Add(directeur);
+                    Directeur directeur = db.Directeurs.Find(nomDirecteur);
+                    if (directeur == null)
+                    {
+                        directeur = new Directeur();
+                        directeur.Nom = nomDirecteur;
+                        db.Directeurs.Add(directeur);
+                    }
+                    contenu.Directeurs.Add(directeur);
+                    db.SaveChanges();
                 }
-                contenu.Directeurs.Add(directeur);
-                db.SaveChanges();
             }
             return Redirect(Url.Action("Edit", "Contenus", new { id = titre }));
 
