@@ -65,6 +65,7 @@ $(document).ready(function () {
                 $("#rmenu-ajuster").on('click', function () {
                     console.log("Ajuster");
                     console.log(info.event.id);
+                    adjustTimes(info.event);
                 });
 
                 window.event.returnValue = false;
@@ -101,7 +102,8 @@ $(document).ready(function () {
             return null;
         }
     }
-    
+
+    //  Supprimer un event par ajax.
     function deleteEvent(event) {
         $.ajax({
             type: 'POST',
@@ -117,6 +119,26 @@ $(document).ready(function () {
             },
             error: function (e) {
                 alert("Suppression échoué!");
+                animateFailure();
+            }
+        });
+    }
+
+    function adjustTimes(event) {
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["AdjustSeanceTimes"],
+            dataType: 'json',
+            data: '{seanceID: ' + event.id + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                $("#unsaved-alert").show();
+                refreshEvents();
+                animateSuccess();
+            },
+            error: function (e) {
+                alert("Ajustement échoué!");
                 animateFailure();
             }
         });

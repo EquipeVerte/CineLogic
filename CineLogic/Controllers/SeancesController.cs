@@ -156,6 +156,15 @@ namespace CineLogic.Controllers
             return Json(new { success = true });
         }
 
+        [HttpPost]
+        [HandleErrorJson]
+        public ActionResult AdjustTimes(int seanceID)
+        {
+            // TODO adjustment logic.
+
+            return Json(new { success = true });
+        }
+
         public ActionResult Save()
         {
             seanceService.SaveChanges();
