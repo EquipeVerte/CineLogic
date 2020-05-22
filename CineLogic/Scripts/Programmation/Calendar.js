@@ -42,6 +42,7 @@ $(document).ready(function () {
             hour12: false
         },
         editable: true,
+        snapDuration: '00:15:00',
         eventOverlap: false,
         eventDrop: function (info) {
             timesChanged(info);
@@ -59,6 +60,7 @@ $(document).ready(function () {
                 $("#rmenu-delete").on('click', function () {
                     console.log("Delete");
                     console.log(info.event.id);
+                    deleteEvent(info.event);
                 });
                 $("#rmenu-ajuster").on('click', function () {
                     console.log("Ajuster");
@@ -98,6 +100,26 @@ $(document).ready(function () {
         } else {
             return null;
         }
+    }
+    
+    function deleteEvent(event) {
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["DeleteSeanceAjax"],
+            dataType: 'json',
+            data: '{seanceID: ' + event.id + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                event.remove();
+                $("#unsaved-alert").show();
+                animateSuccess();
+            },
+            error: function (e) {
+                alert("Suppression échoué!");
+                animateFailure();
+            }
+        });
     }
 
     //  Appelé quand les heures d'un séance sont changé par le calendrier.

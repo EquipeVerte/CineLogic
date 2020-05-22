@@ -136,6 +136,17 @@ namespace CineLogic.Controllers
 
         [HttpPost]
         [HandleErrorJson]
+        public ActionResult DeleteAjax(int seanceID)
+        {
+            seanceService.DeleteSeance(seanceID);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
         public ActionResult UpdateTimes(SeanceViewModel seanceVM)
         {
             seanceService.UpdateSeanceTimes(seanceVM);

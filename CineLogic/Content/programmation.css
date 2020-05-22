@@ -75,11 +75,10 @@ input[readonly] {
 
 .show .card {
     border: 0px;
-    background-color: lightgray;
 }
 
 .list-group-item {
-    background-color: lightgray;
+    background-color: #DDEEEF;
     cursor: default;
 }
 
