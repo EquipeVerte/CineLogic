@@ -66,3 +66,23 @@ input[readonly] {
     background-color: lightblue !important;
     font-weight: bold;
 }
+
+.show {
+    display: none;
+    z-index:10000;
+    position: absolute;
+}
+
+.show .card {
+    border: 0px;
+    background-color: lightgray;
+}
+
+.list-group-item {
+    background-color: lightgray;
+    cursor: default;
+}
+
+.list-group-item:hover {
+    background-color: darkgray;
+}
