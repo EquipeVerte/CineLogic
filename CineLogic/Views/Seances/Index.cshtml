@@ -40,8 +40,8 @@
             <div class="col-md-2 d-flex justify-content-end align-items-center">
                 @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
                     @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                <button class="btn btn-success save-changes" id="">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -56,8 +56,8 @@ else
             <div class="col-md-2 d-flex justify-content-end align-items-center">
                 @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
                     @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                <button class="btn btn-success save-changes" id="">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -198,8 +198,8 @@ else
                 <div class="col-md-2 d-flex justify-content-end align-items-center">
                     @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
                         @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                    <button class="btn btn-danger mr-2 save-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -214,8 +214,8 @@ else
                 <div class="col-md-2 d-flex justify-content-end align-items-center">
                     @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
                         @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                    <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -253,7 +253,7 @@ else
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#save-changes").on('click', function () {
+            $(".save-changes").on('click', function () {
                 console.log("save changes clicked");
                 var jqxhr = $.get("@Url.Action("Save")", function (data) {
                     $(".unsaved-alert").hide();
@@ -261,7 +261,7 @@ else
                 });
             });
 
-            $("#annuler-changes").on('click', function () {
+            $(".annuler-changes").on('click', function () {
                 $.get("@Url.Action("Annuler")", function (data) {
                     $(".unsaved-alert").hide();
                     refreshEvents();
