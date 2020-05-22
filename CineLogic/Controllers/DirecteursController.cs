@@ -52,9 +52,16 @@ namespace CineLogic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Directeurs.Add(directeur);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Directeurs.Add(directeur);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch(Exception ex)
+                {
+                    ViewBag.Erreur = "Le nom existe déja. \n" + ex.Message;
+                }
             }
 
             return View(directeur);

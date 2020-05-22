@@ -198,10 +198,12 @@
     </Compile>
     <Compile Include="Models\Libraries\NameLibrary.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
+    <Compile Include="Models\MetaData\Acteur.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\MetaData\Directeur.cs" />
     <Compile Include="Models\MetaData\Responsable.cs" />
     <Compile Include="Models\MetaData\User.cs" />
     <Compile Include="Models\UserViewModel.cs" />

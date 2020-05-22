@@ -24,8 +24,14 @@
 
         <div class="form-group m-4">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit"  value="Ajouter l'acteur" class="btn btn-outline-info"  />
+                <input type="submit" value="Ajouter l'acteur" class="btn btn-outline-success" />
             </div>
+            @{
+                if (ViewBag.Erreur != null)
+                {
+                    <div class="alert alert-danger mt-4">@ViewBag.Erreur</div>
+                }
+            }
         </div>
     </div>
 }
