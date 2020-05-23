@@ -37,12 +37,12 @@ namespace CineLogic.Controllers
             return View();
         }
 
-        /*
+
         public ActionResult User()
         {
             return View();
         }
-        */
+
 
         [RedirectIfSessionActive]
         public ActionResult Login()

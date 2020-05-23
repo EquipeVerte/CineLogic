@@ -12,23 +12,18 @@ namespace CineLogic.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Salle
+    public partial class ContenuPromo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Salle()
+        public ContenuPromo()
         {
-            this.Seances = new HashSet<Seance>();
+            this.SeancePromoes = new HashSet<SeancePromo>();
         }
     
-        public int SalleID { get; set; }
-        public string Nom { get; set; }
-        public string TypeEcran { get; set; }
-        public string SystemSon { get; set; }
-        public bool EnExploitation { get; set; }
-        public int CinemaID { get; set; }
+        public string Titre { get; set; }
+        public int RuntimeMins { get; set; }
     
-        public virtual Cinema Cinema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seance> Seances { get; set; }
+        public virtual ICollection<SeancePromo> SeancePromoes { get; set; }
     }
 }

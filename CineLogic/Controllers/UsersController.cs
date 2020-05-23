@@ -43,6 +43,7 @@ namespace CineLogic.Controllers
         }
 
         // GET: Users/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -52,15 +53,16 @@ namespace CineLogic.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AdminOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,NomComplet")] UserViewModel userVM)
+        public ActionResult Create([Bind(Include = "Login,Password,NomComplet,Type")] UserViewModel userVM)
         {
             if (ModelState.IsValid)
             {
                 User user = new User();
                 user.Login = userVM.Login;
                 user.NomComplet = userVM.NomComplet;
-                user.Type = "admin";
+                user.Type = userVM.Type;
 
                 Hasher hasher = new Hasher();
 

@@ -141,6 +141,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\Attributes\AdminOnlyAttribute.cs" />
     <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
     <Compile Include="Controllers\Attributes\RedirectIfSessionActiveAttribute.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
@@ -188,6 +189,9 @@
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContenuPromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CsvData.cs" />
     <Compile Include="Models\Directeur.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
@@ -203,6 +207,12 @@
     <Compile Include="Models\Hashing\Hasher.cs" />
     <Compile Include="Models\MetaData\Responsable.cs" />
     <Compile Include="Models\MetaData\User.cs" />
+    <Compile Include="Models\SeanceContenu.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeancePromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
@@ -502,6 +512,7 @@
     <Content Include="Views\Salles\Delete.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
     <Content Include="Views\Home\Accueil.cshtml" />
+    <Content Include="Views\Home\NotAuthorised.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Seances\Edit.cshtml" />

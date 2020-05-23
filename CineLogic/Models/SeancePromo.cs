@@ -12,17 +12,13 @@ namespace CineLogic.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Directeur
+    public partial class SeancePromo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Directeur()
-        {
-            this.Contenus = new HashSet<Contenu>();
-        }
+        public string PromoTitre { get; set; }
+        public int SeanceID { get; set; }
+        public Nullable<int> indexOrdre { get; set; }
     
-        public string Nom { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contenu> Contenus { get; set; }
+        public virtual ContenuPromo ContenuPromo { get; set; }
+        public virtual Seance Seance { get; set; }
     }
 }
