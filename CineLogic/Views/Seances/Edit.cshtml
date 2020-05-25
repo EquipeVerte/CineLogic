@@ -145,30 +145,44 @@ else
             @*@foreach (var film in Model.Contenus)
                 {*@
             <li class="list-group-item d-flex align-items-center" id="1">
-                <h3>Film 1</h3>
-                <div class="ml-auto d-flex flex-column justify-content-between">
-                    <div onclick="moveup(1)" class="btn-order">
-                        <i class="fas fa-chevron-up"></i>
+                <h3><i class="fas fa-film"></i> Film 1</h3>
+                <h5 class="ml-3">20 mins</h5>
+                <div class="ml-auto d-flex flex-row">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input d-none" id="principalFilm1" type="radio" name="principalFilm" value="1" />
+                        <label class="form-check-label myRB" for="principalFilm1"><i class="far fa-star"></i></label>
                     </div>
-                    <div onclick="movedown(1)" class="btn-order">
-                        <i class="fas fa-chevron-down"></i>
+                    <div class="d-flex flex-column justify-content-between">
+                        <div onclick="moveup(1)" class="btn-order">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                        <div onclick="movedown(1)" class="btn-order">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
                     </div>
                 </div>
             </li>
             <li class="list-group-item d-flex align-items-center" id="2">
-                <h3>Film 2</h3>
-                <div class="ml-auto d-flex flex-column justify-content-between">
-                    <div class="btn-order">
-                        <i class="fas fa-chevron-up"></i>
+                <h3><i class="fas fa-film"></i> Film 2</h3>
+                <h5 class="ml-3">93 mins</h5>
+                <div class="ml-auto d-flex flex-row">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input d-none" id="principalFilm2" type="radio" name="principalFilm" value="2" />
+                        <label class="form-check-label myRB" for="principalFilm2"><i class="far fa-star"></i></label>
                     </div>
-                    <div class="btn-order">
-                        <i class="fas fa-chevron-down"></i>
+                    <div class=" d-flex flex-column justify-content-between">
+                        <div class="btn-order">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                        <div class="btn-order">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
                     </div>
                 </div>
             </li>
             @*}*@
         </ul>
-        <button class="btn btn-outline-success" onclick="getOrder()">Get order</button>
+        <button class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#filmSelection"><i class="fas fa-plus"></i> Ajouter contenu</button>
     </div>
 </div>
 
@@ -184,7 +198,6 @@ else
                 </div>
                 <div class="modal-body">
                     <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
-                    <p>Pour retirer un film, sélectionner N/A.</p>
                     <div class="form-group">
                         <input id="filter" class="form-control mb-1" placeholder="Recherche" />
                         <div class="d-flex justify-content-center">
@@ -199,7 +212,7 @@ else
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Ajouter</button>
                 </div>
             </div>
         </div>
@@ -267,7 +280,9 @@ else
 
     <script>
         var el = document.getElementById('list-films');
-        var sortable = Sortable.create(el);
+        var sortable = new Sortable(el, {
+            animation: 150
+        });
 
         function getOrder() {
             var order = [];
@@ -278,5 +293,24 @@ else
 
             console.log(order);
         }
+        $(document).ready(function () {
+            
+
+            $('input[name=principalFilm]').change(function () {
+                $('#list-films').children('.list-group-item').each(function (i, item) {
+                    console.log($('input[name=principalFilm]').filter(':checked').val());
+                    if (item.id == $('input[type=radio][name=principalFilm]').filter(':checked').val()) {
+                        $(item).find("label").html('<i class="fas fa-star"></i>')
+                    }
+                    else {
+                        $(item).find("label").html('<i class="far fa-star"></i>');
+                    }
+                });
+            });
+
+            $('input[name=principalFilm]').val([1]);
+
+            $('input[name=principalFilm]').change();
+        });
     </script>
 }

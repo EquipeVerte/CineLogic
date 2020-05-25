@@ -87,10 +87,15 @@ input[readonly] {
 }
 
 
-#rmenu .modal-open .container {
+.modal-open .container {
     -webkit-filter: blur(3px) grayscale(90%);
 }
 
 #list-films .list-group-item:hover {
     background-color: lightblue;
+}
+
+.myRB {
+    font-size: 2rem;
+    color: gold;
 }
