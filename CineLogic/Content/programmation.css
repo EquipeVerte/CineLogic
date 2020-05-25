@@ -77,11 +77,20 @@ input[readonly] {
     border: 0px;
 }
 
-.list-group-item {
+#rmenu .list-group-item {
     background-color: #DDEEEF;
     cursor: default;
 }
 
-.list-group-item:hover {
+#rmenu .list-group-item:hover {
     background-color: darkgray;
+}
+
+
+#rmenu .modal-open .container {
+    -webkit-filter: blur(3px) grayscale(90%);
+}
+
+#list-films .list-group-item:hover {
+    background-color: lightblue;
 }

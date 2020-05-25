@@ -13,6 +13,8 @@ namespace CineLogic.Business.Programmation
 
         SeanceViewModel GetSeance(int id);
 
+        SeanceEditionViewModel GetEditableSeance(int id);
+
         SeanceViewModel CreateSeance(SeanceViewModel seance);
 
         SeanceViewModel UpdateSeance(SeanceViewModel seance);

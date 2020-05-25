@@ -17,6 +17,7 @@ namespace CineLogic.Business.Programmation
         private IMapper mapper = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Seance, SeanceViewModel>();
+            cfg.CreateMap<Seance, SeanceEditionViewModel>();
             cfg.CreateMap<SeanceViewModel, Seance>();
         }).CreateMapper();
 
@@ -42,6 +43,18 @@ namespace CineLogic.Business.Programmation
             if (seance != null)
             {
                 return mapper.Map<Seance, SeanceViewModel>(seance);
+            }
+
+            throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");
+        }
+
+        public SeanceEditionViewModel GetEditableSeance(int id)
+        {
+            Seance seance = repository.GetSeance(id);
+
+            if (seance != null)
+            {
+                return mapper.Map<Seance, SeanceEditionViewModel>(seance);
             }
 
             throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");

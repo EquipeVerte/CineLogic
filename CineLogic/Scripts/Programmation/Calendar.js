@@ -14,11 +14,14 @@ $(document).ready(function () {
         '<div class="show" id="rmenu">' +
         '<div class="card">' +
         '<ul class="list-group list-group-flush">' +
-        '<li class="list-group-item py-2 px-3">' +
-        '<span id="rmenu-delete" href="#">Supprimer</span>' +
+        '<li id="rmenu-delete" class="list-group-item py-2 px-3">' +
+        '<span>Supprimer</span>' +
         '</li>' +
-        '<li class="list-group-item py-2 px-3">' +
-        '<span id="rmenu-ajuster">Ajuster le temps</span>' +
+        '<li id="rmenu-ajuster" class="list-group-item py-2 px-3">' +
+        '<span>Ajuster le temps</span>' +
+        '</li>' +
+        '<li id="rmenu-edit" class="list-group-item py-2 px-3">' +
+        '<span>Éditer</span>' +
         '</li>' +
         '</ul>' +
         '</div>' +
@@ -66,6 +69,11 @@ $(document).ready(function () {
                     console.log("Ajuster");
                     console.log(info.event.id);
                     adjustTimes(info.event);
+                });
+                $("#rmenu-edit").on('click', function () {
+                    console.log("Edit");
+                    console.log(info.event.id);
+                    window.open(dictURLs["EditSeance"] + "/" + info.event.id);
                 });
 
                 window.event.returnValue = false;

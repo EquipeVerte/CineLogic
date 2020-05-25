@@ -82,7 +82,7 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SeanceViewModel seance = seanceService.GetSeance(id.Value);
+            SeanceEditionViewModel seance = seanceService.GetEditableSeance(id.Value);
 
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
