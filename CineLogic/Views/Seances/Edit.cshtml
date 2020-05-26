@@ -205,7 +205,7 @@
                         @if (film.Type != "promo")
                         {
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input d-none" id="@film.Titre.Replace(" ", "-")" type="radio" name="principalFilm" value="@film.Titre" />
+                                <input class="form-check-input d-none" id="@film.Titre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.Titre" />
                                 <label class="form-check-label myRB" for="@film.Titre.Replace(" ", "-")"><i class="far fa-star"></i></label>
                             </div>
                         }
@@ -214,42 +214,6 @@
                         </h3>
                     </div>
                 </li>
-                @*<li class="list-group-item d-flex align-items-center" id="1">
-                        <h3><i class="fas fa-film"></i> Film 1</h3>
-                        <h5 class="ml-3">20 mins</h5>
-                        <div class="ml-auto d-flex flex-row">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input d-none" id="principalFilm1" type="radio" name="principalFilm" value="1" />
-                                <label class="form-check-label myRB" for="principalFilm1"><i class="far fa-star"></i></label>
-                            </div>
-                            <div class="d-flex flex-column justify-content-between">
-                                <div onclick="moveup(1)" class="btn-order">
-                                    <i class="fas fa-chevron-up"></i>
-                                </div>
-                                <div onclick="movedown(1)" class="btn-order">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex align-items-center" id="2">
-                        <h3><i class="fas fa-film"></i> Film 2</h3>
-                        <h5 class="ml-3">93 mins</h5>
-                        <div class="ml-auto d-flex flex-row">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input d-none" id="principalFilm2" type="radio" name="principalFilm" value="2" />
-                                <label class="form-check-label myRB" for="principalFilm2"><i class="far fa-star"></i></label>
-                            </div>
-                            <div class=" d-flex flex-column justify-content-between">
-                                <div class="btn-order">
-                                    <i class="fas fa-chevron-up"></i>
-                                </div>
-                                <div class="btn-order">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </li>*@
             }
         </ul>
         <button class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#filmSelection"><i class="fas fa-plus"></i> Ajouter contenu</button>
@@ -270,15 +234,15 @@
                     <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
                     <div class="form-group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbPromo" value="promo" checked>
+                            <input class="form-check-input" type="checkbox" id="cbPromo" value="promo" name="types" checked>
                             <label class="form-check-label" for="cbPromo">Promos</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbCourt" value="court" checked>
+                            <input class="form-check-input" type="checkbox" id="cbCourt" value="court" name="types" checked>
                             <label class="form-check-label" for="cbCourt">Court metrages</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbStandard" value="stand" checked>
+                            <input class="form-check-input" type="checkbox" id="cbStandard" value="stand" name="types" checked>
                             <label class="form-check-label" for="cbStandard">Standards</label>
                         </div>
                     </div>
@@ -291,12 +255,16 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="film-select" class="form-control mr-2" size="6">
-                        </select>
+                        @using (Html.BeginForm("AddContent", "Seances", FormMethod.Post, new { name = "addContent", id = "addContent" }))
+                        {
+                            @Html.HiddenFor(model => model.SeanceID)
+                            <select id="film-select" class="form-control mr-2" size="6" name="contenuTitre">
+                            </select>
+                        }
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"><i class="fas fa-plus"></i> Ajouter</button>
+                    <button type="submit" class="btn btn-outline-success" form="addContent"><i class="fas fa-plus"></i> Ajouter</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
                 </div>
             </div>

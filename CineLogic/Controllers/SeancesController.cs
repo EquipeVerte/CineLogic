@@ -97,7 +97,7 @@ namespace CineLogic.Controllers
 
         [HttpPost]
         [HandleError]
-        public ActionResult Edit(SeanceViewModel seance)
+        public ActionResult Edit(SeanceEditionViewModel seance)
         {
             if (ModelState.IsValid)
             {
@@ -160,9 +160,17 @@ namespace CineLogic.Controllers
         [HandleErrorJson]
         public ActionResult AdjustTimes(int seanceID)
         {
-            // TODO adjustment logic.
+            seanceService.AdjustTimeToContent(seanceID);
 
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult AddContent(int seanceID, string contenuTitre)
+        {
+            seanceService.AddContentToSeance(seanceID, contenuTitre);
+
+            return RedirectToAction("Edit", new { id = seanceID });
         }
 
         public ActionResult Save()

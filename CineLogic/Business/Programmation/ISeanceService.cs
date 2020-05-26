@@ -21,6 +21,10 @@ namespace CineLogic.Business.Programmation
 
         void UpdateSeanceTimes(SeanceViewModel seance);
 
+        void AdjustTimeToContent(int seanceID);
+
+        void AddContentToSeance(int seanceID, string contenuTitre);
+
         void DeleteSeance(int id);
 
         void SaveChanges();

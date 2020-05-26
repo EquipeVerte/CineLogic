@@ -147,6 +147,11 @@ namespace CineLogic.Business.Programmation
             }
         }
 
+        public void AdjustTimeToContent(int seanceID)
+        {
+            // TODO time adjustment logic.
+        }
+
         public void UpdateSeanceTimes(SeanceViewModel seanceVM)
         {
             if (seanceVM.Validate(this))
@@ -160,6 +165,11 @@ namespace CineLogic.Business.Programmation
             {
                 throw new ScheduleException();
             }
+        }
+
+        public void AddContentToSeance(int seanceID, string contenuTitre)
+        {
+            // TODO adding content to seance logic.
         }
 
         public void DeleteSeance(int id)
