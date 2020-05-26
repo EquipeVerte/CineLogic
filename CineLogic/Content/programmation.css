@@ -78,8 +78,7 @@ input[readonly] {
 }
 
 #rmenu .list-group-item {
-    background-color: #DDEEEF;
-    cursor: default;
+    cursor: pointer;
 }
 
 #rmenu .list-group-item:hover {
@@ -96,6 +95,23 @@ input[readonly] {
 }
 
 .myRB {
-    font-size: 2rem;
+    font-size: 20px;
     color: gold;
+    cursor: pointer;
+}
+
+.myRB:hover {
+    color: goldenrod;
+}
+
+select {
+    font-family: 'FontAwesome', 'Segoe UI', 'sans-serif';
+}
+
+.handle, .btn-close {
+    color: gray;
+}
+
+.btn-close:hover {
+    color: #d9534f;
 }

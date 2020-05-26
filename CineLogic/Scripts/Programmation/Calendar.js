@@ -13,15 +13,15 @@ $(document).ready(function () {
     $('body').append(
         '<div class="show" id="rmenu">' +
         '<div class="card">' +
-        '<ul class="list-group list-group-flush">' +
+        '<ul class="list-group">' +
         '<li id="rmenu-delete" class="list-group-item py-2 px-3">' +
-        '<span>Supprimer</span>' +
+        '<span><i class="far fa-trash-alt"></i> Supprimer</span>' +
         '</li>' +
         '<li id="rmenu-ajuster" class="list-group-item py-2 px-3">' +
-        '<span>Ajuster le temps</span>' +
+        '<span><i class="far fa-clock"></i> Ajuster la durée</span>' +
         '</li>' +
         '<li id="rmenu-edit" class="list-group-item py-2 px-3">' +
-        '<span>Éditer</span>' +
+        '<span><i class="far fa-edit"></i> Éditer</span>' +
         '</li>' +
         '</ul>' +
         '</div>' +

@@ -30,39 +30,43 @@
 
 <hr />
 
-@if (ViewBag.UnsavedChanges != null)
-{
-    <div class="alert alert-danger unsaved-alert" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                    @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
-                <button class="btn btn-success save-changes" id="">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div class="alert alert-danger collapse unsaved-alert" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                    @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
-                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
-                <button class="btn btn-success save-changes" id="">Enregistrer</button>
+<!-- CHANGEMENTS NON_ENREGISTRÉS -->
+<div>
+    @if (ViewBag.UnsavedChanges != null)
+    {
+        <div class="alert alert-danger unsaved-alert" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                        @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                    <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="alert alert-danger collapse unsaved-alert" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                        @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                    <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
+<!-- CORPS DE LA PAGE -->
 <div class="row">
     <div class="col-md-4">
         <!-- Ajout d'une séance -->
@@ -140,6 +144,7 @@ else
     </div>
 </div>
 
+<!-- CHANGEMENTS NON_ENREGISTRÉS -->
 <div class="mt-3">
     @if (ViewBag.UnsavedChanges != null)
     {
@@ -176,7 +181,7 @@ else
 </div>
 
 @section modals {
-    <!-- Modal confirmation -->
+    <!-- Modal confirmation de creation -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -255,6 +260,11 @@ else
     </script>
 
     <script type="text/javascript">
+        //================================================================================
+        // ENREGISTREMENT
+        //================================================================================
+
+        // Script pour l'enregistrement et annulation des changements.
         $(document).ready(function () {
             $(".save-changes").on('click', function () {
                 console.log("save changes clicked");

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CineLogic.Business.Contenus;
 using CineLogic.Models;
 using CineLogic.Repositories;
 using System;
@@ -12,6 +13,42 @@ namespace CineLogic.Business.Programmation
 {
     public class SeanceService : ISeanceService
     {
+        private List<ContenuViewModel> dummyContenus = new List<ContenuViewModel>()
+        {
+            new ContenuViewModel()
+            {
+                Titre = "Promo 1",
+                RuntimeMins = 5,
+                Type = "promo",
+                indexOrdre = 0,
+                estPrincipal = false
+            },
+            new ContenuViewModel()
+            {
+                Titre = "Promo 2",
+                RuntimeMins = 3,
+                Type = "promo",
+                indexOrdre = 1,
+                estPrincipal = false
+            },
+            new ContenuViewModel()
+            {
+                Titre = "Court 1",
+                RuntimeMins = 10,
+                Type = "court",
+                indexOrdre = 2,
+                estPrincipal = false
+            },
+            new ContenuViewModel()
+            {
+                Titre = "Standard film 1",
+                RuntimeMins = 96,
+                Type = "stand",
+                indexOrdre = 3,
+                estPrincipal = true
+            }
+        };
+
         private ISeanceRepository repository;
 
         private IMapper mapper = new MapperConfiguration(cfg =>
@@ -54,7 +91,11 @@ namespace CineLogic.Business.Programmation
 
             if (seance != null)
             {
-                return mapper.Map<Seance, SeanceEditionViewModel>(seance);
+                SeanceEditionViewModel sevm =  mapper.Map<Seance, SeanceEditionViewModel>(seance);
+
+                sevm.Contenus = dummyContenus;
+
+                return sevm;
             }
 
             throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");

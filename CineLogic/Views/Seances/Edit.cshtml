@@ -2,6 +2,7 @@
 
 @section css {
     @Styles.Render("~/Content/programmation.css")
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
 }
 
 @{
@@ -10,46 +11,51 @@
 
 <h2>Édition : Séance @Model.SeanceID - @Model.Titre</h2>
 
-<div class="form-group">
+<div class="form-group mt-3">
     <div class="col-md-10">
-        <a href="@Url.Action("Index")" class="btn btn-outline-primary"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+        <a href="@Url.Action("Index")" class="btn btn-outline-primary mr-2"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+        <button type="submit" class="btn btn-outline-danger mr-2" form="delete"><i class="fas fa-trash"></i> Supprimer</button>
+        <button type="submit" class="btn btn-outline-success" form="edit"><i class="fas fa-sync-alt"></i> Actualiser</button>
     </div>
 </div>
 
 <hr />
 
 <!-- Alert de changements non-enregistrés -->
-@if (ViewBag.UnsavedChanges != null)
-{
-    <div class="alert alert-danger" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div class="alert alert-danger collapse" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
+<div>
+    @if (ViewBag.UnsavedChanges != null)
+    {
+        <div class="alert alert-danger" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="alert alert-danger collapse" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 <div class="row">
-    <div class="col-md-6">
+    <!-- ÉDITION DE LA SÉANCE -->
+    <div class="col-md-4">
         <!-- Formulaire d'édition de la séance-->
         @using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
         {
@@ -119,15 +125,10 @@ else
             </div>
         }
 
-        <!-- Boutons de soumission pour les formulaires-->
-        <div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Supprimer" class="btn btn-outline-danger mr-3" form="delete" />
-                <input type="submit" value="Actualiser" class="btn btn-outline-success" form="edit" />
-            </div>
-        </div>
+
     </div>
-    <div class="col-md-6">
+    <!-- CONTENUS -->
+    <div class="col-md-8">
         <!-- Selection et boit de récherche pour les films
         <div class="form-group">
 
@@ -141,46 +142,115 @@ else
                 </button>
             </div>
         </div>-->
+
+        <h4>Durée totale: <span id="duree">@Model.Contenus.Sum(c => c.RuntimeMins) mins</span></h4>
+
+        <div class="d-flex mb-2">
+            <div class="badge badge-danger mr-2">Promos</div>
+            <div class="badge badge-warning mr-2">Court metrages</div>
+            <div class="badge badge-success">Standards</div>
+        </div>
+
+        <div class="progress mb-2" id="dureeGraph">
+            @{int i = 0;}
+            @foreach (var film in Model.Contenus)
+            {
+                string index = "index" + i++;
+                string color = "";
+                switch (film.Type)
+                {
+                    case "promo":
+                        color = "bg-danger";
+                        break;
+                    case "court":
+                        color = "bg-warning";
+                        break;
+                    case "stand":
+                        color = "bg-success";
+                        break;
+                }
+                double width = Math.Round((double)(film.RuntimeMins * 100) / Model.Contenus.Sum(c => c.RuntimeMins));
+
+                <div id="@film.Titre" data-id="@film.Titre.Replace(" ", "-")" class="progress-bar @color border-right" role="progressbar" style="width:@width%"></div>
+            }
+        </div>
+
         <ul class="list-group" id="list-films">
-            @*@foreach (var film in Model.Contenus)
-                {*@
-            <li class="list-group-item d-flex align-items-center" id="1">
-                <h3><i class="fas fa-film"></i> Film 1</h3>
-                <h5 class="ml-3">20 mins</h5>
-                <div class="ml-auto d-flex flex-row">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input d-none" id="principalFilm1" type="radio" name="principalFilm" value="1" />
-                        <label class="form-check-label myRB" for="principalFilm1"><i class="far fa-star"></i></label>
+            @foreach (var film in Model.Contenus)
+            {
+                string icon = "";
+                string color = "";
+                switch (film.Type)
+                {
+                    case "promo":
+                        icon = "fas fa-ad";
+                        color = "text-danger";
+                        break;
+                    case "court":
+                        icon = "fas fa-video";
+                        color = "text-warning";
+                        break;
+                    case "stand":
+                        icon = "fas fa-film";
+                        color = "text-success";
+                        break;
+                }
+                <li class="list-group-item d-flex align-items-center" id="@film.Titre">
+                    <div class="handle mr-3">
+                        <h3 class="mb-0"><i class="fas fa-bars"></i></h3>
                     </div>
-                    <div class="d-flex flex-column justify-content-between">
-                        <div onclick="moveup(1)" class="btn-order">
-                            <i class="fas fa-chevron-up"></i>
-                        </div>
-                        <div onclick="movedown(1)" class="btn-order">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
+                    <h3 class="mb-0 "><i class="@icon @color"></i> @film.Titre</h3>
+                    <h5 class="ml-3 mb-0">@film.RuntimeMins mins</h5>
+                    <div class="ml-auto d-flex flex-row">
+                        @if (film.Type != "promo")
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input d-none" id="@film.Titre.Replace(" ", "-")" type="radio" name="principalFilm" value="@film.Titre" />
+                                <label class="form-check-label myRB" for="@film.Titre.Replace(" ", "-")"><i class="far fa-star"></i></label>
+                            </div>
+                        }
+                        <h3 class="mb-0 btn-close">
+                            <i class="fas fa-times"></i>
+                        </h3>
                     </div>
-                </div>
-            </li>
-            <li class="list-group-item d-flex align-items-center" id="2">
-                <h3><i class="fas fa-film"></i> Film 2</h3>
-                <h5 class="ml-3">93 mins</h5>
-                <div class="ml-auto d-flex flex-row">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input d-none" id="principalFilm2" type="radio" name="principalFilm" value="2" />
-                        <label class="form-check-label myRB" for="principalFilm2"><i class="far fa-star"></i></label>
-                    </div>
-                    <div class=" d-flex flex-column justify-content-between">
-                        <div class="btn-order">
-                            <i class="fas fa-chevron-up"></i>
+                </li>
+                @*<li class="list-group-item d-flex align-items-center" id="1">
+                        <h3><i class="fas fa-film"></i> Film 1</h3>
+                        <h5 class="ml-3">20 mins</h5>
+                        <div class="ml-auto d-flex flex-row">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input d-none" id="principalFilm1" type="radio" name="principalFilm" value="1" />
+                                <label class="form-check-label myRB" for="principalFilm1"><i class="far fa-star"></i></label>
+                            </div>
+                            <div class="d-flex flex-column justify-content-between">
+                                <div onclick="moveup(1)" class="btn-order">
+                                    <i class="fas fa-chevron-up"></i>
+                                </div>
+                                <div onclick="movedown(1)" class="btn-order">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
                         </div>
-                        <div class="btn-order">
-                            <i class="fas fa-chevron-down"></i>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center" id="2">
+                        <h3><i class="fas fa-film"></i> Film 2</h3>
+                        <h5 class="ml-3">93 mins</h5>
+                        <div class="ml-auto d-flex flex-row">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input d-none" id="principalFilm2" type="radio" name="principalFilm" value="2" />
+                                <label class="form-check-label myRB" for="principalFilm2"><i class="far fa-star"></i></label>
+                            </div>
+                            <div class=" d-flex flex-column justify-content-between">
+                                <div class="btn-order">
+                                    <i class="fas fa-chevron-up"></i>
+                                </div>
+                                <div class="btn-order">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </li>
-            @*}*@
+                    </li>*@
+            }
         </ul>
         <button class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#filmSelection"><i class="fas fa-plus"></i> Ajouter contenu</button>
     </div>
@@ -193,11 +263,25 @@ else
                 <div class="modal-header">
                     <h5 class="modal-title">Selectionner un film</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbPromo" value="promo" checked>
+                            <label class="form-check-label" for="cbPromo">Promos</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbCourt" value="court" checked>
+                            <label class="form-check-label" for="cbCourt">Court metrages</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbStandard" value="stand" checked>
+                            <label class="form-check-label" for="cbStandard">Standards</label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <input id="filter" class="form-control mb-1" placeholder="Recherche" />
                         <div class="d-flex justify-content-center">
@@ -212,7 +296,8 @@ else
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Ajouter</button>
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"><i class="fas fa-plus"></i> Ajouter</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -224,39 +309,39 @@ else
     <script type="text/javascript">
         $(document).ready(function () {
             $("#save-changes").on('click', function () {
-                console.log("save changes clicked");
-                var jqxhr = $.get("@Url.Action("Save")", function (data) {
-                    console.log("hide");
+                        console.log("save changes clicked");
+                        var jqxhr = $.get("@Url.Action("Save")", function (data) {
+                            console.log("hide");
                     $("#unsaved-alert").hide();
-                });
-            });
+                        });
+                    });
 
             $("#annuler-changes").on('click', function () {
                 $.get("@Url.Action("Annuler")", function (data) {
                     $("#unsaved-alert").hide();
+                        });
+                    });
                 });
-            });
-        });
     </script>
     <script>
         $(document).ready(function () {
-
-            getFilms();
+                    getFilms();
 
             //  Mettre à jour les films à chaque changement dans la boite de recherche.
             //  Est-ce que l'ajax est néccesaire? Peut être fais en javascript avec une liste statique?
             $("#filter").on('input', function () {
-                console.log("Change");
-                getFilms();
-            });
+                        console.log("Change");
+                        getFilms();
+                    });
 
-            function getFilms() {
+                    //  Remplir la liste des films.
+                    function getFilms() {
                 $.get("@Url.Action("Contenus", "Contenus")", { filter: $("#filter").val() }, function (data) {
                     $("#film-select").empty();
                     $("#film-select").append('<option value="">N/A</option>');
                     $.each(data, function (i, item) {
-                        $("#film-select").append('<option value="' + item + '">' + item + '</option>');
-                    });
+                        $("#film-select").append('<option value="' + item + '">&#xf008; ' + item + '</option>');
+                            });
                 });
             }
 
@@ -272,18 +357,44 @@ else
                 console.log("ajax stop");
                 $("#loading").hide();
             });
-
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script>
+        //  Créer la liste éditable.
         var el = document.getElementById('list-films');
         var sortable = new Sortable(el, {
-            animation: 150
+            handle: '.handle',
+            animation: 150,
+            onEnd: function (evt) {
+                console.log(this.toArray());
+                console.log(evt.oldIndex);
+                console.log(evt.newIndex);
+
+                var oldorder = dureeGraph.toArray();
+
+                console.log(oldorder);
+
+                var newOrder = move(oldorder, evt.oldIndex, evt.newIndex);
+
+                console.log(newOrder);
+
+                dureeGraph.sort(newOrder);
+            }
         });
 
+        function move(arr, from, to) {
+            arr.splice(to, 0, arr.splice(from, 1)[0]);
+            return arr;
+        };
+
+        var dg = document.getElementById('dureeGraph');
+        var dureeGraph = new Sortable(dg, {
+            dataIdAttr: 'data-id'
+        });
+
+        //  Rétourne une liste des titres des contenus dans l'ordre d'affichage.
         function getOrder() {
             var order = [];
 
@@ -292,10 +403,12 @@ else
             });
 
             console.log(order);
-        }
-        $(document).ready(function () {
-            
 
+            return order;
+        }
+
+        $(document).ready(function () {
+            //  Custom radio buttons.
             $('input[name=principalFilm]').change(function () {
                 $('#list-films').children('.list-group-item').each(function (i, item) {
                     console.log($('input[name=principalFilm]').filter(':checked').val());
@@ -308,7 +421,8 @@ else
                 });
             });
 
-            $('input[name=principalFilm]').val([1]);
+            //  Définir le contenu principal au début.
+            $('input[name=principalFilm]').val(["@Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault().Titre"]);
 
             $('input[name=principalFilm]').change();
         });
