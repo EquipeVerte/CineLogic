@@ -1,3 +1,17 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutAccueil.cshtml";
+    if(Session["type"] != null)
+    {
+        if (Session["type"].Equals("admin"))
+        {
+            Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAccueil.cshtml";
+    }
 }

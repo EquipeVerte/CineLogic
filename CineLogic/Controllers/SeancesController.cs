@@ -136,11 +136,31 @@ namespace CineLogic.Controllers
 
         [HttpPost]
         [HandleErrorJson]
+        public ActionResult DeleteAjax(int seanceID)
+        {
+            seanceService.DeleteSeance(seanceID);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
         public ActionResult UpdateTimes(SeanceViewModel seanceVM)
         {
             seanceService.UpdateSeanceTimes(seanceVM);
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
+        public ActionResult AdjustTimes(int seanceID)
+        {
+            // TODO adjustment logic.
 
             return Json(new { success = true });
         }
@@ -151,7 +171,9 @@ namespace CineLogic.Controllers
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = false;
 
-            return View("Index");
+            //return View("Index");
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Annuler()
@@ -162,7 +184,8 @@ namespace CineLogic.Controllers
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = false;
 
-            return View("Index");
+            //return View("Index");
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

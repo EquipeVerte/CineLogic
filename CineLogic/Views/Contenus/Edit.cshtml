@@ -20,13 +20,13 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Titre, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="card-title">
-                            @Html.EditorFor(model => model.Titre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Titre, new { htmlAttributes = new { @readonly="true", @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Titre, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Annee, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Annee, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.Annee, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Annee, "", new { @class = "text-danger" })
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.RuntimeMins, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.RuntimeMins, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.RuntimeMins, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.RuntimeMins, "", new { @class = "text-danger" })
@@ -139,11 +139,6 @@
         </div>
     }
 </div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
 
 <div class="d-flex justify-content-end">
     <div class="border-left border-bottom border-info m-4 p-4">

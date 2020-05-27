@@ -1,41 +1,24 @@
 ﻿@model IEnumerable<CineLogic.Models.User>
 
 @{
-    if (Session["login"].Equals("admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usagers";
 }
 
-<h2>Index</h2>
+<h2>Usagers</h2>
 
 
 <table class="table">
-    @if (Session["login"].Equals("admin"))
+    @if (Session["type"].Equals("admin"))
     {
         <tr>
-            <th>@Html.ActionLink("Create New", "Create")</th>
+            <th>@Html.ActionLink("Ajouter un usager", "Create")</th>
         </tr>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HashIterations)
+                @Html.DisplayNameFor(model => model.Login)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th></th>
         </tr>
@@ -44,24 +27,15 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PasswordHash)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HashIterations)
+                    @Html.DisplayFor(modelItem => item.Login)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NomComplet)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Login }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Login }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Login })
+                    @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                    @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
+                    @Html.ActionLink("Suprimmer", "Delete", new { id = item.Login })
                 </td>
             </tr>
         }
@@ -70,13 +44,7 @@
     {
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HashIterations)
+                @Html.DisplayNameFor(model => model.Login)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
@@ -93,13 +61,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PasswordHash)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Salt)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HashIterations)
+                        @Html.DisplayFor(modelItem => item.Login)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NomComplet)
@@ -108,8 +70,8 @@
                         @Html.DisplayFor(modelItem => item.Type)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Login }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Login }) |
+                        @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
+                        @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
                     </td>
                 </tr>
             }

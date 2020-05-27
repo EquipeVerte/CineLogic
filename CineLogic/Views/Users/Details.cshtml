@@ -1,53 +1,21 @@
 ﻿@model CineLogic.Models.User
 
 @{
-    if (Session["login"].Equals("admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Détails";
 }
 
-<h2>Details</h2>
+<h2>Détails</h2>
 
 <div>
-    <h4>User</h4>
+    <h4>Usager</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Motdepasse)
+            @Html.DisplayNameFor(model => model.Login)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Motdepasse)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HashIterations)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HashIterations)
+            @Html.DisplayFor(model => model.Login)
         </dd>
 
         <dt>
@@ -58,17 +26,9 @@
             @Html.DisplayFor(model => model.NomComplet)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Login }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Éditer", "Edit", new { id = Model.Login }) |
+    @Html.ActionLink("Liste des usagers", "Index")
 </p>

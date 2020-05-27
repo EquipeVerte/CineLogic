@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="fr-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,14 +18,18 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("CineLogic", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Accueil", "Home")" class="navbar-brand">
+                    <img class="logo" src="~/Images/CineLogicFull.png" />
+                </a>
             </div>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Accueil", "Accueil", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
                 </ul>
+                <div class="ml-auto">
+                    @Html.ActionLink("Se Connecter", "Login", "Home", null, new { @class = "btn btn-success" })
+                </div>
             </div>
         </div>
     </div>
@@ -33,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - CineLogic</p>
+            <p>&copy; @DateTime.Now.Year Cinelogic - Un produit Équipe Verte <img src="~/Images/evlogomini.png" /></p>
         </footer>
     </div>
 

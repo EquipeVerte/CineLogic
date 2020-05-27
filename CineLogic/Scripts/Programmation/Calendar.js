@@ -10,6 +10,21 @@ $(document).ready(function () {
 
     var calendarEl = document.getElementById('calendar');
 
+    $('body').append(
+        '<div class="show" id="rmenu">' +
+        '<div class="card">' +
+        '<ul class="list-group list-group-flush">' +
+        '<li class="list-group-item py-2 px-3">' +
+        '<span id="rmenu-delete" href="#">Supprimer</span>' +
+        '</li>' +
+        '<li class="list-group-item py-2 px-3">' +
+        '<span id="rmenu-ajuster">Ajuster le temps</span>' +
+        '</li>' +
+        '</ul>' +
+        '</div>' +
+        '</div>'
+    );
+
     //  Définir les options pour le calendrier.
     var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['timeGrid', 'interaction', 'bootstrap'],
@@ -27,14 +42,107 @@ $(document).ready(function () {
             hour12: false
         },
         editable: true,
+        snapDuration: '00:15:00',
         eventOverlap: false,
         eventDrop: function (info) {
             timesChanged(info);
         },
         eventResize: function (info) {
             timesChanged(info);
+        },
+        eventRender: function (info) {
+            $(info.el).contextmenu(function (e) {
+                e.preventDefault();
+                console.log("Context Menu");
+                $("#rmenu").show();
+                $("#rmenu").css({ 'top': mouseY(event) + 'px' });
+                $("#rmenu").css({ 'left': mouseX(event) + 'px' });
+                $("#rmenu-delete").on('click', function () {
+                    console.log("Delete");
+                    console.log(info.event.id);
+                    deleteEvent(info.event);
+                });
+                $("#rmenu-ajuster").on('click', function () {
+                    console.log("Ajuster");
+                    console.log(info.event.id);
+                    adjustTimes(info.event);
+                });
+
+                window.event.returnValue = false;
+            });
         }
     });
+
+    //  Cacher le context menu quand le bouton gauche du souris est cliqué.
+    $(document).bind("click", function (event) {
+        $("#rmenu").hide();
+    });
+
+    //  Fonctions pour rétourner les positions du souris.
+    function mouseX(evt) {
+        if (evt.pageX) {
+            return evt.pageX;
+        } else if (evt.clientX) {
+            return evt.clientX + (document.documentElement.scrollLeft ?
+                document.documentElement.scrollLeft :
+                document.body.scrollLeft);
+        } else {
+            return null;
+        }
+    }
+
+    function mouseY(evt) {
+        if (evt.pageY) {
+            return evt.pageY;
+        } else if (evt.clientY) {
+            return evt.clientY + (document.documentElement.scrollTop ?
+                document.documentElement.scrollTop :
+                document.body.scrollTop);
+        } else {
+            return null;
+        }
+    }
+
+    //  Supprimer un event par ajax.
+    function deleteEvent(event) {
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["DeleteSeanceAjax"],
+            dataType: 'json',
+            data: '{seanceID: ' + event.id + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                event.remove();
+                $("#unsaved-alert").show();
+                animateSuccess();
+            },
+            error: function (e) {
+                alert("Suppression échoué!");
+                animateFailure();
+            }
+        });
+    }
+
+    function adjustTimes(event) {
+        $.ajax({
+            type: 'POST',
+            url: dictURLs["AdjustSeanceTimes"],
+            dataType: 'json',
+            data: '{seanceID: ' + event.id + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                console.log("Post success.");
+                $("#unsaved-alert").show();
+                refreshEvents();
+                animateSuccess();
+            },
+            error: function (e) {
+                alert("Ajustement échoué!");
+                animateFailure();
+            }
+        });
+    }
 
     //  Appelé quand les heures d'un séance sont changé par le calendrier.
     function timesChanged(info) {

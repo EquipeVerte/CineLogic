@@ -1,91 +1,41 @@
 ﻿@model CineLogic.Models.LoginViewModel
 
 @{
-    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
     ViewBag.Title = "Login";
-
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <style>
-        .field-validation-error {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <div class="jumbotron">
-        <div id="login-div">
-
-            @using (Html.BeginForm("LoginAutoriser", "Home", FormMethod.Post))
-            {<br><br><br><br>
-                <table>
-                    <tr>
-                        <td></td>
-                        <td style="text-decoration:underline">Connexion</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.LabelFor(model => model.Login)
-                        </td>
-
-                        <td>
-                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@Html.ValidationMessageFor(model => model.Login)</td>
-                    </tr>
-                    <tr>
-
-                    <tr>
-                        <td>@Html.LabelFor(model => model.Password)</td>
-                        <td>@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@Html.ValidationMessageFor(model => model.Password)</td>
-                    </tr>
-
-
-
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" name="nameLogin" value="Login" />
-                        </td>
-                    </tr>
-                </table>
-                <br><br><br><br>
-            }
-            @*@using (Html.BeginForm("Create", "Users", FormMethod.Get))
-                {
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td style="text-decoration:underline">Inscription</td>
-                        </tr>
-                        <tr>
-                            <td><b>Première utilisation?</b></td>
-                            <td>
-                                <input type="submit" name="inscription" value="S’inscrire" />
-                            </td>
-                        </tr>
-                    </table>
-                }*@
-
+<div class="jumbotron">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</body>
-</html>
+        if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <h4>@ViewBag.Error</h4>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Se Connecter" class="btn btn-outline-success" />
+            </div>
+        </div>
+    }
+</div>
 
 

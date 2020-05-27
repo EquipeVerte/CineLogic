@@ -5,47 +5,19 @@
     ViewBag.Title = "Membre";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Espace membre</title>
-    <style>
-
-        .field-validation-error {
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <div class="jumbotron">
-        <div>
-            @using (CineLogic.Models.CineDBEntities db = new CineLogic.Models.CineDBEntities())
+<div class="jumbotron">
+    <div>
+        @using (CineLogic.Models.CineDBEntities db = new CineLogic.Models.CineDBEntities())
+        {
+            foreach (var item in db.Users)
             {
-                foreach (var item in db.Users)
-                {
 
-                    if (item.Login.Equals((string)Session["Login"]))
-                    {
-                        <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
-                    }
+                if (item.Login.Equals((string)Session["Login"]))
+                {
+                    <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
                 }
             }
-        </div>
+        }
     </div>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</body>
-</html>
-
-
-
-
-@{
-    ViewBag.Title = "View";
-}
-
-<h2>View</h2>
+</div>
 

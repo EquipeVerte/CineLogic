@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class SallesController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -57,7 +59,7 @@ namespace CineLogic.Controllers
             {
                 db.Salles.Add(salle);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cinemas");
             }
 
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
@@ -91,7 +93,7 @@ namespace CineLogic.Controllers
             {
                 db.Entry(salle).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cinemas");
             }
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
             return View(salle);
@@ -120,7 +122,7 @@ namespace CineLogic.Controllers
             Salle salle = db.Salles.Find(id);
             db.Salles.Remove(salle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Cinemas");
         }
 
         //  Ajax get salles.

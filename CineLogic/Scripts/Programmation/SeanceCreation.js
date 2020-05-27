@@ -6,6 +6,10 @@
     //  Confirmer l'ajout d'une nouvelle séance.
     $("#create-seance").click(function () {
 
+        //  Cacher les alerts s'ils sont affichés déjà.
+        $("#alert-seance-container").hide();
+        $("#success-seance-container").hide();
+
         //  Vérifier q'une date est sélectionné.
         if ($("#date-picker").datepicker('getDate') == null) {
             $("#alert-date").show();
@@ -65,8 +69,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function () {
                 console.log("Post success.");
-                console.log($("#unsaved-alert").show());
-                $("#unsaved-alert").show();
+                $(".unsaved-alert").show();
                 $("#confirmationModal").modal('hide');
                 $("#alert-seance-container").hide();
 

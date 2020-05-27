@@ -1,4 +1,5 @@
-﻿@model CineLogic.Models.Salle
+﻿
+@model CineLogic.Models.Salle
 
 @{
     ViewBag.Title = "Delete";
@@ -53,12 +54,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index", "Cinemas")
         </div>
     }
 </div>

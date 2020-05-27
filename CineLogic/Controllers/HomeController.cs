@@ -1,47 +1,50 @@
-﻿using CineLogic.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
+using CineLogic.Controllers.Attributes;
+using CineLogic.Models;
 
 namespace CineLogic.Controllers
 {
     public class HomeController : Controller
     {
-        private CineDBEntities db = new CineDBEntities();
         public ActionResult Accueil()
         {
-            return View(db.Contenus.ToList());
+            return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "À propos de cette projet.";
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contacter nous.";
+            ViewBag.Message = "Your contact page.";
 
             return View();
         }
 
+        [SessionActiveOnly]
         public ActionResult Admin()
         {
             return View();
         }
 
+        /*
         public ActionResult User()
         {
             return View();
         }
+        */
 
+        [RedirectIfSessionActive]
         public ActionResult Login()
         {
             ViewBag.Message = "Tapez votre login";
@@ -50,7 +53,7 @@ namespace CineLogic.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginAutoriser(LoginViewModel userModel)
+        public ActionResult Login(LoginViewModel userModel)
         {
 
             using (CineDBEntities db = new CineDBEntities())
@@ -68,6 +71,7 @@ namespace CineLogic.Controllers
                 if (hasher.IsMatched(userModel.Password, hash))
                 {
                     Session["login"] = user.Login;
+                    Session["type"] = user.Type;
 
                     return user.Type.Equals("admin")
                         ? RedirectToAction("Admin", "Home")
@@ -75,78 +79,12 @@ namespace CineLogic.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
+                    ViewBag.Error = "Vérifier l'identifiant ou mot de passe";
+                    return View();
                 }
-
-                /*
-                var userDetails = db.Users.Where(x => x.Login == userModel.Login && x.Motdepasse == userModel.Motdepasse).FirstOrDefault();
-
-                if (userDetails == null)
-                {
-                    return RedirectToAction("Login", "Home", new { Erreur = "Nom d'utilisateur ou mot de passe n'existe pas" });
-                }
-                else
-                {
-                    Session["login"] = userDetails.Login;
- 
-
-                    return userDetails.Type.Equals("admin")
-                        ? RedirectToAction("Admin", "Home")
-                        : RedirectToAction("User", "Home");
-                }
-                */
             }
         }
 
-        [HttpPost]
-        public ActionResult Login([Bind(Include = "Login, Password")] LoginViewModel loginUsers)
-        {
-            if (loginUsers.Login == "admin")
-            {
-                Session["login"] = loginUsers.Login;
-                return RedirectToAction("Index", "Admin");
-            }
-   
-            else
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Manage()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Edit([Bind(Include = "Login, Password, NewPassword, NewPasswordConfirm")] PasswordChangeViewModel userPass, string Type)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = new User()
-                {
-
-                };
-
-                using (CineDBEntities db = new CineDBEntities())
-                {
-                    try
-                    {
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                        return RedirectToAction("Connect", "Home");
-                    }
-                    catch
-                    {
-                        return RedirectToAction("Register", "Home", new { Erreur = "Incapable de registrer l'utilisateur." });
-                    }
-                }
-            }
-            else
-            {
-                return View();
-            }
-        }
         public ActionResult SessionDisconnect()
         {
             Session.Abandon();

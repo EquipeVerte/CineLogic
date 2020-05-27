@@ -3,7 +3,7 @@
 @section css {
     @Styles.Render("~/Content/fullcalendarcss")
     @Styles.Render("~/Content/bootstrapdatepickercss")
-    @Styles.Render("~/Content/Programmation/programmation.css")
+    @Styles.Render("~/Content/programmation.css")
 }
 
 @{
@@ -32,28 +32,32 @@
 
 @if (ViewBag.UnsavedChanges != null)
 {
-    <div class="alert alert-danger" id="unsaved-alert">
+    <div class="alert alert-danger unsaved-alert" id="unsaved-alert">
         <div class="row">
             <div class="col-md-10  d-flex justify-content-start align-items-center">
                 <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+                @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                    @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                <button class="btn btn-success save-changes" id="">Enregistrer</button>
             </div>
         </div>
     </div>
 }
 else
 {
-    <div class="alert alert-danger collapse" id="unsaved-alert">
+    <div class="alert alert-danger collapse unsaved-alert" id="unsaved-alert">
         <div class="row">
             <div class="col-md-10  d-flex justify-content-start align-items-center">
                 <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
             </div>
             <div class="col-md-2 d-flex justify-content-end align-items-center">
-                @Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
-                @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })
+                @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                    @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                <button class="btn btn-success save-changes" id="">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -183,6 +187,42 @@ else
     </div>
 </div>
 
+<div class="mt-3">
+    @if (ViewBag.UnsavedChanges != null)
+    {
+        <div class="alert alert-danger unsaved-alert" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                        @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                    <button class="btn btn-danger mr-2 save-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger collapse unsaved-alert" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    @*@Html.ActionLink("Annuler", "Annuler", "Seances", new { @class = "btn btn-danger mr-2" })
+                        @Html.ActionLink("Enregistrer", "Save", "Seances", new { @class = "btn btn-success" })*@
+                    <button class="btn btn-danger mr-2 annuler-changes" id="">Annuler</button>
+                    <button class="btn btn-success save-changes" id="">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
 @section scripts {
 
     <script type="text/javascript">
@@ -207,8 +247,29 @@ else
             "CreateSeance": "@Url.Action("Create")",
             "GetCinemas": "@Url.Action("Cinemas", "Cinemas")",
             "GetSalles": "@Url.Action("Salles", "Salles")",
-            "UpdateSeanceTimes": "@Url.Action("UpdateTimes")"
+            "UpdateSeanceTimes": "@Url.Action("UpdateTimes")",
+            "DeleteSeanceAjax": "@Url.Action("DeleteAjax")",
+            "AdjustSeanceTimes": "@Url.Action("AdjustTimes")"
         }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".save-changes").on('click', function () {
+                console.log("save changes clicked");
+                var jqxhr = $.get("@Url.Action("Save")", function (data) {
+                    $(".unsaved-alert").hide();
+                    refreshEvents();
+                });
+            });
+
+            $(".annuler-changes").on('click', function () {
+                $.get("@Url.Action("Annuler")", function (data) {
+                    $(".unsaved-alert").hide();
+                    refreshEvents();
+                });
+            });
+        });
     </script>
 
     @Scripts.Render("~/Content/fullcalendarjs")
