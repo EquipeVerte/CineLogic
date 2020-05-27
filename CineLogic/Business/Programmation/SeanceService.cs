@@ -150,6 +150,10 @@ namespace CineLogic.Business.Programmation
         public void AdjustTimeToContent(int seanceID)
         {
             // TODO time adjustment logic.
+
+            // Sum runtimes of content.
+            // Change end time to start time + sum of runtimes.
+
         }
 
         public void UpdateSeanceTimes(SeanceViewModel seanceVM)
@@ -170,6 +174,11 @@ namespace CineLogic.Business.Programmation
         public void AddContentToSeance(int seanceID, string contenuTitre)
         {
             // TODO adding content to seance logic.
+
+            // If first standard content it becomes principal film.
+            // Film added at the end of order.
+
+
         }
 
         public void DeleteSeance(int id)
