@@ -18,20 +18,19 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a href="@Url.Action("Accueil", "Home")" class="navbar-brand">
+                <a href="@Url.Action("Prog", "Home")" class="navbar-brand">
                     <img class="logo" src="~/Images/CineLogicFull.png" />
                 </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="nav-item">@Html.ActionLink("Mes détails", "Details", "Users", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Usagers", "Index", "Users", null, new { @class = "nav-link" })</li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownCinemaLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Cinémas
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownCinemaLink">
-                            <a class="dropdown-item" href="@Url.Action( "Index", "Cinemas")">Cinémas</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Cinemas")">Cinémas</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Responsables")">Responsables</a>
                         </div>
                     </li>
@@ -40,7 +39,7 @@
                             Oeuvres
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="@Url.Action( "Index", "Contenus")">Oeuvres</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Contenus")">Oeuvres</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Directeurs")">Directeurs</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Acteurs")">Acteurs</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Genres")">Genres</a>
@@ -49,12 +48,12 @@
                     <li class="nav-item">
                         @Html.ActionLink("Programmation", "Index", "Seances", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
                 </ul>
             </div>
             <div class="ml-auto">
-                @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home", new { @class = "btn btn-danger" })
+                @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home", null, new { @class = "btn btn-danger" })
             </div>
         </div>
     </div>

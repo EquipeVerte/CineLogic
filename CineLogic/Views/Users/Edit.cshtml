@@ -41,7 +41,7 @@
             @Html.ValidationMessageFor(model => model.NomComplet, "", new { @class = "text-danger" })
         </div>
     </div>
-    @if (Session["login"].Equals("admin"))
+    @if (Session[CineLogic.Models.Libraries.SessionTypes.login].Equals(CineLogic.Models.Libraries.UserTypes.admin))
     {
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })

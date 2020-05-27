@@ -5,9 +5,9 @@ using System.Web;
 
 namespace CineLogic.Models.Libraries
 {
-    public class ValidationLibrary
+    public class SessionTypes
     {
-        public const string ERR_REQUIS= "Ce champ est requis !";
-
+        public static string login { get => "login"; }
+        public static string type { get => "type"; }
     }
 }

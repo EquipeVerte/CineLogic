@@ -1,7 +1,7 @@
 ﻿@{
-    if(Session["type"] != null)
+    if(Session[CineLogic.Models.Libraries.SessionTypes.type] != null)
     {
-        if (Session["type"].Equals("admin"))
+        if (Session[CineLogic.Models.Libraries.SessionTypes.type].Equals(CineLogic.Models.Libraries.UserTypes.admin))
         {
             Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
         }

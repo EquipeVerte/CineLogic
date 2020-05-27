@@ -29,7 +29,7 @@
                             Cinémas
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownCinemaLink">
-                            <a class="dropdown-item" href="@Url.Action( "Index", "Cinemas")">Cinémas</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Cinemas")">Cinémas</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Responsables")">Responsables</a>
                         </div>
                     </li>
@@ -38,7 +38,7 @@
                             Oeuvres
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="@Url.Action( "Index", "Contenus")">Oeuvres</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Contenus")">Oeuvres</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Directeurs")">Directeurs</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Acteurs")">Acteurs</a>
                             <a class="dropdown-item" href="@Url.Action("Index", "Genres")">Genres</a>
@@ -47,21 +47,20 @@
                     <li class="nav-item">
                         @Html.ActionLink("Programmation", "Index", "Seances", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home",null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home",null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
                 </ul>
                 <div class="ml-auto">
-                    @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home",null, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home", new { @class = "btn btn-danger" })
                 </div>
             </div>
-            
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Cinelogic</p>
+            <p>&copy; @DateTime.Now.Year - Cinelogic - Un produit Équipe Verte <img src="~/Images/evlogomini.png" /> </p>
         </footer>
     </div>
 

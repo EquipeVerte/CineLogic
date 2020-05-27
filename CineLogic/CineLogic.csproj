@@ -200,6 +200,8 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\SessionTypes.cs" />
+    <Compile Include="Models\Libraries\UserTypes.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
@@ -521,7 +523,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Home\Prog.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
   </ItemGroup>
   <ItemGroup />

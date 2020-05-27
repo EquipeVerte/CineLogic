@@ -6,9 +6,8 @@
 
 <h2>Usagers</h2>
 
-
 <table class="table">
-    @if (Session["type"].Equals("admin"))
+    @if (Session[CineLogic.Models.Libraries.SessionTypes.type].Equals(CineLogic.Models.Libraries.UserTypes.admin))
     {
         <tr>
             <th>@Html.ActionLink("Ajouter un usager", "Create")</th>
@@ -36,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.NomComplet)
                 </td>
                 <td>
-                    @Html.DisplayNameFor(model => model.Type)
+                    @Html.DisplayFor(model => item.Type)
                 </td>
                 <td>
                     @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
@@ -55,15 +54,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.NomComplet)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
             <th></th>
         </tr>
 
         foreach (var item in Model)
         {
-            if (item.Login.Equals((string)Session["login"]))
+            if (item.Login.Equals((string)Session[CineLogic.Models.Libraries.SessionTypes.login]))
             {
                 <tr>
                     <td>
@@ -71,9 +67,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NomComplet)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
                     </td>
                     <td>
                         @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |

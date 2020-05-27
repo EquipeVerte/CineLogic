@@ -7,6 +7,7 @@ using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers
 {
@@ -38,7 +39,7 @@ namespace CineLogic.Controllers
         }
 
 
-        public ActionResult User()
+        public ActionResult Prog()
         {
             return View();
         }
@@ -70,12 +71,12 @@ namespace CineLogic.Controllers
 
                 if (hasher.IsMatched(userModel.Password, hash))
                 {
-                    Session["login"] = user.Login;
-                    Session["type"] = user.Type;
+                    Session[SessionTypes.login] = user.Login;
+                    Session[SessionTypes.type] = user.Type;
 
-                    return user.Type.Equals("admin")
+                    return user.Type.Equals(UserTypes.admin)
                         ? RedirectToAction("Admin", "Home")
-                        : RedirectToAction("User", "Home");
+                        : RedirectToAction("Prog", "Home");
                 }
                 else
                 {
