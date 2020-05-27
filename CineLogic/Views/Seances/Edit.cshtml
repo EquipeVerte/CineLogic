@@ -76,10 +76,11 @@ else
         </div>
 
         <!-- Selection et boit de récherche pour les films-->
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
+                @*@Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })*@
                 <div class="d-flex">
                     <input id="filter" class="form-control mb-1" placeholder="Recherche" />
                     <div class="d-flex justify-content-center">

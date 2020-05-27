@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using CineLogic.Models;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
 

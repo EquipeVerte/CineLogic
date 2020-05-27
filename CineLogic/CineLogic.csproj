@@ -190,6 +190,9 @@
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContenuPromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Directeur.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -202,6 +205,12 @@
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\SeanceContenu.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeancePromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />

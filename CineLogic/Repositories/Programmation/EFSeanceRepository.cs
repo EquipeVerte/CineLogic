@@ -75,7 +75,7 @@ namespace CineLogic.Repositories
             seanceToUpdate.HeureDebut = seance.HeureDebut;
             seanceToUpdate.HeureFin = seance.HeureFin;
             seanceToUpdate.Titre = seance.Titre;
-            seanceToUpdate.ContenuTitre = seance.ContenuTitre;
+            //seanceToUpdate.ContenuTitre = seance.ContenuTitre;
         }
 
         public int SaveChanges()

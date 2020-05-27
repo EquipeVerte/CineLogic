@@ -12,23 +12,18 @@ namespace CineLogic.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class ContenuPromo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public ContenuPromo()
         {
-            this.Cinemas = new HashSet<Cinema>();
+            this.SeancePromoes = new HashSet<SeancePromo>();
         }
     
-        public string Login { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] Salt { get; set; }
-        public int HashIterations { get; set; }
-        public string NomComplet { get; set; }
-        public string Type { get; set; }
-        public string MotDePasse { get; set; }
+        public string Titre { get; set; }
+        public int RuntimeMins { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cinema> Cinemas { get; set; }
+        public virtual ICollection<SeancePromo> SeancePromoes { get; set; }
     }
 }
