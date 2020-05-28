@@ -82,7 +82,7 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SeanceEditionViewModel seance = seanceService.GetEditableSeance(id.Value);
+            SeanceViewModel seance = seanceService.GetEditableSeance(id.Value);
 
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
@@ -97,13 +97,15 @@ namespace CineLogic.Controllers
 
         [HttpPost]
         [HandleError]
-        public ActionResult Edit(SeanceEditionViewModel seance)
+        public ActionResult Edit(SeanceViewModel seance)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     seanceService.UpdateSeance(seance);
+
+                    seanceService.UpdateSeanceContents(seance);
 
                     System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 

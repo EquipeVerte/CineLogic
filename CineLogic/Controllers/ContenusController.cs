@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Microsoft.Win32;
 using System.IO;
 using CineLogic.Controllers.Attributes;
+using CineLogic.Business.Contenus;
 
 namespace CineLogic.Controllers
 {
@@ -272,7 +273,14 @@ namespace CineLogic.Controllers
         {
             CineDBEntities db = new CineDBEntities();
 
-            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
+            //List<ContenuSelectionViewModel> contents = standardContents.Concat(promoContents).ToList();
+
+            return Content(
+                JsonConvert.SerializeObject(
+                    (from c in db.Contenus where c.Titre.Contains(filter) select new { titre = c.Titre, type = c.typage, runtime = c.RuntimeMins }).ToList().Concat(
+                        (from c in db.ContenuPromoes where c.Titre.Contains(filter) select new { titre = c.Titre, type = "promo", runtime = c.RuntimeMins }).ToList()
+                    )), 
+                "application/json");
         }
     }
 }

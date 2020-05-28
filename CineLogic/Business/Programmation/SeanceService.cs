@@ -18,8 +18,9 @@ namespace CineLogic.Business.Programmation
 
         private IMapper mapper = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<Seance, SeanceViewModel>();
-            cfg.CreateMap<Seance, SeanceEditionViewModel>();
+            cfg.CreateMap<Seance, SeanceViewModel>()
+                .ForMember(dest => dest.PrincipalFilm,
+                opts => opts.MapFrom(src => src.SeanceContenus.Where(sc => sc.estPrincipal.GetValueOrDefault()).FirstOrDefault().ContenuTitre));
             cfg.CreateMap<SeanceViewModel, Seance>();
             cfg.CreateMap<SeanceContenu, ContenuViewModel>()
                 .ForMember(dest => dest.RuntimeMins,
@@ -60,20 +61,22 @@ namespace CineLogic.Business.Programmation
             throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");
         }
 
-        public SeanceEditionViewModel GetEditableSeance(int id)
+        public SeanceViewModel GetEditableSeance(int id)
         {
             Seance seance = repository.GetSeance(id);
 
             if (seance != null)
             {
-                SeanceEditionViewModel sevm =  mapper.Map<Seance, SeanceEditionViewModel>(seance);
+                SeanceViewModel svm =  mapper.Map<Seance, SeanceViewModel>(seance);
 
-                sevm.Contenus =
+                svm.Contenus =
                     mapper.Map<IEnumerable<SeanceContenu>, IEnumerable<ContenuViewModel>>(seance.SeanceContenus)
                         .Concat(mapper.Map<IEnumerable<SeancePromo>, IEnumerable<ContenuViewModel>>(seance.SeancePromoes))
                         .ToList();
 
-                return sevm;
+                svm.Contenus.Sort();
+
+                return svm;
             }
 
             throw new NotFoundException($"Le séance avec ID {id} n'existe pas dans la base de données.");
@@ -125,6 +128,32 @@ namespace CineLogic.Business.Programmation
             }
         }
 
+        public void UpdateSeanceContents(SeanceViewModel seanceVM)
+        {
+            Seance seance = repository.GetSeance(seanceVM.SeanceID);
+
+            List<string> order = new List<string>(seanceVM.Order.Split(','));
+
+            foreach(var content in seance.SeanceContenus)
+            {
+                content.indexOrdre = order.IndexOf(content.ContenuTitre);
+
+                if(content.ContenuTitre == seanceVM.PrincipalFilm)
+                {
+                    content.estPrincipal = true;
+                }
+                else
+                {
+                    content.estPrincipal = false;
+                }
+            }
+
+            foreach(var content in seance.SeancePromoes)
+            {
+                content.indexOrdre = order.IndexOf(content.PromoTitre);
+            }
+        }
+
         public void AdjustTimeToContent(int seanceID)
         {
             Seance seance = repository.GetSeance(seanceID);
@@ -141,7 +170,7 @@ namespace CineLogic.Business.Programmation
 
                     seance.HeureFin = seance.HeureDebut.AddMinutes(totalRuntime);
 
-                    if (mapper.Map<Seance, SeanceEditionViewModel>(seance).Validate(this))
+                    if (mapper.Map<Seance, SeanceViewModel>(seance).Validate(this))
                     {
                         repository.UpdateSeance(seance);
                     }

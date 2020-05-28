@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineLogic.Business.Contenus;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,12 @@ namespace CineLogic.Business.Programmation
         [Required]
         [DisplayName("Salle ID")]
         public int SalleID { get; set; }
-        
+
+        public List<ContenuViewModel> Contenus { get; set; }
+        //public List<ContenuViewModel> SeancePromoes { get; set; }
+        public string PrincipalFilm { get; set; }
+        public string Order { get; set; }
+
         //[DisplayName("Titre du film")]
         //public string ContenuTitre { get; set; }
 

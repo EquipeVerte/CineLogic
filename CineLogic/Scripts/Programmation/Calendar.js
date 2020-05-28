@@ -203,6 +203,9 @@ $(document).ready(function () {
 
     //  Fonction pour mettre à jour les evenements.
     refreshEvents = function () {
+
+        console.log("hi");
+
         if (eventsRefreshing) return;
         eventsRefreshing = true;
 
@@ -221,16 +224,19 @@ $(document).ready(function () {
             var events = [];
             //  Ajouter chaque evenement dans le tableau des evenements.
             $.each(data, function (i, item) {
+
+                console.log(item);
+
                 events.push({
                     id: item.SeanceID,
                     url: dictURLs["EditSeance"] + '/' + item.SeanceID,
-                    title: item.Titre + (item.ContenuTitre == null ? "" : " - " + item.ContenuTitre),
+                    title: item.Titre + (item.PrincipalFilm == null ? "" : " - " + item.PrincipalFilm),
                     start: item.HeureDebut,
                     end: item.HeureFin,
-                    backgroundColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
-                    borderColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
+                    backgroundColor: item.PrincipalFilm == null ? 'primary' : '#5CB85C',
+                    borderColor: item.PrincipalFilm == null ? 'primary' : '#5CB85C',
                     eventTitle: item.Titre,
-                    contenuTitre: item.ContenuTitre
+                    contenuTitre: item.PrincipalFilm
                 });
             });
             //  Ajouter les evenements à le calendrier.
