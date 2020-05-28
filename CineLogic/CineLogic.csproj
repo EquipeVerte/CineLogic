@@ -217,7 +217,6 @@
     <Compile Include="Business\Cinemas\SalleSelectionItem.cs" />
     <Compile Include="Business\Programmation\SeanceViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\PasswordChangeViewModel.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -227,8 +226,6 @@
     <Compile Include="Models\Seance.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usagers\EF_UserRepository.cs" />
-    <Compile Include="Models\Usagers\IUserRepository.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>

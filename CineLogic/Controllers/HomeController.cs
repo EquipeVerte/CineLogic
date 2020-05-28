@@ -44,7 +44,7 @@ namespace CineLogic.Controllers
         }
         */
 
-        [RedirectIfSessionActive]
+        //[RedirectIfSessionActive]
         public ActionResult Login()
         {
             ViewBag.Message = "Tapez votre login";
