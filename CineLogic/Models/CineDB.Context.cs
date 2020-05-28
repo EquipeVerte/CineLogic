@@ -32,10 +32,10 @@ namespace CineLogic.Models
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Responsable> Responsables { get; set; }
         public virtual DbSet<Salle> Salles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ContenuPromo> ContenuPromoes { get; set; }
         public virtual DbSet<Seance> Seances { get; set; }
         public virtual DbSet<SeanceContenu> SeanceContenus { get; set; }
         public virtual DbSet<SeancePromo> SeancePromoes { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

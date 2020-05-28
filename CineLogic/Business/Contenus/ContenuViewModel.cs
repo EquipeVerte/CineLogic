@@ -10,11 +10,10 @@ namespace CineLogic.Business.Contenus
         //  Idea on how to pass data to view.
         //  Ce viewmodel va régrouper tous les types de contenu.
 
-        public string Titre { get; set; }
-        public string Description { get; set; }
-        public int Annee { get; set; }
+        public string ContenuTitre { get; set; }
+        public int SeanceID { get; set; }
         public int RuntimeMins { get; set; }
-        public string Type { get; set; }
+        public string Typage { get; set; }
         public int indexOrdre { get; set; }
         public bool estPrincipal { get; set; }
 

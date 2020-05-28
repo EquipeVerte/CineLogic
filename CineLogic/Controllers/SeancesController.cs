@@ -162,6 +162,8 @@ namespace CineLogic.Controllers
         {
             seanceService.AdjustTimeToContent(seanceID);
 
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
             return Json(new { success = true });
         }
 
@@ -169,6 +171,8 @@ namespace CineLogic.Controllers
         public ActionResult AddContent(int seanceID, string contenuTitre)
         {
             seanceService.AddContentToSeance(seanceID, contenuTitre);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
             return RedirectToAction("Edit", new { id = seanceID });
         }

@@ -23,6 +23,10 @@ namespace CineLogic.Repositories
 
         void UpdateSeance(Seance seance);
 
+        void AddContenu(SeanceContenu contenu);
+
+        void AddPromo(SeancePromo promo);
+
         int SaveChanges();
 
         void Annuler();

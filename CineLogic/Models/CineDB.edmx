@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acteur">
           <Key>
             <PropertyRef Name="Nom" />
@@ -20,7 +20,7 @@
           <Property Name="Adresse" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EnExploitation" Type="bit" Nullable="false" />
           <Property Name="ResponsableID" Type="int" Nullable="false" />
-          <Property Name="Programmateur" Type="nvarchar" MaxLength="200" />
+          <Property Name="Programmateur" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Contenu">
           <Key>
@@ -58,7 +58,7 @@
             <PropertyRef Name="GenreNom" />
           </Key>
           <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="GenreNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GenreNom" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ContenuPromo">
           <Key>
@@ -77,7 +77,7 @@
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Responsable">
           <Key>
@@ -104,7 +104,7 @@
             <PropertyRef Name="SeanceID" />
           </Key>
           <Property Name="SeanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Titre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="HeureDebut" Type="datetime" Nullable="false" />
           <Property Name="HeureFin" Type="datetime" Nullable="false" />
           <Property Name="SalleID" Type="int" Nullable="false" />
@@ -132,8 +132,7 @@
           <Key>
             <PropertyRef Name="Login" />
           </Key>
-          <Property Name="Login" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="MotDePasse" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="HashIterations" Type="int" Nullable="false" />
@@ -381,8 +380,7 @@
             <End Role="Seance" EntitySet="Seance" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -402,10 +400,10 @@
           <Property Name="Adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EnExploitation" Type="Boolean" Nullable="false" />
           <Property Name="ResponsableID" Type="Int32" Nullable="false" />
-          <Property Name="Programmateur" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Programmateur" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Responsable" Relationship="Self.FK_Cinema_Responsable" FromRole="Cinema" ToRole="Responsable" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Cinema_User" FromRole="Cinema" ToRole="User" />
           <NavigationProperty Name="Salles" Relationship="Self.FK_Salle_Cinema" FromRole="Cinema" ToRole="Salle" />
+          <NavigationProperty Name="User" Relationship="CineDBModel.FK_Cinema_User" FromRole="Cinema" ToRole="User" />
         </EntityType>
         <EntityType Name="Contenu">
           <Key>
@@ -436,7 +434,7 @@
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Contenus" Relationship="Self.ContenuGenre" FromRole="Genre" ToRole="Contenu" />
         </EntityType>
         <EntityType Name="Responsable">
@@ -462,19 +460,6 @@
           <NavigationProperty Name="Cinema" Relationship="Self.FK_Salle_Cinema" FromRole="Salle" ToRole="Cinema" />
           <NavigationProperty Name="Seances" Relationship="CineDBModel.FK_Seance_Salle1" FromRole="Salle" ToRole="Seance1" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Login" />
-          </Key>
-          <Property Name="Login" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
-          <Property Name="Salt" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
-          <Property Name="HashIterations" Type="Int32" Nullable="false" />
-          <Property Name="NomComplet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
-          <Property Name="MotDePasse" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
         <Association Name="FK_Cinema_Responsable">
           <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
           <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
@@ -484,18 +469,6 @@
             </Principal>
             <Dependent Role="Cinema">
               <PropertyRef Name="ResponsableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cinema_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Login" />
-            </Principal>
-            <Dependent Role="Cinema">
-              <PropertyRef Name="Programmateur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,13 +504,8 @@
           <EntitySet Name="Genres" EntityType="Self.Genre" />
           <EntitySet Name="Responsables" EntityType="Self.Responsable" />
           <EntitySet Name="Salles" EntityType="Self.Salle" />
-          <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
             <End Role="Responsable" EntitySet="Responsables" />
-            <End Role="Cinema" EntitySet="Cinemas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cinema_User" Association="Self.FK_Cinema_User">
-            <End Role="User" EntitySet="Users" />
             <End Role="Cinema" EntitySet="Cinemas" />
           </AssociationSet>
           <AssociationSet Name="FK_Salle_Cinema" Association="Self.FK_Salle_Cinema">
@@ -580,6 +548,11 @@
             <End Role="Seance1" EntitySet="Seances" />
             <End Role="SeancePromo1" EntitySet="SeancePromoes" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="CineDBModel.User" />
+          <AssociationSet Name="FK_Cinema_User" Association="CineDBModel.FK_Cinema_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Cinema" EntitySet="Cinemas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ContenuPromo">
           <Key>
@@ -594,7 +567,7 @@
             <PropertyRef Name="SeanceID" />
           </Key>
           <Property Name="SeanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Titre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Titre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="HeureDebut" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HeureFin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SalleID" Type="Int32" Nullable="false" />
@@ -685,6 +658,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="Binary" Nullable="false" MaxLength="24" FixedLength="true" />
+          <Property Name="Salt" Type="Binary" Nullable="false" MaxLength="24" FixedLength="true" />
+          <Property Name="HashIterations" Type="Int32" Nullable="false" />
+          <Property Name="NomComplet" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Cinemas" Relationship="CineDBModel.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
+        </EntityType>
+        <Association Name="FK_Cinema_User">
+          <End Type="CineDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="CineDBModel.Cinema" Role="Cinema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="Cinema">
+              <PropertyRef Name="Programmateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -761,19 +758,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="CineDBModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
-                <ScalarProperty Name="HashIterations" ColumnName="HashIterations" />
-                <ScalarProperty Name="NomComplet" ColumnName="NomComplet" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="ContenuActeur" TypeName="CineDBModel.ContenuActeur" StoreEntitySet="ContenuActeur">
             <EndProperty Name="Acteur">
               <ScalarProperty Name="Nom" ColumnName="ActeurNom" />
@@ -833,6 +817,18 @@
                 <ScalarProperty Name="indexOrdre" ColumnName="indexOrdre" />
                 <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
                 <ScalarProperty Name="PromoTitre" ColumnName="PromoTitre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CineDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="NomComplet" ColumnName="NomComplet" />
+                <ScalarProperty Name="HashIterations" ColumnName="HashIterations" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

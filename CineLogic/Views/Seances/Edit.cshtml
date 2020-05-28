@@ -129,19 +129,6 @@
     </div>
     <!-- CONTENUS -->
     <div class="col-md-8">
-        <!-- Selection et boit de récherche pour les films
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
-            </div>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#filmSelection">
-                    Selectionner un film
-                </button>
-            </div>
-        </div>-->
 
         <h4>Durée totale: <span id="duree">@Model.Contenus.Sum(c => c.RuntimeMins) mins</span></h4>
 
@@ -157,7 +144,7 @@
             {
                 string index = "index" + i++;
                 string color = "";
-                switch (film.Type)
+                switch (film.Typage)
                 {
                     case "promo":
                         color = "bg-danger";
@@ -165,13 +152,13 @@
                     case "court":
                         color = "bg-warning";
                         break;
-                    case "stand":
+                    case "standard":
                         color = "bg-success";
                         break;
                 }
                 double width = Math.Round((double)(film.RuntimeMins * 100) / Model.Contenus.Sum(c => c.RuntimeMins));
 
-                <div id="@film.Titre" data-id="@film.Titre.Replace(" ", "-")" class="progress-bar @color border-right" role="progressbar" style="width:@width%"></div>
+                <div id="@film.ContenuTitre" data-id="@film.ContenuTitre.Replace(" ", "-")" class="progress-bar @color border-right" role="progressbar" style="width:@width%"></div>
             }
         </div>
 
@@ -180,7 +167,7 @@
             {
                 string icon = "";
                 string color = "";
-                switch (film.Type)
+                switch (film.Typage)
                 {
                     case "promo":
                         icon = "fas fa-ad";
@@ -190,23 +177,23 @@
                         icon = "fas fa-video";
                         color = "text-warning";
                         break;
-                    case "stand":
+                    case "standard":
                         icon = "fas fa-film";
                         color = "text-success";
                         break;
                 }
-                <li class="list-group-item d-flex align-items-center" id="@film.Titre">
+                <li class="list-group-item d-flex align-items-center" id="@film.ContenuTitre">
                     <div class="handle mr-3">
                         <h3 class="mb-0"><i class="fas fa-bars"></i></h3>
                     </div>
-                    <h3 class="mb-0 "><i class="@icon @color"></i> @film.Titre</h3>
+                    <h3 class="mb-0 "><i class="@icon @color"></i> @film.ContenuTitre</h3>
                     <h5 class="ml-3 mb-0">@film.RuntimeMins mins</h5>
                     <div class="ml-auto d-flex flex-row">
-                        @if (film.Type != "promo")
+                        @if (film.Typage != "promo")
                         {
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input d-none" id="@film.Titre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.Titre" />
-                                <label class="form-check-label myRB" for="@film.Titre.Replace(" ", "-")"><i class="far fa-star"></i></label>
+                                <input class="form-check-input d-none" id="@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
+                                <label class="form-check-label myRB" for="@film.ContenuTitre.Replace(" ", "-")"><i class="far fa-star"></i></label>
                             </div>
                         }
                         <h3 class="mb-0 btn-close">
@@ -390,7 +377,17 @@
             });
 
             //  Définir le contenu principal au début.
-            $('input[name=principalFilm]').val(["@Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault().Titre"]);
+
+            @{
+                string titre = "";
+                if (@Model.Contenus.Count > 0)
+                {
+                    titre = @Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault().ContenuTitre;
+                }
+            }
+
+
+            $('input[name=principalFilm]').val(["@titre"]);
 
             $('input[name=principalFilm]').change();
         });

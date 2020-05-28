@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'G:\Session 5\Projet VMA\Empty_CineLogic\CineLogic\Models\CineDB.edmx'. 
+﻿// T4 code generation is enabled for model 'F:\Session_5\Projet_VMA\Travail de Session\CineLogic\CineLogic\Models\CineDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
