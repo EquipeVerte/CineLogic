@@ -286,6 +286,7 @@
     <Content Include="Content\Fullcalendar\timegrid\main.js" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
+    <Content Include="Content\programmation.css" />
     <Content Include="Scripts\Programmation\AjaxLoader.js" />
     <Content Include="Scripts\Programmation\Calendar.js" />
     <Content Include="Scripts\Programmation\DatePicker.js" />
