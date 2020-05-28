@@ -20,7 +20,7 @@
           <Property Name="Adresse" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EnExploitation" Type="bit" Nullable="false" />
           <Property Name="ResponsableID" Type="int" Nullable="false" />
-          <Property Name="Programmateur" Type="nvarchar" MaxLength="20" />
+          <Property Name="Programmateur" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Contenu">
           <Key>
@@ -34,6 +34,7 @@
           <Property Name="Votes" Type="int" />
           <Property Name="Revenue" Type="decimal" Precision="6" Scale="2" />
           <Property Name="MetaScore" Type="int" />
+          <Property Name="typage" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ContenuActeur">
           <Key>
@@ -57,7 +58,14 @@
             <PropertyRef Name="GenreNom" />
           </Key>
           <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="GenreNom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="GenreNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContenuPromo">
+          <Key>
+            <PropertyRef Name="Titre" />
+          </Key>
+          <Property Name="Titre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RuntimeMins" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Directeur">
           <Key>
@@ -69,7 +77,7 @@
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Responsable">
           <Key>
@@ -96,17 +104,36 @@
             <PropertyRef Name="SeanceID" />
           </Key>
           <Property Name="SeanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Titre" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="HeureDebut" Type="datetime" Nullable="false" />
           <Property Name="HeureFin" Type="datetime" Nullable="false" />
           <Property Name="SalleID" Type="int" Nullable="false" />
-          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="SeanceContenu">
+          <Key>
+            <PropertyRef Name="ContenuTitre" />
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SeanceID" Type="int" Nullable="false" />
+          <Property Name="indexOrdre" Type="int" />
+          <Property Name="estPrincipal" Type="bit" />
+        </EntityType>
+        <EntityType Name="SeancePromo">
+          <Key>
+            <PropertyRef Name="PromoTitre" />
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="PromoTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SeanceID" Type="int" Nullable="false" />
+          <Property Name="indexOrdre" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Login" />
           </Key>
-          <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MotDePasse" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
           <Property Name="HashIterations" Type="int" Nullable="false" />
@@ -209,6 +236,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ContenuSeance_Contenu">
+          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
+          <End Role="SeanceContenu" Type="Self.SeanceContenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="SeanceContenu">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuSeance_Seance">
+          <End Role="Seance" Type="Self.Seance" Multiplicity="1" />
+          <End Role="SeanceContenu" Type="Self.SeanceContenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seance">
+              <PropertyRef Name="SeanceID" />
+            </Principal>
+            <Dependent Role="SeanceContenu">
+              <PropertyRef Name="SeanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromoSeance_Promo">
+          <End Role="ContenuPromo" Type="Self.ContenuPromo" Multiplicity="1" />
+          <End Role="SeancePromo" Type="Self.SeancePromo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContenuPromo">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="SeancePromo">
+              <PropertyRef Name="PromoTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromoSeance_Seance">
+          <End Role="Seance" Type="Self.Seance" Multiplicity="1" />
+          <End Role="SeancePromo" Type="Self.SeancePromo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seance">
+              <PropertyRef Name="SeanceID" />
+            </Principal>
+            <Dependent Role="SeancePromo">
+              <PropertyRef Name="SeanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Salle_Cinema">
           <End Role="Cinema" Type="Self.Cinema" Multiplicity="1" />
           <End Role="Salle" Type="Self.Salle" Multiplicity="*" />
@@ -218,18 +293,6 @@
             </Principal>
             <Dependent Role="Salle">
               <PropertyRef Name="CinemaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Seance_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="0..1" />
-          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contenu">
-              <PropertyRef Name="Titre" />
-            </Principal>
-            <Dependent Role="Seance">
-              <PropertyRef Name="ContenuTitre" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -252,11 +315,14 @@
           <EntitySet Name="ContenuActeur" EntityType="Self.ContenuActeur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContenuDirecteur" EntityType="Self.ContenuDirecteur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContenuGenre" EntityType="Self.ContenuGenre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContenuPromo" EntityType="Self.ContenuPromo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Directeur" EntityType="Self.Directeur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responsable" EntityType="Self.Responsable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salle" EntityType="Self.Salle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seance" EntityType="Self.Seance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeanceContenu" EntityType="Self.SeanceContenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeancePromo" EntityType="Self.SeancePromo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
             <End Role="Responsable" EntitySet="Responsable" />
@@ -290,13 +356,25 @@
             <End Role="Genre" EntitySet="Genre" />
             <End Role="ContenuGenre" EntitySet="ContenuGenre" />
           </AssociationSet>
+          <AssociationSet Name="FK_ContenuSeance_Contenu" Association="Self.FK_ContenuSeance_Contenu">
+            <End Role="Contenu" EntitySet="Contenu" />
+            <End Role="SeanceContenu" EntitySet="SeanceContenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuSeance_Seance" Association="Self.FK_ContenuSeance_Seance">
+            <End Role="Seance" EntitySet="Seance" />
+            <End Role="SeanceContenu" EntitySet="SeanceContenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromoSeance_Promo" Association="Self.FK_PromoSeance_Promo">
+            <End Role="ContenuPromo" EntitySet="ContenuPromo" />
+            <End Role="SeancePromo" EntitySet="SeancePromo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromoSeance_Seance" Association="Self.FK_PromoSeance_Seance">
+            <End Role="Seance" EntitySet="Seance" />
+            <End Role="SeancePromo" EntitySet="SeancePromo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Salle_Cinema" Association="Self.FK_Salle_Cinema">
             <End Role="Cinema" EntitySet="Cinema" />
             <End Role="Salle" EntitySet="Salle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seance_Contenu" Association="Self.FK_Seance_Contenu">
-            <End Role="Contenu" EntitySet="Contenu" />
-            <End Role="Seance" EntitySet="Seance" />
           </AssociationSet>
           <AssociationSet Name="FK_Seance_Salle" Association="Self.FK_Seance_Salle">
             <End Role="Salle" EntitySet="Salle" />
@@ -324,7 +402,7 @@
           <Property Name="Adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EnExploitation" Type="Boolean" Nullable="false" />
           <Property Name="ResponsableID" Type="Int32" Nullable="false" />
-          <Property Name="Programmateur" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Programmateur" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Responsable" Relationship="Self.FK_Cinema_Responsable" FromRole="Cinema" ToRole="Responsable" />
           <NavigationProperty Name="User" Relationship="Self.FK_Cinema_User" FromRole="Cinema" ToRole="User" />
           <NavigationProperty Name="Salles" Relationship="Self.FK_Salle_Cinema" FromRole="Cinema" ToRole="Salle" />
@@ -341,10 +419,11 @@
           <Property Name="Votes" Type="Int32" />
           <Property Name="Revenue" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="MetaScore" Type="Int32" />
-          <NavigationProperty Name="Seances" Relationship="Self.FK_Seance_Contenu" FromRole="Contenu" ToRole="Seance" />
           <NavigationProperty Name="Acteurs" Relationship="Self.ContenuActeur" FromRole="Contenu" ToRole="Acteur" />
           <NavigationProperty Name="Directeurs" Relationship="Self.ContenuDirecteur" FromRole="Contenu" ToRole="Directeur" />
           <NavigationProperty Name="Genres" Relationship="Self.ContenuGenre" FromRole="Contenu" ToRole="Genre" />
+          <Property Name="typage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SeanceContenus" Relationship="CineDBModel.FK_ContenuSeance_Contenu1" FromRole="Contenu" ToRole="SeanceContenu1" />
         </EntityType>
         <EntityType Name="Directeur">
           <Key>
@@ -357,7 +436,7 @@
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Contenus" Relationship="Self.ContenuGenre" FromRole="Genre" ToRole="Contenu" />
         </EntityType>
         <EntityType Name="Responsable">
@@ -381,32 +460,20 @@
           <Property Name="EnExploitation" Type="Boolean" Nullable="false" />
           <Property Name="CinemaID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cinema" Relationship="Self.FK_Salle_Cinema" FromRole="Salle" ToRole="Cinema" />
-          <NavigationProperty Name="Seances" Relationship="Self.FK_Seance_Salle" FromRole="Salle" ToRole="Seance" />
-        </EntityType>
-        <EntityType Name="Seance">
-          <Key>
-            <PropertyRef Name="SeanceID" />
-          </Key>
-          <Property Name="SeanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Titre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HeureDebut" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="HeureFin" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SalleID" Type="Int32" Nullable="false" />
-          <Property Name="ContenuTitre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Contenu" Relationship="Self.FK_Seance_Contenu" FromRole="Seance" ToRole="Contenu" />
-          <NavigationProperty Name="Salle" Relationship="Self.FK_Seance_Salle" FromRole="Seance" ToRole="Salle" />
+          <NavigationProperty Name="Seances" Relationship="CineDBModel.FK_Seance_Salle1" FromRole="Salle" ToRole="Seance1" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Login" />
           </Key>
-          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PasswordHash" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="Salt" Type="Binary" MaxLength="24" FixedLength="true" Nullable="false" />
           <Property Name="HashIterations" Type="Int32" Nullable="false" />
           <Property Name="NomComplet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cinemas" Relationship="Self.FK_Cinema_User" FromRole="User" ToRole="Cinema" />
+          <Property Name="MotDePasse" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cinema_Responsable">
           <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
@@ -444,30 +511,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Seance_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="0..1" />
-          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contenu">
-              <PropertyRef Name="Titre" />
-            </Principal>
-            <Dependent Role="Seance">
-              <PropertyRef Name="ContenuTitre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Seance_Salle">
-          <End Role="Salle" Type="Self.Salle" Multiplicity="1" />
-          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Salle">
-              <PropertyRef Name="SalleID" />
-            </Principal>
-            <Dependent Role="Seance">
-              <PropertyRef Name="SalleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ContenuActeur">
           <End Role="Acteur" Type="Self.Acteur" Multiplicity="*" />
           <End Role="Contenu" Type="Self.Contenu" Multiplicity="*" />
@@ -488,7 +531,6 @@
           <EntitySet Name="Genres" EntityType="Self.Genre" />
           <EntitySet Name="Responsables" EntityType="Self.Responsable" />
           <EntitySet Name="Salles" EntityType="Self.Salle" />
-          <EntitySet Name="Seances" EntityType="Self.Seance" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
             <End Role="Responsable" EntitySet="Responsables" />
@@ -502,14 +544,6 @@
             <End Role="Cinema" EntitySet="Cinemas" />
             <End Role="Salle" EntitySet="Salles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Seance_Contenu" Association="Self.FK_Seance_Contenu">
-            <End Role="Contenu" EntitySet="Contenus" />
-            <End Role="Seance" EntitySet="Seances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Seance_Salle" Association="Self.FK_Seance_Salle">
-            <End Role="Salle" EntitySet="Salles" />
-            <End Role="Seance" EntitySet="Seances" />
-          </AssociationSet>
           <AssociationSet Name="ContenuActeur" Association="Self.ContenuActeur">
             <End Role="Acteur" EntitySet="Acteurs" />
             <End Role="Contenu" EntitySet="Contenus" />
@@ -522,7 +556,135 @@
             <End Role="Contenu" EntitySet="Contenus" />
             <End Role="Genre" EntitySet="Genres" />
           </AssociationSet>
+          <EntitySet Name="ContenuPromoes" EntityType="CineDBModel.ContenuPromo" />
+          <EntitySet Name="Seances" EntityType="CineDBModel.Seance" />
+          <EntitySet Name="SeanceContenus" EntityType="CineDBModel.SeanceContenu" />
+          <EntitySet Name="SeancePromoes" EntityType="CineDBModel.SeancePromo" />
+          <AssociationSet Name="FK_ContenuSeance_Contenu1" Association="CineDBModel.FK_ContenuSeance_Contenu1">
+            <End Role="Contenu" EntitySet="Contenus" />
+            <End Role="SeanceContenu1" EntitySet="SeanceContenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromoSeance_Promo1" Association="CineDBModel.FK_PromoSeance_Promo1">
+            <End Role="ContenuPromo" EntitySet="ContenuPromoes" />
+            <End Role="SeancePromo1" EntitySet="SeancePromoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seance_Salle1" Association="CineDBModel.FK_Seance_Salle1">
+            <End Role="Salle" EntitySet="Salles" />
+            <End Role="Seance1" EntitySet="Seances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContenuSeance_Seance1" Association="CineDBModel.FK_ContenuSeance_Seance1">
+            <End Role="Seance1" EntitySet="Seances" />
+            <End Role="SeanceContenu1" EntitySet="SeanceContenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromoSeance_Seance1" Association="CineDBModel.FK_PromoSeance_Seance1">
+            <End Role="Seance1" EntitySet="Seances" />
+            <End Role="SeancePromo1" EntitySet="SeancePromoes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ContenuPromo">
+          <Key>
+            <PropertyRef Name="Titre" />
+          </Key>
+          <Property Name="Titre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RuntimeMins" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SeancePromoes" Relationship="CineDBModel.FK_PromoSeance_Promo1" FromRole="ContenuPromo" ToRole="SeancePromo1" />
+        </EntityType>
+        <EntityType Name="Seance">
+          <Key>
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="SeanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="HeureDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HeureFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SalleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Salle" Relationship="CineDBModel.FK_Seance_Salle1" FromRole="Seance1" ToRole="Salle" />
+          <NavigationProperty Name="SeanceContenus" Relationship="CineDBModel.FK_ContenuSeance_Seance1" FromRole="Seance1" ToRole="SeanceContenu1" />
+          <NavigationProperty Name="SeancePromoes" Relationship="CineDBModel.FK_PromoSeance_Seance1" FromRole="Seance1" ToRole="SeancePromo1" />
+        </EntityType>
+        <EntityType Name="SeanceContenu">
+          <Key>
+            <PropertyRef Name="ContenuTitre" />
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="ContenuTitre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SeanceID" Type="Int32" Nullable="false" />
+          <Property Name="indexOrdre" Type="Int32" />
+          <Property Name="estPrincipal" Type="Boolean" />
+          <NavigationProperty Name="Contenu" Relationship="CineDBModel.FK_ContenuSeance_Contenu1" FromRole="SeanceContenu1" ToRole="Contenu" />
+          <NavigationProperty Name="Seance" Relationship="CineDBModel.FK_ContenuSeance_Seance1" FromRole="SeanceContenu1" ToRole="Seance1" />
+        </EntityType>
+        <EntityType Name="SeancePromo">
+          <Key>
+            <PropertyRef Name="PromoTitre" />
+            <PropertyRef Name="SeanceID" />
+          </Key>
+          <Property Name="PromoTitre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SeanceID" Type="Int32" Nullable="false" />
+          <Property Name="indexOrdre" Type="Int32" />
+          <NavigationProperty Name="ContenuPromo" Relationship="CineDBModel.FK_PromoSeance_Promo1" FromRole="SeancePromo1" ToRole="ContenuPromo" />
+          <NavigationProperty Name="Seance" Relationship="CineDBModel.FK_PromoSeance_Seance1" FromRole="SeancePromo1" ToRole="Seance1" />
+        </EntityType>
+        <Association Name="FK_ContenuSeance_Contenu1">
+          <End Type="CineDBModel.Contenu" Role="Contenu" Multiplicity="1" />
+          <End Type="CineDBModel.SeanceContenu" Role="SeanceContenu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contenu">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="SeanceContenu1">
+              <PropertyRef Name="ContenuTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromoSeance_Promo1">
+          <End Type="CineDBModel.ContenuPromo" Role="ContenuPromo" Multiplicity="1" />
+          <End Type="CineDBModel.SeancePromo" Role="SeancePromo1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContenuPromo">
+              <PropertyRef Name="Titre" />
+            </Principal>
+            <Dependent Role="SeancePromo1">
+              <PropertyRef Name="PromoTitre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seance_Salle1">
+          <End Type="CineDBModel.Salle" Role="Salle" Multiplicity="1" />
+          <End Type="CineDBModel.Seance" Role="Seance1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salle">
+              <PropertyRef Name="SalleID" />
+            </Principal>
+            <Dependent Role="Seance1">
+              <PropertyRef Name="SalleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContenuSeance_Seance1">
+          <End Type="CineDBModel.Seance" Role="Seance1" Multiplicity="1" />
+          <End Type="CineDBModel.SeanceContenu" Role="SeanceContenu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seance1">
+              <PropertyRef Name="SeanceID" />
+            </Principal>
+            <Dependent Role="SeanceContenu1">
+              <PropertyRef Name="SeanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromoSeance_Seance1">
+          <End Type="CineDBModel.Seance" Role="Seance1" Multiplicity="1" />
+          <End Type="CineDBModel.SeancePromo" Role="SeancePromo1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seance1">
+              <PropertyRef Name="SeanceID" />
+            </Principal>
+            <Dependent Role="SeancePromo1">
+              <PropertyRef Name="SeanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -551,6 +713,7 @@
           <EntitySetMapping Name="Contenus">
             <EntityTypeMapping TypeName="CineDBModel.Contenu">
               <MappingFragment StoreEntitySet="Contenu">
+                <ScalarProperty Name="typage" ColumnName="typage" />
                 <ScalarProperty Name="Titre" ColumnName="Titre" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Annee" ColumnName="Annee" />
@@ -598,21 +761,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Seances">
-            <EntityTypeMapping TypeName="CineDBModel.Seance">
-              <MappingFragment StoreEntitySet="Seance">
-                <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
-                <ScalarProperty Name="Titre" ColumnName="Titre" />
-                <ScalarProperty Name="HeureDebut" ColumnName="HeureDebut" />
-                <ScalarProperty Name="HeureFin" ColumnName="HeureFin" />
-                <ScalarProperty Name="SalleID" ColumnName="SalleID" />
-                <ScalarProperty Name="ContenuTitre" ColumnName="ContenuTitre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CineDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
@@ -646,6 +798,44 @@
               <ScalarProperty Name="Nom" ColumnName="GenreNom" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ContenuPromoes">
+            <EntityTypeMapping TypeName="CineDBModel.ContenuPromo">
+              <MappingFragment StoreEntitySet="ContenuPromo">
+                <ScalarProperty Name="RuntimeMins" ColumnName="RuntimeMins" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seances">
+            <EntityTypeMapping TypeName="CineDBModel.Seance">
+              <MappingFragment StoreEntitySet="Seance">
+                <ScalarProperty Name="SalleID" ColumnName="SalleID" />
+                <ScalarProperty Name="HeureFin" ColumnName="HeureFin" />
+                <ScalarProperty Name="HeureDebut" ColumnName="HeureDebut" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeanceContenus">
+            <EntityTypeMapping TypeName="CineDBModel.SeanceContenu">
+              <MappingFragment StoreEntitySet="SeanceContenu">
+                <ScalarProperty Name="estPrincipal" ColumnName="estPrincipal" />
+                <ScalarProperty Name="indexOrdre" ColumnName="indexOrdre" />
+                <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
+                <ScalarProperty Name="ContenuTitre" ColumnName="ContenuTitre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeancePromoes">
+            <EntityTypeMapping TypeName="CineDBModel.SeancePromo">
+              <MappingFragment StoreEntitySet="SeancePromo">
+                <ScalarProperty Name="indexOrdre" ColumnName="indexOrdre" />
+                <ScalarProperty Name="SeanceID" ColumnName="SeanceID" />
+                <ScalarProperty Name="PromoTitre" ColumnName="PromoTitre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

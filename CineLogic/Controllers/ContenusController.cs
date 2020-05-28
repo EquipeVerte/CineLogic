@@ -19,7 +19,7 @@ namespace CineLogic.Controllers
     public class ContenusController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
-        private CsvData csvData;
+        //private CsvData csvData;
 
         // GET: Contenus
         public ActionResult Index()
@@ -67,14 +67,14 @@ namespace CineLogic.Controllers
 
 
         //Get CreateCsv
-        [DontAllowAccess]
+        //[DontAllowAccess]
         public ActionResult CreateCsv()
         {
             return View();
         }
 
         //Charger le fichier csv
-        [DontAllowAccess]
+        /*[DontAllowAccess]
         private ActionResult ChargerCsv(HttpPostedFileBase postedFile)
         {
             csvData = new CsvData();
@@ -108,10 +108,10 @@ namespace CineLogic.Controllers
             }
 
             return View();
-        }
+        }*/
 
 
-        [DontAllowAccess]
+        //[DontAllowAccess]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCsv([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)

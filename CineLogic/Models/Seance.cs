@@ -14,14 +14,23 @@ namespace CineLogic.Models
     
     public partial class Seance
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Seance()
+        {
+            this.SeanceContenus = new HashSet<SeanceContenu>();
+            this.SeancePromoes = new HashSet<SeancePromo>();
+        }
+    
         public int SeanceID { get; set; }
         public string Titre { get; set; }
         public System.DateTime HeureDebut { get; set; }
         public System.DateTime HeureFin { get; set; }
         public int SalleID { get; set; }
-        public string ContenuTitre { get; set; }
     
-        public virtual Contenu Contenu { get; set; }
         public virtual Salle Salle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SeanceContenu> SeanceContenus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SeancePromo> SeancePromoes { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace CineLogic.Models
         public int HashIterations { get; set; }
         public string NomComplet { get; set; }
         public string Type { get; set; }
+        public string MotDePasse { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cinema> Cinemas { get; set; }
