@@ -148,13 +148,13 @@
                 string color = "";
                 switch (film.Typage)
                 {
-                    case "promo":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
                         color = "bg-danger";
                         break;
-                    case "court":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
                         color = "bg-warning";
                         break;
-                    case "standard":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
                         color = "bg-success";
                         break;
                 }
@@ -171,15 +171,15 @@
                 string color = "";
                 switch (film.Typage)
                 {
-                    case "promo":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
                         icon = "fas fa-ad";
                         color = "text-danger";
                         break;
-                    case "court":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
                         icon = "fas fa-video";
                         color = "text-warning";
                         break;
-                    case "standard":
+                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
                         icon = "fas fa-film";
                         color = "text-success";
                         break;
@@ -191,15 +191,20 @@
                     <h3 class="mb-0 "><i class="@icon @color"></i> @film.ContenuTitre</h3>
                     <h5 class="ml-3 mb-0">@film.RuntimeMins mins</h5>
                     <div class="ml-auto d-flex flex-row">
-                        @if (film.Typage != "promo")
+                        @if (film.Typage != CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO)
                         {
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input d-none" id="@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
                                 <label class="form-check-label myRB" for="@film.ContenuTitre.Replace(" ", "-")"><i class="far fa-star"></i></label>
                             </div>
                         }
-                        <h3 class="mb-0 btn-close">
-                            <i class="fas fa-times"></i>
+                        <h3 class="mb-0">
+                            @using (Html.BeginForm("DeleteContent", "Seances", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(model => model.SeanceID)
+                                @Html.Hidden("contenuTitre", film.ContenuTitre)
+                                <button type="submit" class="btn btn-close"><i class="fas fa-times"></i></button>
+                            }
                         </h3>
                     </div>
                 </li>
@@ -223,15 +228,15 @@
                     <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
                     <div class="form-group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbPromo" value="promo" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbPromo" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO" name="types" checked>
                             <label class="form-check-label" for="cbPromo">Promos</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbCourt" value="court" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbCourt" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT" name="types" checked>
                             <label class="form-check-label" for="cbCourt">Court metrages</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbStandard" value="stand" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbStandard" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD" name="types" checked>
                             <label class="form-check-label" for="cbStandard">Standards</label>
                         </div>
                     </div>
@@ -276,11 +281,19 @@
             $("#annuler-changes").on('click', function () {
                 $.get("@Url.Action("Annuler")", function (data) {
                     $("#unsaved-alert").hide();
+                    location.reload();
                         });
                     });
                 });
     </script>
     <script>
+
+        var typeDict = {
+            "promo": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO",
+            "court": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT",
+            "standard": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD"
+        };
+
         $(document).ready(function () {
             getFilms();
 
@@ -302,13 +315,13 @@
                         var type;
 
                         switch (item.type) {
-                            case "court":
+                            case typeDict["standard"]:
                                 type = "Standard";
                                 break;
-                            case "standard":
+                            case typeDict["court"]:
                                 type = "Court";
                                 break;
-                            case "promo":
+                            case typeDict["promo"]:
                                 type = "Promo";
                                 break;
                         }
@@ -400,9 +413,10 @@
 
             @{
                 string titre = "";
-                if (@Model.Contenus.Count > 0)
+                var content = Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault();
+                if (Model.Contenus.Count > 0 && content != null)
                 {
-                    titre = @Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault().ContenuTitre;
+                    titre = content.ContenuTitre;
                 }
             }
 

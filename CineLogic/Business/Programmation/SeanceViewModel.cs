@@ -30,6 +30,7 @@ namespace CineLogic.Business.Programmation
         //public List<ContenuViewModel> SeancePromoes { get; set; }
         public string PrincipalFilm { get; set; }
         public string Order { get; set; }
+        public int? TotalRuntime { get => Contenus.Sum(c => c.RuntimeMins); }
 
         //[DisplayName("Titre du film")]
         //public string ContenuTitre { get; set; }

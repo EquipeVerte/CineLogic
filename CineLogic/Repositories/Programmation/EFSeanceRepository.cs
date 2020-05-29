@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CineLogic.Business.Contenus;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using System;
@@ -77,7 +78,6 @@ namespace CineLogic.Repositories
             seanceToUpdate.HeureDebut = seance.HeureDebut;
             seanceToUpdate.HeureFin = seance.HeureFin;
             seanceToUpdate.Titre = seance.Titre;
-            //seanceToUpdate.ContenuTitre = seance.ContenuTitre;
 
             db.SaveChanges();
         }
@@ -89,6 +89,24 @@ namespace CineLogic.Repositories
             contenu.Contenu = db.Contenus.Find(contenu.ContenuTitre);
 
             db.SaveChanges();
+        }
+
+        public string GetContentType(string contenuTitre)
+        {
+            if(db.Contenus.Find(contenuTitre) != null)
+            {
+                return db.Contenus.Find(contenuTitre).typage;
+            }
+            else if (db.ContenuPromoes.Find(contenuTitre) != null)
+            {
+                //  TODO find a way to not reference business from repo!
+                //  Should this be in business?
+                return ContenuTypeLibrary.CONT_TYPE_PROMO;
+            }
+            else
+            {
+                return "notfound";
+            }
         }
 
         public void AddPromo(SeancePromo promo)

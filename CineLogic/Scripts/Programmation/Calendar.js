@@ -45,7 +45,7 @@ $(document).ready(function () {
             hour12: false
         },
         editable: true,
-        snapDuration: '00:15:00',
+        snapDuration: '00:05:00',
         eventOverlap: false,
         eventDrop: function (info) {
             timesChanged(info);
@@ -224,8 +224,11 @@ $(document).ready(function () {
             var events = [];
             //  Ajouter chaque evenement dans le tableau des evenements.
             $.each(data, function (i, item) {
+               //console.log(item);
 
-                console.log(item);
+                var time = new Date(item.HeureFin).getTime() - new Date(item.HeureDebut).getTime();
+
+                var overrun = (time - item.TotalRuntime * 60 * 1000) < 0;
 
                 events.push({
                     id: item.SeanceID,
@@ -233,8 +236,8 @@ $(document).ready(function () {
                     title: item.Titre + (item.PrincipalFilm == null ? "" : " - " + item.PrincipalFilm),
                     start: item.HeureDebut,
                     end: item.HeureFin,
-                    backgroundColor: item.PrincipalFilm == null ? 'primary' : '#5CB85C',
-                    borderColor: item.PrincipalFilm == null ? 'primary' : '#5CB85C',
+                    backgroundColor: overrun ? '#d9534f' : item.PrincipalFilm == null ? 'primary' : '#5CB85C',
+                    borderColor: overrun ? '#d9534f' : item.PrincipalFilm == null ? 'primary' : '#5CB85C',
                     eventTitle: item.Titre,
                     contenuTitre: item.PrincipalFilm
                 });

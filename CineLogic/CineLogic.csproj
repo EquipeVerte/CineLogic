@@ -144,7 +144,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
     <Compile Include="Business\Contenus\ContenuViewModel.cs" />
+    <Compile Include="Business\Programmation\DuplicateContentException.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
     <Compile Include="Controllers\DirecteursController.cs" />
@@ -206,6 +208,11 @@
     <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\MetaData\SeancePromo.cs" />
+    <Compile Include="Models\MetaData\IContenu.cs" />
+    <Compile Include="Models\MetaData\ISeanceContenu.cs" />
+    <Compile Include="Models\MetaData\Promo.cs" />
+    <Compile Include="Models\MetaData\SeanceContenu.cs" />
     <Compile Include="Models\SeanceContenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>

@@ -13,8 +13,6 @@ namespace CineLogic.Business.Programmation
 
         SeanceViewModel GetSeance(int id);
 
-        SeanceViewModel GetEditableSeance(int id);
-
         SeanceViewModel CreateSeance(SeanceViewModel seance);
 
         SeanceViewModel UpdateSeance(SeanceViewModel seance);
@@ -26,6 +24,8 @@ namespace CineLogic.Business.Programmation
         void AdjustTimeToContent(int seanceID);
 
         void AddContentToSeance(int seanceID, string contenuTitre);
+
+        void DeleteContentFromSeance(int seanceID, string contenuTitre);
 
         void DeleteSeance(int id);
 

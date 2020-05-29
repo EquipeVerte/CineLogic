@@ -82,7 +82,7 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SeanceViewModel seance = seanceService.GetEditableSeance(id.Value);
+            SeanceViewModel seance = seanceService.GetSeance(id.Value);
 
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
@@ -173,6 +173,16 @@ namespace CineLogic.Controllers
         public ActionResult AddContent(int seanceID, string contenuTitre)
         {
             seanceService.AddContentToSeance(seanceID, contenuTitre);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return RedirectToAction("Edit", new { id = seanceID });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteContent(int seanceID, string contenuTitre)
+        {
+            seanceService.DeleteContentFromSeance(seanceID, contenuTitre);
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 

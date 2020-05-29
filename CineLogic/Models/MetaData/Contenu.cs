@@ -8,7 +8,7 @@ using System.Web;
 namespace CineLogic.Models
 {
     [MetadataType(typeof(ContenuMetaData))]
-    public partial class Contenu
+    public partial class Contenu : IContenu
     {
     }
     public class ContenuMetaData
