@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -8,12 +9,19 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows.Forms;
 using CineLogic.Models;
+using AutoMapper;
 
 namespace CineLogic.Controllers
 {
     public class CinemasController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Cinema, CinemaViewModel>();
+            cfg.CreateMap<CinemaViewModel, Cinema>();
+        }).CreateMapper();
 
         // GET: Cinemas
         public ActionResult Index()
@@ -72,13 +80,15 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Cinema cinema = db.Cinemas.Find(id);
+
             if (cinema == null)
             {
                 return HttpNotFound();
             }
+            CinemaViewModel c = mapper.Map<Cinema, CinemaViewModel>(cinema);
             ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
             ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
-            return View(cinema);
+            return View(c);
         }
 
         // POST: Cinemas/Edit/5
@@ -86,11 +96,12 @@ namespace CineLogic.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] CinemaViewModel cinema)
         {
+            Cinema c = mapper.Map<CinemaViewModel, Cinema>(cinema);
             if (ModelState.IsValid)
             {
-                db.Entry(cinema).State = EntityState.Modified;
+                db.Entry(c).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -122,36 +133,27 @@ namespace CineLogic.Controllers
             Cinema cinema = db.Cinemas.Find(id);
             if (cinema.Salles.Count > 0)
             {
-                DialogResult result = MessageBox.Show("Ce cinéma contient des salles. Voulez-vous vraiment le supprimer?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-
-                if (result == DialogResult.Yes)
+                bool contientSeances = false;
+                List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
+                foreach (Salle salle in salles)
                 {
-                    bool contientSeances = false;
-                    List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
-                    foreach (Salle salle in salles)
-                    {
-                        if (salle.Seances.Count > 0)
-                            contientSeances = true;
-                    }
-
-                    if (contientSeances)
-                    {
-                        DialogResult resultSalles = MessageBox.Show("Vous avez des séances de programmées dans ces salles. Voulez-vous vraiment supprimer ce cinéma?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-
-                        if (resultSalles == DialogResult.Yes)
-                        {
-                            var seances = db.Seances.Where(t => t.SalleID == id).ToList();
-                            db.Seances.RemoveRange(seances);
-                            db.Salles.RemoveRange(salles);
-                            db.Cinemas.Remove(cinema);
-                        }
-                    }
-                    else
-                    {
-                        db.Salles.RemoveRange(salles);
-                        db.Cinemas.Remove(cinema);
-                    }
+                    if (salle.Seances.Count > 0)
+                        contientSeances = true;
                 }
+
+                if (contientSeances)
+                {
+                    var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                    db.Seances.RemoveRange(seances);
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+                else
+                {
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+
             }
             else
                 db.Cinemas.Remove(cinema);

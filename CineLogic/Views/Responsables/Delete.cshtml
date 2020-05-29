@@ -37,12 +37,28 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="form-actions no-color">
+    @foreach (var cinema in Model.Cinemas)
+    {
+        <div style="color: red; background-color:rosybrown;">
+            Vous ne pouvez pas supprimer ce responsable, car il est assigné à un cinéma.
+            Veuillez réassigner le responsable de ces cinémas:
         </div>
+
+        <div class="form-group">
+            @Html.Label(cinema.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Display(cinema.Nom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage(cinema.Nom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    <input type="submit" value="Delete" class="btn btn-default" /> |
+    @Html.ActionLink("Back to List", "Index")
+</div>
     }
 </div>

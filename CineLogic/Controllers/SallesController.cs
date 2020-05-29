@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows.Forms;
+using AutoMapper;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
@@ -14,6 +15,12 @@ namespace CineLogic.Controllers
     public class SallesController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Salle, SalleViewModel>();
+            cfg.CreateMap<SalleViewModel, Salle>();
+        }).CreateMapper();
 
         // GET: Salles
         public ActionResult Index()
@@ -55,7 +62,7 @@ namespace CineLogic.Controllers
             {
                 db.Salles.Add(salle);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cinemas", new { area = "" });
             }
 
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
@@ -74,8 +81,9 @@ namespace CineLogic.Controllers
             {
                 return HttpNotFound();
             }
+            SalleViewModel s = mapper.Map<Salle, SalleViewModel>(salle);
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
-            return View(salle);
+            return View(s);
         }
 
         // POST: Salles/Edit/5
@@ -83,13 +91,14 @@ namespace CineLogic.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SalleID,Nom,TypeEcran,SystemSon,EnExploitation,CinemaID")] Salle salle)
+        public ActionResult Edit([Bind(Include = "SalleID,Nom,TypeEcran,SystemSon,EnExploitation,CinemaID")] SalleViewModel salle)
         {
+            Salle s = mapper.Map<SalleViewModel, Salle>(salle);
             if (ModelState.IsValid)
             {
-                db.Entry(salle).State = EntityState.Modified;
+                db.Entry(s).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cinemas", new { area = "" });
             }
             ViewBag.CinemaID = new SelectList(db.Cinemas, "CinemaID", "Nom", salle.CinemaID);
             return View(salle);
@@ -118,20 +127,14 @@ namespace CineLogic.Controllers
             Salle salle = db.Salles.Find(id);
             if (salle.Seances.Count > 0)
             {
-                DialogResult result = MessageBox.Show("Cette salle contient des séances programmées. Voulez-vous vraiment la supprimer?", "Confirmer", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-
-                if (result == DialogResult.Yes)
-                {
-                    var seances = db.Seances.Where(t => t.SalleID == id).ToList();
-                    db.Seances.RemoveRange(seances);
-
-                    db.Salles.Remove(salle);
-                }
+                var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                db.Seances.RemoveRange(seances);
+                db.Salles.Remove(salle);
             }
             else
                 db.Salles.Remove(salle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Cinemas", new { area = "" });
         }
 
         protected override void Dispose(bool disposing)

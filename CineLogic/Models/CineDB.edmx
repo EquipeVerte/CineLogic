@@ -4,35 +4,35 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="CineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="Acteur">
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Nom" Nullable="false" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Cinema">
           <Key>
             <PropertyRef Name="CinemaID" />
           </Key>
-          <Property Name="CinemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Adresse" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="EnExploitation" Type="bit" Nullable="false" />
-          <Property Name="ResponsableID" Type="int" Nullable="false" />
-          <Property Name="Programmateur" Type="nvarchar" MaxLength="20" />
+          <Property Name="CinemaID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Nom" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Adresse" Nullable="false" MaxLength="200" Type="nvarchar" />
+          <Property Name="EnExploitation" Nullable="false" Type="bit" />
+          <Property Name="ResponsableID" Nullable="false" Type="int" />
+          <Property Name="Programmateur" MaxLength="20" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Contenu">
           <Key>
             <PropertyRef Name="Titre" />
           </Key>
-          <Property Name="Titre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="2000" Nullable="false" />
-          <Property Name="Annee" Type="int" Nullable="false" />
-          <Property Name="RuntimeMins" Type="int" Nullable="false" />
-          <Property Name="Rating" Type="decimal" Precision="3" Scale="1" />
+          <Property Name="Titre" Nullable="false" MaxLength="200" Type="nvarchar" />
+          <Property Name="Description" Nullable="false" MaxLength="2000" Type="nvarchar" />
+          <Property Name="Annee" Nullable="false" Type="int" />
+          <Property Name="RuntimeMins" Nullable="false" Type="int" />
+          <Property Name="Rating" Precision="3" Scale="1" Type="decimal" />
           <Property Name="Votes" Type="int" />
-          <Property Name="Revenue" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Revenue" Precision="6" Scale="2" Type="decimal" />
           <Property Name="MetaScore" Type="int" />
         </EntityType>
         <EntityType Name="ContenuActeur">
@@ -40,82 +40,82 @@
             <PropertyRef Name="ContenuTitre" />
             <PropertyRef Name="ActeurNom" />
           </Key>
-          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ActeurNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContenuTitre" Nullable="false" MaxLength="200" Type="nvarchar" />
+          <Property Name="ActeurNom" Nullable="false" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="ContenuDirecteur">
           <Key>
             <PropertyRef Name="ContenuTitre" />
             <PropertyRef Name="DirecteurNom" />
           </Key>
-          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="DirecteurNom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContenuTitre" Nullable="false" MaxLength="200" Type="nvarchar" />
+          <Property Name="DirecteurNom" Nullable="false" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="ContenuGenre">
           <Key>
             <PropertyRef Name="ContenuTitre" />
             <PropertyRef Name="GenreNom" />
           </Key>
-          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="GenreNom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContenuTitre" Nullable="false" MaxLength="200" Type="nvarchar" />
+          <Property Name="GenreNom" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Directeur">
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Nom" Nullable="false" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="Nom" />
           </Key>
-          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nom" Nullable="false" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Responsable">
           <Key>
             <PropertyRef Name="ResponsableID" />
           </Key>
-          <Property Name="ResponsableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="NumTel" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ResponsableID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Nom" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="NumTel" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Email" Nullable="false" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Salle">
           <Key>
             <PropertyRef Name="SalleID" />
           </Key>
-          <Property Name="SalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nom" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="TypeEcran" Type="nvarchar" MaxLength="100" />
-          <Property Name="SystemSon" Type="nvarchar" MaxLength="100" />
-          <Property Name="EnExploitation" Type="bit" Nullable="false" />
-          <Property Name="CinemaID" Type="int" Nullable="false" />
+          <Property Name="SalleID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Nom" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="TypeEcran" MaxLength="100" Type="nvarchar" />
+          <Property Name="SystemSon" MaxLength="100" Type="nvarchar" />
+          <Property Name="EnExploitation" Nullable="false" Type="bit" />
+          <Property Name="CinemaID" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Seance">
           <Key>
             <PropertyRef Name="SeanceID" />
           </Key>
-          <Property Name="SeanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Titre" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="HeureDebut" Type="datetime" Nullable="false" />
-          <Property Name="HeureFin" Type="datetime" Nullable="false" />
-          <Property Name="SalleID" Type="int" Nullable="false" />
-          <Property Name="ContenuTitre" Type="nvarchar" MaxLength="200" />
+          <Property Name="SeanceID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Titre" Nullable="false" MaxLength="20" Type="nvarchar" />
+          <Property Name="HeureDebut" Nullable="false" Type="datetime" />
+          <Property Name="HeureFin" Nullable="false" Type="datetime" />
+          <Property Name="SalleID" Nullable="false" Type="int" />
+          <Property Name="ContenuTitre" MaxLength="200" Type="nvarchar" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Login" />
           </Key>
-          <Property Name="Login" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="PasswordHash" Type="binary" MaxLength="24" Nullable="false" />
-          <Property Name="Salt" Type="binary" MaxLength="24" Nullable="false" />
-          <Property Name="HashIterations" Type="int" Nullable="false" />
-          <Property Name="NomComplet" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Type" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="Login" Nullable="false" MaxLength="20" Type="nvarchar" />
+          <Property Name="PasswordHash" Nullable="false" MaxLength="24" Type="binary" />
+          <Property Name="Salt" Nullable="false" MaxLength="24" Type="binary" />
+          <Property Name="HashIterations" Nullable="false" Type="int" />
+          <Property Name="NomComplet" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Type" Nullable="false" MaxLength="5" Type="char" />
         </EntityType>
         <Association Name="FK_Cinema_Responsable">
-          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
-          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <End Type="Self.Responsable" Multiplicity="1" Role="Responsable" />
+          <End Type="Self.Cinema" Multiplicity="*" Role="Cinema" />
           <ReferentialConstraint>
             <Principal Role="Responsable">
               <PropertyRef Name="ResponsableID" />
@@ -126,8 +126,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cinema_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Cinema" Type="Self.Cinema" Multiplicity="*" />
+          <End Type="Self.User" Multiplicity="0..1" Role="User" />
+          <End Type="Self.Cinema" Multiplicity="*" Role="Cinema" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Login" />
@@ -138,8 +138,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuActeur_Acteur">
-          <End Role="Acteur" Type="Self.Acteur" Multiplicity="1" />
-          <End Role="ContenuActeur" Type="Self.ContenuActeur" Multiplicity="*" />
+          <End Type="Self.Acteur" Multiplicity="1" Role="Acteur" />
+          <End Type="Self.ContenuActeur" Multiplicity="*" Role="ContenuActeur" />
           <ReferentialConstraint>
             <Principal Role="Acteur">
               <PropertyRef Name="Nom" />
@@ -150,8 +150,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuActeur_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
-          <End Role="ContenuActeur" Type="Self.ContenuActeur" Multiplicity="*" />
+          <End Type="Self.Contenu" Multiplicity="1" Role="Contenu" />
+          <End Type="Self.ContenuActeur" Multiplicity="*" Role="ContenuActeur" />
           <ReferentialConstraint>
             <Principal Role="Contenu">
               <PropertyRef Name="Titre" />
@@ -162,8 +162,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuDirecteur_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
-          <End Role="ContenuDirecteur" Type="Self.ContenuDirecteur" Multiplicity="*" />
+          <End Type="Self.Contenu" Multiplicity="1" Role="Contenu" />
+          <End Type="Self.ContenuDirecteur" Multiplicity="*" Role="ContenuDirecteur" />
           <ReferentialConstraint>
             <Principal Role="Contenu">
               <PropertyRef Name="Titre" />
@@ -174,8 +174,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuDirecteur_Directeur">
-          <End Role="Directeur" Type="Self.Directeur" Multiplicity="1" />
-          <End Role="ContenuDirecteur" Type="Self.ContenuDirecteur" Multiplicity="*" />
+          <End Type="Self.Directeur" Multiplicity="1" Role="Directeur" />
+          <End Type="Self.ContenuDirecteur" Multiplicity="*" Role="ContenuDirecteur" />
           <ReferentialConstraint>
             <Principal Role="Directeur">
               <PropertyRef Name="Nom" />
@@ -186,8 +186,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuGenre_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="1" />
-          <End Role="ContenuGenre" Type="Self.ContenuGenre" Multiplicity="*" />
+          <End Type="Self.Contenu" Multiplicity="1" Role="Contenu" />
+          <End Type="Self.ContenuGenre" Multiplicity="*" Role="ContenuGenre" />
           <ReferentialConstraint>
             <Principal Role="Contenu">
               <PropertyRef Name="Titre" />
@@ -198,8 +198,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContenuGenre_Genre">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
-          <End Role="ContenuGenre" Type="Self.ContenuGenre" Multiplicity="*" />
+          <End Type="Self.Genre" Multiplicity="1" Role="Genre" />
+          <End Type="Self.ContenuGenre" Multiplicity="*" Role="ContenuGenre" />
           <ReferentialConstraint>
             <Principal Role="Genre">
               <PropertyRef Name="Nom" />
@@ -210,8 +210,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Salle_Cinema">
-          <End Role="Cinema" Type="Self.Cinema" Multiplicity="1" />
-          <End Role="Salle" Type="Self.Salle" Multiplicity="*" />
+          <End Type="Self.Cinema" Multiplicity="1" Role="Cinema" />
+          <End Type="Self.Salle" Multiplicity="*" Role="Salle" />
           <ReferentialConstraint>
             <Principal Role="Cinema">
               <PropertyRef Name="CinemaID" />
@@ -222,8 +222,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Seance_Contenu">
-          <End Role="Contenu" Type="Self.Contenu" Multiplicity="0..1" />
-          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <End Type="Self.Contenu" Multiplicity="0..1" Role="Contenu" />
+          <End Type="Self.Seance" Multiplicity="*" Role="Seance" />
           <ReferentialConstraint>
             <Principal Role="Contenu">
               <PropertyRef Name="Titre" />
@@ -234,8 +234,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Seance_Salle">
-          <End Role="Salle" Type="Self.Salle" Multiplicity="1" />
-          <End Role="Seance" Type="Self.Seance" Multiplicity="*" />
+          <End Type="Self.Salle" Multiplicity="1" Role="Salle" />
+          <End Type="Self.Seance" Multiplicity="*" Role="Seance" />
           <ReferentialConstraint>
             <Principal Role="Salle">
               <PropertyRef Name="SalleID" />
@@ -259,48 +259,48 @@
           <EntitySet Name="Seance" EntityType="Self.Seance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cinema_Responsable" Association="Self.FK_Cinema_Responsable">
-            <End Role="Responsable" EntitySet="Responsable" />
-            <End Role="Cinema" EntitySet="Cinema" />
+            <End EntitySet="Responsable" Role="Responsable" />
+            <End EntitySet="Cinema" Role="Cinema" />
           </AssociationSet>
           <AssociationSet Name="FK_Cinema_User" Association="Self.FK_Cinema_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Cinema" EntitySet="Cinema" />
+            <End EntitySet="User" Role="User" />
+            <End EntitySet="Cinema" Role="Cinema" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuActeur_Acteur" Association="Self.FK_ContenuActeur_Acteur">
-            <End Role="Acteur" EntitySet="Acteur" />
-            <End Role="ContenuActeur" EntitySet="ContenuActeur" />
+            <End EntitySet="Acteur" Role="Acteur" />
+            <End EntitySet="ContenuActeur" Role="ContenuActeur" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuActeur_Contenu" Association="Self.FK_ContenuActeur_Contenu">
-            <End Role="Contenu" EntitySet="Contenu" />
-            <End Role="ContenuActeur" EntitySet="ContenuActeur" />
+            <End EntitySet="Contenu" Role="Contenu" />
+            <End EntitySet="ContenuActeur" Role="ContenuActeur" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuDirecteur_Contenu" Association="Self.FK_ContenuDirecteur_Contenu">
-            <End Role="Contenu" EntitySet="Contenu" />
-            <End Role="ContenuDirecteur" EntitySet="ContenuDirecteur" />
+            <End EntitySet="Contenu" Role="Contenu" />
+            <End EntitySet="ContenuDirecteur" Role="ContenuDirecteur" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuDirecteur_Directeur" Association="Self.FK_ContenuDirecteur_Directeur">
-            <End Role="Directeur" EntitySet="Directeur" />
-            <End Role="ContenuDirecteur" EntitySet="ContenuDirecteur" />
+            <End EntitySet="Directeur" Role="Directeur" />
+            <End EntitySet="ContenuDirecteur" Role="ContenuDirecteur" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuGenre_Contenu" Association="Self.FK_ContenuGenre_Contenu">
-            <End Role="Contenu" EntitySet="Contenu" />
-            <End Role="ContenuGenre" EntitySet="ContenuGenre" />
+            <End EntitySet="Contenu" Role="Contenu" />
+            <End EntitySet="ContenuGenre" Role="ContenuGenre" />
           </AssociationSet>
           <AssociationSet Name="FK_ContenuGenre_Genre" Association="Self.FK_ContenuGenre_Genre">
-            <End Role="Genre" EntitySet="Genre" />
-            <End Role="ContenuGenre" EntitySet="ContenuGenre" />
+            <End EntitySet="Genre" Role="Genre" />
+            <End EntitySet="ContenuGenre" Role="ContenuGenre" />
           </AssociationSet>
           <AssociationSet Name="FK_Salle_Cinema" Association="Self.FK_Salle_Cinema">
-            <End Role="Cinema" EntitySet="Cinema" />
-            <End Role="Salle" EntitySet="Salle" />
+            <End EntitySet="Cinema" Role="Cinema" />
+            <End EntitySet="Salle" Role="Salle" />
           </AssociationSet>
           <AssociationSet Name="FK_Seance_Contenu" Association="Self.FK_Seance_Contenu">
-            <End Role="Contenu" EntitySet="Contenu" />
-            <End Role="Seance" EntitySet="Seance" />
+            <End EntitySet="Contenu" Role="Contenu" />
+            <End EntitySet="Seance" Role="Seance" />
           </AssociationSet>
           <AssociationSet Name="FK_Seance_Salle" Association="Self.FK_Seance_Salle">
-            <End Role="Salle" EntitySet="Salle" />
-            <End Role="Seance" EntitySet="Seance" />
+            <End EntitySet="Salle" Role="Salle" />
+            <End EntitySet="Seance" Role="Seance" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -392,7 +392,7 @@
           <Property Name="HeureDebut" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HeureFin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SalleID" Type="Int32" Nullable="false" />
-          <Property Name="ContenuTitre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContenuTitre" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="Contenu" Relationship="Self.FK_Seance_Contenu" FromRole="Seance" ToRole="Contenu" />
           <NavigationProperty Name="Salle" Relationship="Self.FK_Seance_Salle" FromRole="Seance" ToRole="Salle" />
         </EntityType>
