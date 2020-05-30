@@ -51,6 +51,8 @@ namespace CineLogic.Repositories
         public void DeleteSeance(Seance seance)
         {
             db.Seances.Remove(seance);
+
+            db.SaveChanges();
         }
 
         public IEnumerable<Seance> GetSeancesBySalle(int salleID)
@@ -76,6 +78,8 @@ namespace CineLogic.Repositories
             seanceToUpdate.HeureFin = seance.HeureFin;
             seanceToUpdate.Titre = seance.Titre;
             seanceToUpdate.ContenuTitre = seance.ContenuTitre;
+
+            db.SaveChanges();
         }
 
         public int SaveChanges()

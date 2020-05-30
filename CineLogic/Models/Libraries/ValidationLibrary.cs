@@ -8,5 +8,6 @@ namespace CineLogic.Models.Libraries
     public class ValidationLibrary
     {
         public const string ERR_REQUIS= "Ce champ est requis !";
+
     }
 }

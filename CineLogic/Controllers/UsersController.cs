@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Hashing;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers
 {
@@ -19,6 +20,7 @@ namespace CineLogic.Controllers
         private CineDBEntities db = new CineDBEntities();
 
         // GET: Users
+        [AdminOnly]
         public ActionResult Index()
         {
             return View(db.Users.ToList());
@@ -27,11 +29,9 @@ namespace CineLogic.Controllers
         // GET: Users/Details/5
         public ActionResult Details(string id)
         {
-            
-
             if (id == null)
             {
-                id = (string)Session["login"];
+                id = (string)Session[SessionTypes.login];
             }
             User user = db.Users.Find(id);
             if (user == null)
@@ -43,6 +43,7 @@ namespace CineLogic.Controllers
         }
 
         // GET: Users/Create
+        [AdminOnly]
         public ActionResult Create()
         {
             return View();
@@ -51,16 +52,17 @@ namespace CineLogic.Controllers
         // POST: Users/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminOnly]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,NomComplet")] UserViewModel userVM)
+        public ActionResult Create([Bind(Include = "Login,Password,NomComplet,Type")] UserViewModel userVM)
         {
             if (ModelState.IsValid)
             {
                 User user = new User();
                 user.Login = userVM.Login;
                 user.NomComplet = userVM.NomComplet;
-                user.Type = "admin";
+                user.Type = userVM.Type;
 
                 Hasher hasher = new Hasher();
 
@@ -150,6 +152,7 @@ namespace CineLogic.Controllers
         }
 
         // GET: Users/Delete/5
+        [AdminOnly]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -165,6 +168,7 @@ namespace CineLogic.Controllers
         }
 
         // POST: Users/Delete/5
+        [AdminOnly]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

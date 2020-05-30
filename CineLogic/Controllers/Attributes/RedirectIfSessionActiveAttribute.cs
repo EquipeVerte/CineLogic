@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers.Attributes
 {
@@ -10,7 +11,7 @@ namespace CineLogic.Controllers.Attributes
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Session["login"] != null)
+            if (filterContext.HttpContext.Session[SessionTypes.login] != null)
             {
                 filterContext.Result = new RedirectResult("~/Home/Admin");
                 return;

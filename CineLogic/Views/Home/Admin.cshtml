@@ -11,9 +11,9 @@
             foreach (var item in db.Users)
             {
 
-                if (item.Login.Equals((string)Session["Login"]))
+                if (item.Login.Equals((string)Session[CineLogic.Models.Libraries.SessionTypes.login]))
                 {
-                    <span> Bienvenue <b>@Session["Login"]</b> dans votre espace membre</span>
+                    <span> Bienvenue <b>@Session[CineLogic.Models.Libraries.SessionTypes.login]</b> dans votre espace membre</span>
                 }
             }
         }
