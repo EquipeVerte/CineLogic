@@ -105,7 +105,7 @@ namespace CineLogic.Controllers
             {
                 if (Path.GetExtension(csvFile.FileName) != ".csv")
                 {
-                    ViewBag.ErreurTypeFichier = "Le type de fichier est incorecte ! ";
+                    ViewBag.ErreurTypeFichier = "Le type du fichier est incorecte ! ";
                 }
                 else
                 {
