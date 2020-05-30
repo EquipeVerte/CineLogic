@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System.IO;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Business.Contenus;
+using System.Collections;
 
 namespace CineLogic.Controllers
 {
@@ -269,18 +270,25 @@ namespace CineLogic.Controllers
 
         //  Ajax get contenus
         [HttpGet]
-        public ContentResult Contenus(string filter)
+        public ContentResult Contenus(string filter, string types, int nbResults)
         {
             CineDBEntities db = new CineDBEntities();
 
+            string[] typesArray = types.Split(',');
+
             //List<ContenuSelectionViewModel> contents = standardContents.Concat(promoContents).ToList();
+
+            IQueryable<ContenuSelectionViewModel> contenus = from c in db.Contenus where c.Titre.Contains(filter) && typesArray.Contains(c.typage) select new ContenuSelectionViewModel() { Titre = c.Titre, Type = c.typage, Runtime = c.RuntimeMins };
+
+            if (typesArray.Contains(ContenuTypeLibrary.CONT_TYPE_PROMO))
+            {
+                contenus = contenus.Concat((from c in db.ContenuPromoes where c.Titre.Contains(filter) select new ContenuSelectionViewModel() { Titre = c.Titre, Type = ContenuTypeLibrary.CONT_TYPE_PROMO, Runtime = c.RuntimeMins }));
+            }
 
             return Content(
                 JsonConvert.SerializeObject(
-                    (from c in db.Contenus where c.Titre.Contains(filter) select new { titre = c.Titre, type = c.typage, runtime = c.RuntimeMins }).ToList().Concat(
-                        (from c in db.ContenuPromoes where c.Titre.Contains(filter) select new { titre = c.Titre, type = "promo", runtime = c.RuntimeMins }).ToList()
-                    )), 
-                "application/json");
+                    contenus.Take(nbResults)),
+                    "application/json");
         }
     }
 }

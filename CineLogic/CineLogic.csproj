@@ -144,6 +144,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Contenus\ContenuSelectionViewModel.cs" />
     <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
     <Compile Include="Business\Contenus\ContenuViewModel.cs" />
     <Compile Include="Business\Programmation\DuplicateContentException.cs" />

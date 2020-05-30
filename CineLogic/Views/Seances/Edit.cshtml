@@ -241,8 +241,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input id="filter" class="form-control mb-1" placeholder="Recherche" />
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex">
+                            <input id="filter" class="form-control mb-1" placeholder="Recherche" />
                             <div id="loading" class="pl-2">
                                 <div class="loader-small">
                                     <i class="fas fa-film"></i>
@@ -255,6 +255,9 @@
                             <select id="film-select" class="form-control mr-2" size="6" name="contenuTitre">
                             </select>
                         }
+                        <button id="btnLoadMore" class="btn btn-outline-primary">
+                            Charger plus
+                        </button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -295,39 +298,75 @@
         };
 
         $(document).ready(function () {
-            getFilms();
+            var initialNbToLoad = 20;
+            var nbToLoad = initialNbToLoad;
+
+            getFilms(nbToLoad);
 
             //  Mettre à jour les films à chaque changement dans la boite de recherche.
             //  Est-ce que l'ajax est néccesaire? Peut être fais en javascript avec une liste statique?
             $("#filter").on('input', function () {
                 console.log("Change");
-                getFilms();
+                nbToLoad = initialNbToLoad;
+                getFilms(initialNbToLoad);
+            });
+
+            $("input:checkbox[name=types]").on('change', function () {
+                nbToLoad = initialNbToLoad;
+                getFilms(initialNbToLoad);
+            });
+
+            $("#btnLoadMore").click(function () {
+                nbToLoad = nbToLoad + 20;
+                getFilms(nbToLoad);
             });
 
             //  Remplir la liste des films.
-            function getFilms() {
-                var jqxhr = $.get("@Url.Action("Contenus", "Contenus")", { filter: $("#filter").val() }, function (data) {
-                    $("#film-select").empty();
-                    $("#film-select").append('<option value="">N/A</option>');
+            function getFilms(nbFilms) {
 
-                    console.log(data);
-                    $.each(data, function (i, item) {
-                        var type;
+                var typesToGet = "";
 
-                        switch (item.type) {
-                            case typeDict["standard"]:
-                                type = "Standard";
-                                break;
-                            case typeDict["court"]:
-                                type = "Court";
-                                break;
-                            case typeDict["promo"]:
-                                type = "Promo";
-                                break;
-                        }
+                $("input:checkbox[name=types]:checked").each(function () {
+                    typesToGet += $(this).val() + ",";
+                });
 
-                        $("#film-select").append('<option value="' + item.titre + '">' + item.titre + " - " + type + " " + item.runtime + '</option>');
-                    });
+                typesToGet = typesToGet.substring(0, typesToGet.length - 1);
+
+                console.log(typesToGet);
+
+                var data = {
+                    filter: $("#filter").val(),
+                    types: typesToGet,
+                    nbResults: nbFilms
+                };
+
+                console.log(data);
+
+                var jqxhr = $.get(
+                    "@Url.Action("Contenus", "Contenus")",
+                    data,
+                    function (data) {
+                        $("#film-select").empty();
+                        $("#film-select").append('<option value="">N/A</option>');
+
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            var type;
+
+                            switch (item.Type) {
+                                case typeDict["standard"]:
+                                    type = "Standard";
+                                    break;
+                                case typeDict["court"]:
+                                    type = "Court";
+                                    break;
+                                case typeDict["promo"]:
+                                    type = "Promo";
+                                    break;
+                            }
+
+                            $("#film-select").append('<option value="' + item.Titre + '">' + item.Titre + " - " + type + " " + item.Runtime + '</option>');
+                        });
                 }).fail(function () {
                     console.log(jqxhr);
                 });

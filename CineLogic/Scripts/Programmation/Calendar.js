@@ -73,7 +73,7 @@ $(document).ready(function () {
                 $("#rmenu-edit").on('click', function () {
                     console.log("Edit");
                     console.log(info.event.id);
-                    window.open(dictURLs["EditSeance"] + "/" + info.event.id);
+                    window.open(dictURLs["EditSeance"] + "/" + info.event.id, "_self");
                 });
 
                 window.event.returnValue = false;
