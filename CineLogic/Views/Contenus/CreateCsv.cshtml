@@ -6,79 +6,60 @@
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Charger Plusieurs films (Fichier .csv)</h2>
 
-<div class="m-1">
-    <input type="submit" value="Ouvrir " class="btn btn-outline-info" />
-</div>
+@*<div class="m-1">
+        <input type="submit" value="Ouvrir " class="btn btn-outline-info" />
+    </div>*@
 
-
-@*<form action="~/Controllers/ContenusController" method="post" enctype="multipart/form-data">
-    <label> test</label>
-    <div>
-        <input type="file" name="test" id="test" class="form-group mr-2" />
-        <div class="badge badge-success mr-2 collapse"><i class="input-group form-check"></i></div>
-        <input type="submit"/>
-    </div>
-</form>*@
 
 <div>
-     @using (Html.BeginForm("ChargerCsv", "Contenus", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="d-flex justify-content-between">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="">
+    @using (Html.BeginForm("CreateCsv", "Contenus", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="d-flex justify-content-between">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="m-4">
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Titres</label>
-                        <input name="titreContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Genres</label>
-                        <input name="genreContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Descriptions</label>
-                        <input name="descriptionContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Directeurs</label>
-                        <input name="directorsContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Acteurs</label>
-                        <input name="actorsContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-6">Année de sortie</label>
-                        <input name="yearContenu" class="form-control col-md-6" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Durée en min</label>
-                        <input name="runtimeContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Rating</label>
-                        <input name="ratingContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Revenus</label>
-                        <input name="votesContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Revenues</label>
-                        <input name="revenueContenu" class="form-control col-md-8" />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="m-4 col-md-4">Metascore</label>
-                        <input name="metascoreContenu" class="form-control col-md-8" />
-                    </div>
+                <table>
+                </table>
+
+                <div class="form-group">
+                    <input class="form-control-file " type="file" id="dataFile" name="csvFile" />
+                </div>
 
 
-                    @Html.HiddenFor(model => model.Titre)
-                    <div class="m-1">
-                        <input type="submit" value="Ajouter" class="btn btn-outline-info" />
+                <div class="m-1">
+                    <input type="submit" value="Charger le fichier" class="btn btn-outline-info" id="chargerFichierBTN" />
+                    @{
+                        if (ViewBag.CheminVide != null)
+                        {
+                            <div class="alert alert-danger mt-4">@ViewBag.CheminVide</div>
+                        }
+                    }
+
+                    @{
+                        if (ViewBag.ErreurTypeFichier != null)
+                        {
+                            <div class="alert alert-danger mt-4">@ViewBag.ErreurTypeFichier</div>
+                        }
+                    }
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="mr-2">
+                        <div class="alert alert-info mt-1"><span>Nombre de films ajoutés : </span><strong>@ViewBag.FilmAjouter</strong></div>
+                        <div class="alert alert-info mt-1"><span>Nombre de films existants : </span><strong>@ViewBag.FilmExistant</strong></div>
+                    </div>
+                    <div class="mr-2">
+                        <div class="alert alert-info mt-1"><span>Nombre d'acteurs ajoutés : </span><strong>@ViewBag.ActeurAjouter</strong></div>
+                        <div class="alert alert-info mt-1"><span>Nombre d'acteurs existants : </span><strong>@ViewBag.ActeurExistant</strong></div>
+                    </div>
+                    <div class="mr-2">
+                        <div class="alert alert-info mt-1"><span>Nombre de directeurs ajoutés : </span><strong>@ViewBag.DirecteurAjouter</strong></div>
+                        <div class="alert alert-info mt-1"><span>Nombre de directeurs existants : </span><strong>@ViewBag.DirecteurExistant</strong></div>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 </div>
+

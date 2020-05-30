@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 using Microsoft.Win32;
 using System.IO;
 using CineLogic.Controllers.Attributes;
+using CineLogic.Business.Contenus;
+using CsvHelper;
+using System.Globalization;
 
 namespace CineLogic.Controllers
 {
@@ -19,7 +22,7 @@ namespace CineLogic.Controllers
     public class ContenusController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
-        private CsvData csvData;
+
 
         // GET: Contenus
         public ActionResult Index()
@@ -67,63 +70,121 @@ namespace CineLogic.Controllers
 
 
         //Get CreateCsv
-        [DontAllowAccess]
+        //[DontAllowAccess]
         public ActionResult CreateCsv()
         {
-            return View();
+            return View("CreateCsv");
         }
 
         //Charger le fichier csv
-        [DontAllowAccess]
-        private ActionResult ChargerCsv(HttpPostedFileBase postedFile)
-        {
-            csvData = new CsvData();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            List<string> lignes;
-            if (openFileDialog.ShowDialog() == true)
-            {
-                lignes = new List<string>(System.IO.File.ReadAllLines(openFileDialog.FileName));
-                lignes.RemoveAt(0);
-
-                foreach (string ligne in lignes)
-                {
-                    string[] colones = ligne.Split(';');
-                    csvData.AjouterTitle(colones[01]);
-                    csvData.AjouterGenre(colones[02]);
-                    csvData.AjouterDescription(colones[03]);
-                    csvData.AjouterDirector(colones[04]);
-                    csvData.AjouterActor(colones[05]);
-                    csvData.AjouterYear(colones[06]);
-                    csvData.AjouterRuntime(colones[07]);
-                    csvData.AjouterRating(colones[08]);
-                    csvData.AjouterVote(colones[09]);
-                    csvData.AjouterRevenu(colones[10]);
-                    csvData.AjouterMetascore(colones[11]);
-
-
-                    //csvView.Text += colones[1] + " | " + colones[2] + "\n";
-                    //text1.Text = colones[3];
-                }
-
-            }
-
-            return View();
-        }
-
-
-        [DontAllowAccess]
+        //private CsvData csvData = new CsvData();
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCsv([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)
+        public ActionResult CreateCsv(HttpPostedFileBase csvFile)
         {
-            if (ModelState.IsValid)
-            {
-                db.Contenus.Add(contenu);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            int filmExistant = 0;
+            int filmAjouter = 0;
 
-            return View(contenu);
+            int acteurExistant = 0;
+            int acteurAjouter = 0;
+
+            int directeurExistant = 0;
+            int directeurAjouter = 0;
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.Contenus.Add(contenu);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //List<string> lignes;
+
+
+            if (csvFile != null)
+            {
+                if (Path.GetExtension(csvFile.FileName) != ".csv")
+                {
+                    ViewBag.ErreurTypeFichier = "Le type de fichier est incorecte ! ";
+                }
+                else
+                {
+                    StreamReader streamReader = new StreamReader(csvFile.InputStream);
+                    CsvReader csvReader = new CsvReader(streamReader, new CultureInfo("en-US"));
+
+                    List<CsvContenuLigne> csvContenuLignes = csvReader.GetRecords<CsvContenuLigne>().ToList();
+
+                    //lignes = new List<string>();
+                    //while (!streamReader.EndOfStream)
+                    //{
+                    //    lignes.Add(streamReader.ReadLine());
+                    //}
+
+                    //lignes.RemoveAt(0);
+
+
+                    foreach (CsvContenuLigne csvContenuLigne in csvContenuLignes)
+                    {
+                        ContenuService contenuService = new ContenuService();
+                        contenuService.ParsserColmn(csvContenuLigne);
+
+                        Contenu contenu = db.Contenus.Find(csvContenuLigne.Title);
+
+                        if (contenu == null)
+                        {
+                            filmAjouter += contenuService.filmAjouter;
+                            ViewBag.FilmAjouter = filmAjouter;
+                            directeurAjouter += contenuService.directeurAjouter;
+                            ViewBag.DirecteurAjouter = directeurAjouter;
+                            acteurAjouter += contenuService.acteurAjouter;
+                            ViewBag.ActeurAjouter = acteurAjouter;
+
+                        }
+                        else
+                        {
+                            filmExistant += contenuService.filmExistant;
+                            //directeurExistant++;
+                            ViewBag.FilmExistant = filmExistant;
+                            directeurExistant += contenuService.directeurExistant;
+                            ViewBag.DirecteurExistant = directeurExistant;
+                            acteurExistant += contenuService.acteurExistant;
+                            ViewBag.ActeurExistant = acteurExistant;
+                        }
+
+                    }
+                    //foreach (string ligne in lignes)
+                    //{
+                    //    string[] colones = ligne.Split(';');
+                    //    ContenuService contenuService = new ContenuService();
+                    //    contenuService.ParsserColmn(colones);
+
+
+                    //    Contenu contenu = db.Contenus.Find(colones[01]);
+
+                    //    if (contenu == null)
+                    //    {
+                    //        filmAjouter++;
+                    //        ViewBag.FilmAjouter = filmAjouter;
+                    //        directeurAjouter += contenuService.directeurAjouter;
+                    //        ViewBag.DirecteurAjouter = directeurAjouter;
+                    //        acteurAjouter += contenuService.acteurAjouter;
+                    //        ViewBag.ActeurAjouter = acteurAjouter;
+
+                    //    }
+                    //    else
+                    //    {
+                    //        filmExistant++;
+                    //        //directeurExistant++;
+                    //        ViewBag.FilmExistant = filmExistant;
+                    //    }
+                    //}
+                }        
+            }
+            else
+            {
+                ViewBag.CheminVide = "Veillez sélectionner un fichier CSV !";
+            }
+            return View();
         }
 
         // GET: Contenus/Edit/5
@@ -272,6 +333,43 @@ namespace CineLogic.Controllers
             return Redirect(Url.Action("Edit", "Contenus", new { id = contenuId }));
         }
 
+        //Ajouter un genre dans un contenu
+        [HttpPost]
+        public ActionResult AjouterGenre(string titre, string nomGenre)
+        {
+            Contenu contenu = db.Contenus.Find(titre);
+            if (nomGenre != null)
+            {
+                if (nomGenre.Trim().Length != 0)
+                {
+                    Genre genre = db.Genres.Find(nomGenre);
+                    if (genre == null)
+                    {
+                        genre = new Genre();
+                        genre.Nom = nomGenre;
+                        db.Genres.Add(genre);
+                    }
+                    contenu.Genres.Add(genre);
+                    db.SaveChanges();
+                }
+            }
+            return Redirect(Url.Action("Edit", "Contenus", new { id = titre }));
+
+        }
+        //Supprimer un genre d'un contenu
+        [HttpGet]
+        public ActionResult SupprimerGenre(string contenuId, string GenreId)
+        {
+            Contenu contenu = db.Contenus.Find(contenuId);
+            Genre genre = db.Genres.Find(GenreId);
+            if (genre == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            contenu.Genres.Remove(genre);
+            db.SaveChanges();
+            return Redirect(Url.Action("Edit", "Contenus", new { id = contenuId }));
+        }
         //  Ajax get contenus
         [HttpGet]
         public ContentResult Contenus(string filter)
@@ -280,5 +378,6 @@ namespace CineLogic.Controllers
 
             return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
         }
+
     }
 }

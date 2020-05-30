@@ -19,10 +19,11 @@ textarea {
 .description textarea {
     width: 300px !important;
     height: 300px !important;
+    margin-top:8px;
 }
 
 .details {
-    width: 450px !important;
+    width: 370px !important;
 }
 
 .affiche {
@@ -37,4 +38,11 @@ textarea {
 
 .logo {
     max-height: 2.5rem;
+}
+.EDS {
+    font-size: 12px !important;
+}
+.scrollable {
+    height: 140px;
+    overflow-y: scroll;
 }

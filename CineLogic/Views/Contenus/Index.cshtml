@@ -79,8 +79,8 @@
 </div>
 
 
-<table class="table">
-    <tr>
+<table class="table table-striped EDS">
+    <tr class="EDS">
         <th>
             @Html.DisplayNameFor(model => model.Titre)
         </th>
@@ -132,9 +132,9 @@
                 @Html.DisplayFor(modelItem => item.MetaScore)
             </td>
             <td>
-                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
-                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
+                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
             </td>
         </tr>
     }
