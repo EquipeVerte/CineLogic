@@ -105,6 +105,8 @@ namespace CineLogic.Controllers
                 {
                     seanceService.UpdateSeance(seance);
 
+                    seanceService.UpdateSeanceContents(seance);
+
                     System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
                     return RedirectToAction("Edit");
@@ -136,6 +138,17 @@ namespace CineLogic.Controllers
 
         [HttpPost]
         [HandleErrorJson]
+        public ActionResult DeleteAjax(int seanceID)
+        {
+            seanceService.DeleteSeance(seanceID);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
         public ActionResult UpdateTimes(SeanceViewModel seanceVM)
         {
             seanceService.UpdateSeanceTimes(seanceVM);
@@ -143,6 +156,37 @@ namespace CineLogic.Controllers
             System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [HandleErrorJson]
+        public ActionResult AdjustTimes(int seanceID)
+        {
+            seanceService.AdjustTimeToContent(seanceID);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult AddContent(int seanceID, string contenuTitre)
+        {
+            seanceService.AddContentToSeance(seanceID, contenuTitre);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return RedirectToAction("Edit", new { id = seanceID });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteContent(int seanceID, string contenuTitre)
+        {
+            seanceService.DeleteContentFromSeance(seanceID, contenuTitre);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return RedirectToAction("Edit", new { id = seanceID });
         }
 
         public ActionResult Save()

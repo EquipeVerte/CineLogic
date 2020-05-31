@@ -13,6 +13,8 @@ using Microsoft.Win32;
 using System.IO;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Business.Contenus;
+using System.Collections;
+using CineLogic.Business.Contenus;
 using CsvHelper;
 using System.Globalization;
 
@@ -366,11 +368,25 @@ namespace CineLogic.Controllers
         }
         //  Ajax get contenus
         [HttpGet]
-        public ContentResult Contenus(string filter)
+        public ContentResult Contenus(string filter, string types, int nbResults)
         {
             CineDBEntities db = new CineDBEntities();
 
-            return Content(JsonConvert.SerializeObject((from c in db.Contenus where c.Titre.Contains(filter) select c.Titre)), "application/json");
+            string[] typesArray = types.Split(',');
+
+            //List<ContenuSelectionViewModel> contents = standardContents.Concat(promoContents).ToList();
+
+            IQueryable<ContenuSelectionViewModel> contenus = from c in db.Contenus where c.Titre.Contains(filter) && typesArray.Contains(c.typage) select new ContenuSelectionViewModel() { Titre = c.Titre, Type = c.typage, Runtime = c.RuntimeMins };
+
+            if (typesArray.Contains(ContenuTypeLibrary.CONT_TYPE_PROMO))
+            {
+                contenus = contenus.Concat((from c in db.ContenuPromoes where c.Titre.Contains(filter) select new ContenuSelectionViewModel() { Titre = c.Titre, Type = ContenuTypeLibrary.CONT_TYPE_PROMO, Runtime = c.RuntimeMins }));
+            }
+
+            return Content(
+                JsonConvert.SerializeObject(
+                    contenus.Take(nbResults)),
+                    "application/json");
         }
 
     }

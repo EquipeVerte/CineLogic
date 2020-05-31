@@ -47,11 +47,11 @@
                     <li class="nav-item">
                         @Html.ActionLink("Programmation", "Index", "Seances", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("À propos de", "About", "Home",null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home",null, new { @class = "nav-link" })</li>
                 </ul>
                 <div class="ml-auto">
-                    @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home", new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Déconnexion", "SessionDisconnect", "Home",null, new { @class = "btn btn-danger" })
                 </div>
             </div>
             
@@ -64,6 +64,9 @@
             <p>&copy; @DateTime.Now.Year - Cinelogic</p>
         </footer>
     </div>
+
+    <!-- Section apart pour les modals pour qu'ils ne soient pas affectés par le blur et grayscale -->
+    @RenderSection("modals", required: false)
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

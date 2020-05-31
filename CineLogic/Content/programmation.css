@@ -66,3 +66,53 @@ input[readonly] {
     background-color: lightblue !important;
     font-weight: bold;
 }
+
+
+#rmenu.show {
+    display: none;
+    z-index: 10000;
+    position: absolute;
+}
+
+#rmenu.show .card {
+    border: 0px;
+}
+
+#rmenu .list-group-item {
+    cursor: pointer;
+}
+
+#rmenu .list-group-item:hover {
+    background-color: darkgray;
+}
+
+
+.modal-open .container {
+    -webkit-filter: blur(3px) grayscale(90%);
+}
+
+#list-films .list-group-item:hover {
+    background-color: lightblue;
+}
+
+.myRB {
+    font-size: 20px;
+    color: gold;
+    cursor: pointer;
+}
+
+.myRB:hover {
+    color: goldenrod;
+}
+
+select {
+    font-family: 'FontAwesome', 'Segoe UI', 'sans-serif';
+}
+
+.handle, .btn-close {
+    color: gray;
+}
+
+.btn-close:hover {
+    color: #d9534f;
+}

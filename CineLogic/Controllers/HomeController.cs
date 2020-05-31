@@ -1,19 +1,17 @@
-﻿using CineLogic.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models.Hashing;
 using System.Web.UI.WebControls;
 using CineLogic.Controllers.Attributes;
+using CineLogic.Models;
 
 namespace CineLogic.Controllers
 {
     public class HomeController : Controller
     {
-        private CineDBEntities db = new CineDBEntities();
         public ActionResult Accueil()
         {
             return View();
@@ -21,14 +19,14 @@ namespace CineLogic.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "À propos de cette projet.";
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contacter nous.";
+            ViewBag.Message = "Your contact page.";
 
             return View();
         }
@@ -46,7 +44,7 @@ namespace CineLogic.Controllers
         }
         */
 
-        [RedirectIfSessionActive]
+        //[RedirectIfSessionActive]
         public ActionResult Login()
         {
             ViewBag.Message = "Tapez votre login";

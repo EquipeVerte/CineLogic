@@ -66,6 +66,9 @@
         </footer>
     </div>
 
+    <!-- Section apart pour les modals pour qu'ils ne soient pas affectés par le blur et grayscale -->
+    @RenderSection("modals", required: false)
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
