@@ -123,35 +123,29 @@ namespace CineLogic.Controllers
                     //lignes.RemoveAt(0);
 
 
+                    ContenuService contenuService = new ContenuService();
                     foreach (CsvContenuLigne csvContenuLigne in csvContenuLignes)
                     {
-                        ContenuService contenuService = new ContenuService();
                         contenuService.ParsserColmn(csvContenuLigne);
-
-                        Contenu contenu = db.Contenus.Find(csvContenuLigne.Title);
-
-                        if (contenu == null)
-                        {
-                            filmAjouter += contenuService.filmAjouter;
-                            ViewBag.FilmAjouter = filmAjouter;
-                            directeurAjouter += contenuService.directeurAjouter;
-                            ViewBag.DirecteurAjouter = directeurAjouter;
-                            acteurAjouter += contenuService.acteurAjouter;
-                            ViewBag.ActeurAjouter = acteurAjouter;
-
-                        }
-                        else
-                        {
-                            filmExistant += contenuService.filmExistant;
-                            //directeurExistant++;
-                            ViewBag.FilmExistant = filmExistant;
-                            directeurExistant += contenuService.directeurExistant;
-                            ViewBag.DirecteurExistant = directeurExistant;
-                            acteurExistant += contenuService.acteurExistant;
-                            ViewBag.ActeurExistant = acteurExistant;
-                        }
-
                     }
+
+
+                    filmAjouter += contenuService.filmAjouter;
+                    ViewBag.FilmAjouter = filmAjouter;
+                    directeurAjouter += contenuService.directeurAjouter;
+                    ViewBag.DirecteurAjouter = directeurAjouter;
+                    acteurAjouter += contenuService.acteurAjouter;
+                    ViewBag.ActeurAjouter = acteurAjouter;
+                    //****Existant
+                    filmExistant += contenuService.filmExistant;
+                    //directeurExistant++;
+                    ViewBag.FilmExistant = filmExistant;
+                    directeurExistant += contenuService.directeurExistant;
+                    ViewBag.DirecteurExistant = directeurExistant;
+                    acteurExistant += contenuService.acteurExistant;
+                    ViewBag.ActeurExistant = acteurExistant;
+
+
                     //foreach (string ligne in lignes)
                     //{
                     //    string[] colones = ligne.Split(';');
