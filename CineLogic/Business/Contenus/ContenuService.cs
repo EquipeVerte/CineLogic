@@ -182,6 +182,7 @@ namespace CineLogic.Business.Contenus
                 }
                 catch (Exception ex) { MessageBox.Show(ex.ToString()); }
 
+                contenu.typage = ContenuTypeLibrary.CONT_TYPE_STANDARD;
                 db.Contenus.Add(contenu);
             }
             db.SaveChanges();
