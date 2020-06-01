@@ -44,6 +44,11 @@ namespace CineLogic.Controllers
             return View();
         }
 
+        public ActionResult NotAuthorised()
+        {
+            return View();
+        }
+
 
         [RedirectIfSessionActive]
         public ActionResult Login()

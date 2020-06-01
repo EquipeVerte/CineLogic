@@ -140,6 +140,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Utilisateurs\IUserService.cs" />
+    <Compile Include="Business\Utilisateurs\UserService.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
     <Compile Include="Controllers\Attributes\AdminOnlyAttribute.cs" />
     <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
@@ -526,7 +528,9 @@
     <Content Include="Views\Home\Prog.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repositories\Utilisateurs\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

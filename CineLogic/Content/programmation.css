@@ -67,7 +67,7 @@ input[readonly] {
     font-weight: bold;
 }
 
-.show {
+/*.show {
     display: none;
     z-index:10000;
     position: absolute;
@@ -75,7 +75,7 @@ input[readonly] {
 
 .show .card {
     border: 0px;
-}
+}*/
 
 .list-group-item {
     background-color: #DDEEEF;

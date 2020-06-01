@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CineLogic.Business.Utilisateurs;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Hashing;
@@ -17,13 +18,14 @@ namespace CineLogic.Controllers
     [SessionActiveOnly]
     public class UsersController : Controller
     {
-        private CineDBEntities db = new CineDBEntities();
+        private readonly CineDBEntities db = new CineDBEntities();
 
         // GET: Users
         [AdminOnly]
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            IUserService userservice = new UserService(db);
+            return View(userservice.GetAllUser());
         }
 
         // GET: Users/Details/5
@@ -59,10 +61,12 @@ namespace CineLogic.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User();
-                user.Login = userVM.Login;
-                user.NomComplet = userVM.NomComplet;
-                user.Type = userVM.Type;
+                User user = new User
+                {
+                    Login = userVM.Login,
+                    NomComplet = userVM.NomComplet,
+                    Type = userVM.Type
+                };
 
                 Hasher hasher = new Hasher();
 
@@ -111,10 +115,12 @@ namespace CineLogic.Controllers
             }
 
             //  Extraire les données nécessaires pour faire l'édition.
-            UserViewModel userVM = new UserViewModel();
-            userVM.Login = user.Login;
-            userVM.NomComplet = user.NomComplet;
-            userVM.Type = user.Type;
+            UserViewModel userVM = new UserViewModel
+            {
+                Login = user.Login,
+                NomComplet = user.NomComplet,
+                Type = user.Type
+            };
 
             return View(userVM);
         }
