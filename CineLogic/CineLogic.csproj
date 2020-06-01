@@ -150,9 +150,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Contenus\ContenuSelectionViewModel.cs" />
     <Compile Include="Business\Contenus\ContenuService.cs" />
+    <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
+    <Compile Include="Business\Contenus\ContenuViewModel.cs" />
     <Compile Include="Business\Contenus\CsvContenuLigne.cs" />
+    <Compile Include="Business\Utilisateurs\IUserService.cs" />
+    <Compile Include="Business\Programmation\DuplicateContentException.cs" />
+    <Compile Include="Business\Utilisateurs\UserService.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\Attributes\AdminOnlyAttribute.cs" />
     <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
     <Compile Include="Controllers\Attributes\RedirectIfSessionActiveAttribute.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
@@ -197,6 +204,7 @@
     <Compile Include="Models\Cinema.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CinemaViewModel.cs" />
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -208,6 +216,8 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\SessionTypes.cs" />
+    <Compile Include="Models\Libraries\UserTypes.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Acteur.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
@@ -215,8 +225,14 @@
     <Compile Include="Models\Hashing\Hash.cs" />
     <Compile Include="Models\Hashing\Hasher.cs" />
     <Compile Include="Models\MetaData\Directeur.cs" />
+    <Compile Include="Models\MetaData\IContenu.cs" />
+    <Compile Include="Models\MetaData\ISeanceContenu.cs" />
+    <Compile Include="Models\MetaData\Promo.cs" />
     <Compile Include="Models\MetaData\Responsable.cs" />
+    <Compile Include="Models\MetaData\SeanceContenu.cs" />
+    <Compile Include="Models\MetaData\SeancePromo.cs" />
     <Compile Include="Models\MetaData\User.cs" />
+    <Compile Include="Models\SalleViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
