@@ -5,6 +5,14 @@
 }
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Index des films</h2>
+<div class="d-flex justify-content-lg-start">
+    <p class="p-3, m-3">
+        @Html.ActionLink("Ajouter un Film", "Create")
+    </p>
+    <p class="p-3, m-3">
+        @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
+    </p>
+</div>
 
 <div>
     @{
@@ -95,7 +103,10 @@
             @Html.DisplayNameFor(model => model.MetaScore)
         </th>
         <th>
-
+            @Html.DisplayNameFor(model => model.typage)
+        </th>
+        <th class="align-content-center">
+            <sapn>Actions</sapn>
         </th>
     </tr>
 
@@ -122,6 +133,42 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MetaScore)
+            </td>
+            <td>
+                @{
+                    if (item.typage != null)
+                    {
+                        string icon = "";
+
+                        switch (item.typage)
+                        {
+                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                icon = "fas fa-ad";
+
+                                break;
+                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                icon = "fas fa-video";
+
+                                break;
+                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                icon = "fas fa-film";
+
+                                break;
+                        }
+                        <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                            <i class="@icon"></i>
+                        </div>
+
+                        @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+
+
+                    }
+                }
+
+
+
+
             </td>
             <td>
                 @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |

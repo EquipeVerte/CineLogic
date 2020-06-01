@@ -16,27 +16,6 @@
                 @Html.DisplayFor(model => model.Titre)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Genres)
-            </dt>
-            <dd>
-                <table class="table">
-                    @foreach (var item in Model.Genres)
-                    {
-                        <sapn> @Html.DisplayFor(modelItem => item.Nom) ,</sapn>
-                    }
-                </table>
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-
-            <dd>
-                <br />
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-            </dd>
-
-            <dt>
                 @Html.DisplayNameFor(model => model.Annee)
             </dt>
 
@@ -84,7 +63,38 @@
                 @Html.DisplayFor(model => model.MetaScore)
             </dd>
 
+            <dt>
+                @Html.DisplayNameFor(model => model.typage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.typage)
+            </dd>
         </dl>
+    </div>
+    <div class="mt-4">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Genres)
+            </dt>
+            <dd>
+                <table class="table">
+                    @foreach (var item in Model.Genres)
+                    {
+                        <sapn> @Html.DisplayFor(modelItem => item.Nom) ,</sapn>
+                    }
+                </table>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd class="description">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+            </dd>
+        </dl>
+
     </div>
 
     <div class="d-flex justify-content-center">

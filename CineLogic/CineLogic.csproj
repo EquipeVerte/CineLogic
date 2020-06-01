@@ -157,6 +157,7 @@
     <Compile Include="Business\Contenus\ContenuService.cs" />
     <Compile Include="Business\Contenus\CsvContenuLigne.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\ContenuPromoesController.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
     <Compile Include="Controllers\DirecteursController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
@@ -212,6 +213,7 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\TypagesFilms.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Acteur.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
@@ -307,6 +309,7 @@
     <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
     <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
     <Content Include="Content\programmation.css" />
+    <Content Include="Images\hourglass.gif" />
     <Content Include="Scripts\Programmation\AjaxLoader.js" />
     <Content Include="Scripts\Programmation\Calendar.js" />
     <Content Include="Scripts\Programmation\DatePicker.js" />
@@ -532,6 +535,11 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
+    <Content Include="Views\ContenuPromoes\Create.cshtml" />
+    <Content Include="Views\ContenuPromoes\Delete.cshtml" />
+    <Content Include="Views\ContenuPromoes\Details.cshtml" />
+    <Content Include="Views\ContenuPromoes\Edit.cshtml" />
+    <Content Include="Views\ContenuPromoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

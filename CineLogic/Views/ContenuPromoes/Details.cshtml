@@ -1,0 +1,26 @@
+﻿@model CineLogic.Models.ContenuPromo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ContenuPromo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RuntimeMins)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Titre }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

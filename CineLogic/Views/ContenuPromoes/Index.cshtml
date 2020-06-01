@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CineLogic.Models.ContenuPromo>
+
+@{
+    ViewBag.Title = "Index des films promotionnels";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Index des films promotionnels</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped EDS">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RuntimeMins)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Titre }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Titre }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Titre })
+        </td>
+    </tr>
+}
+
+</table>

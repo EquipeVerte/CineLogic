@@ -22,3 +22,24 @@
     @Html.ActionLink("Editer", "Edit", new { id = Model.Nom }) |
     @Html.ActionLink("Index des Directeurs", "Index")
 </p>
+<div>
+    <div class="alert alert-info" role="alert">
+        Les films qu'il a dirigés
+    </div>
+
+    <table class="table">
+        @foreach (var item in Model.Contenus)
+        {
+            @*.Take(10)*@
+            <tr class="border-bottom  border-warning">
+                <td>
+                    @item.Titre
+                </td>
+                <td>
+                    @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
