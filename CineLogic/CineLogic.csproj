@@ -50,6 +50,12 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=15.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.15.0.5\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -57,12 +63,6 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.8.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.8.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -71,9 +71,6 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -82,9 +79,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.7.0\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -155,6 +149,25 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Contenus\ContenuSelectionViewModel.cs" />
+    <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
+    <Compile Include="Business\Contenus\ContenuViewModel.cs" />
+    <Compile Include="Business\Programmation\DuplicateContentException.cs" />
+    <Compile Include="Business\Contenus\ContenuService.cs" />
+    <Compile Include="Business\Contenus\CsvContenuLigne.cs" />
+    <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\ContenusController.cs" />
+    <Compile Include="Controllers\DirecteursController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
+    <Compile Include="Business\DBException.cs" />
+    <Compile Include="Business\NotFoundException.cs" />
+    <Compile Include="Business\Programmation\ISeanceService.cs" />
+    <Compile Include="Business\Programmation\ScheduleException.cs" />
+    <Compile Include="Business\Programmation\SeanceService.cs" />
+    <Compile Include="Controllers\Attributes\AjaxError.cs" />
+    <Compile Include="Controllers\Attributes\HandleErrorJsonAttribute.cs" />
+    <Compile Include="Controllers\Attributes\SessionActiveOnlyAttribute.cs" />
+    <Compile Include="Controllers\Attributes\ValidateAjaxAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -190,14 +203,42 @@
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContenuPromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Directeur.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Genre.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Programmation\EFSeanceRepository.cs" />
-    <Compile Include="Models\Programmation\ISeanceRepository.cs" />
+    <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\ValidationLibrary.cs" />
+    <Compile Include="Models\MetaData\Acteur.cs" />
+    <Compile Include="Models\MetaData\Contenu.cs" />
+    <Compile Include="Business\Cinemas\CinemaSelectionItem.cs" />
+    <Compile Include="Models\Hashing\Hash.cs" />
+    <Compile Include="Models\Hashing\Hasher.cs" />
+    <Compile Include="Models\MetaData\SeancePromo.cs" />
+    <Compile Include="Models\MetaData\IContenu.cs" />
+    <Compile Include="Models\MetaData\ISeanceContenu.cs" />
+    <Compile Include="Models\MetaData\Promo.cs" />
+    <Compile Include="Models\MetaData\SeanceContenu.cs" />
+    <Compile Include="Models\SeanceContenu.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeancePromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MetaData\Directeur.cs" />
+    <Compile Include="Models\MetaData\Responsable.cs" />
+    <Compile Include="Models\MetaData\User.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
+    <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
+    <Compile Include="Business\Cinemas\SalleSelectionItem.cs" />
+    <Compile Include="Business\Programmation\SeanceViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Responsable.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
@@ -224,9 +265,62 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\Datepicker\css\bootstrap-datepicker3.standalone.min.css" />
+    <Content Include="Content\Datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\Datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\Datepicker\locales\bootstrap-datepicker.en-CA.min.js" />
+    <Content Include="Content\Datepicker\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Content\FontAwesome\all.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.css" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.esm.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.js" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.min.css" />
+    <Content Include="Content\Fullcalendar\bootstrap\main.min.js" />
+    <Content Include="Content\Fullcalendar\core\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\core\locales-all.js" />
+    <Content Include="Content\Fullcalendar\core\locales-all.min.js" />
+    <Content Include="Content\Fullcalendar\core\main.css" />
+    <Content Include="Content\Fullcalendar\core\main.esm.js" />
+    <Content Include="Content\Fullcalendar\core\main.js" />
+    <Content Include="Content\Fullcalendar\core\main.min.css" />
+    <Content Include="Content\Fullcalendar\core\main.min.js" />
+    <Content Include="Content\Fullcalendar\daygrid\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\daygrid\main.css" />
+    <Content Include="Content\Fullcalendar\daygrid\main.esm.js" />
+    <Content Include="Content\Fullcalendar\daygrid\main.js" />
+    <Content Include="Content\Fullcalendar\daygrid\main.min.css" />
+    <Content Include="Content\Fullcalendar\daygrid\main.min.js" />
+    <Content Include="Content\Fullcalendar\interaction\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\interaction\main.esm.js" />
+    <Content Include="Content\Fullcalendar\interaction\main.js" />
+    <Content Include="Content\Fullcalendar\interaction\main.min.js" />
+    <Content Include="Content\Fullcalendar\timegrid\LICENSE.txt" />
+    <Content Include="Content\Fullcalendar\timegrid\main.css" />
+    <Content Include="Content\Fullcalendar\timegrid\main.esm.js" />
+    <Content Include="Content\Fullcalendar\timegrid\main.js" />
+    <Content Include="Content\Fullcalendar\timegrid\main.min.css" />
+    <Content Include="Content\Fullcalendar\timegrid\main.min.js" />
+    <Content Include="Content\programmation.css" />
+    <Content Include="Scripts\Programmation\AjaxLoader.js" />
+    <Content Include="Scripts\Programmation\Calendar.js" />
+    <Content Include="Scripts\Programmation\DatePicker.js" />
+    <Content Include="Scripts\Programmation\SalleSelection.js" />
+    <Content Include="Scripts\Programmation\SeanceCreation.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1917_.png" />
+    <Content Include="Images\accueil.png" />
+    <Content Include="Images\Doc-Dulittl.png" />
+    <Content Include="Images\Oiseaux de proie.png" />
     <Content Include="Models\CineDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CineDB.Context.cs</LastGenOutput>
@@ -237,11 +331,6 @@
       <DependentUpon>CineDB.edmx</DependentUpon>
       <LastGenOutput>CineDB.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -272,8 +361,6 @@
     <Content Include="Models\CineDB.edmx.diagram">
       <DependentUpon>CineDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -369,6 +456,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Accueil.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -380,6 +468,26 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Contenus\Create.cshtml" />
+    <Content Include="Views\Contenus\Delete.cshtml" />
+    <Content Include="Views\Contenus\Details.cshtml" />
+    <Content Include="Views\Contenus\Edit.cshtml" />
+    <Content Include="Views\Contenus\Index.cshtml" />
+    <Content Include="Views\Acteurs\Create.cshtml" />
+    <Content Include="Views\Acteurs\Delete.cshtml" />
+    <Content Include="Views\Acteurs\Details.cshtml" />
+    <Content Include="Views\Acteurs\Edit.cshtml" />
+    <Content Include="Views\Acteurs\Index.cshtml" />
+    <Content Include="Views\Directeurs\Create.cshtml" />
+    <Content Include="Views\Directeurs\Delete.cshtml" />
+    <Content Include="Views\Directeurs\Details.cshtml" />
+    <Content Include="Views\Directeurs\Edit.cshtml" />
+    <Content Include="Views\Directeurs\Index.cshtml" />
+    <Content Include="Views\Genres\Create.cshtml" />
+    <Content Include="Views\Genres\Delete.cshtml" />
+    <Content Include="Views\Genres\Details.cshtml" />
+    <Content Include="Views\Genres\Edit.cshtml" />
+    <Content Include="Views\Genres\Index.cshtml" />
     <Content Include="Views\Seances\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
@@ -398,21 +506,28 @@
     <Content Include="Views\Salles\Create.cshtml" />
     <Content Include="Views\Salles\Delete.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
+    <Content Include="Views\Seances\Edit.cshtml" />
+    <Content Include="Views\Shared\_LayoutAccueil.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Contenus\CreateCsv.cshtml" />
     <Content Include="Views\Cinemas\Assigner.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Datepicker\css\" />
-    <Folder Include="Content\Datepicker\js\" />
-    <Folder Include="Content\Datepicker\locales\" />
-    <Folder Include="Content\FontAwesome\" />
-    <Folder Include="Content\Fullcalendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Content\Fullcalendar\bootstrap\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\core\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\daygrid\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\interaction\main.d.ts" />
+    <TypeScriptCompile Include="Content\Fullcalendar\timegrid\main.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
