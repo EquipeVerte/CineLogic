@@ -42,7 +42,7 @@ namespace CineLogic.Controllers
             this.seanceService = seanceService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? salleID, DateTime? seanceDate)
         {
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
@@ -50,6 +50,29 @@ namespace CineLogic.Controllers
                 {
                     ViewBag.UnsavedChanges = true;
                 }
+            }
+
+            if(salleID != null)
+            {
+                ViewBag.SalleID = salleID;
+
+                using (CineDBEntities db = new CineDBEntities())
+                {
+                    ViewBag.CineID = db.Salles.Find(salleID).CinemaID;
+                }
+                if(seanceDate != null)
+                {
+                    ViewBag.InitialDate = seanceDate;
+                }
+                else
+                {
+                    ViewBag.InitialDate = null;
+                }
+            }
+            else
+            {
+                ViewBag.SalleID = "";
+                ViewBag.CineID = "";
             }
 
             return View();

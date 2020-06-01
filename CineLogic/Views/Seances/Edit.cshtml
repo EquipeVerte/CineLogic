@@ -14,7 +14,7 @@
 
 <div class="form-group mt-3">
     <div class="col-md-10">
-        <a href="@Url.Action("Index")" class="btn btn-outline-primary mr-2"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+        <a href="@Url.Action("Index", new { salleID = Model.SalleID, seanceDate = Model.HeureDebut })" class="btn btn-outline-primary mr-2"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
         <button type="submit" class="btn btn-outline-danger mr-2" form="delete"><i class="fas fa-trash"></i> Supprimer</button>
         <button type="submit" class="btn btn-outline-success" form="edit"><i class="fas fa-sync-alt"></i> Actualiser</button>
     </div>
@@ -194,8 +194,8 @@
                         @if (film.Typage != CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO)
                         {
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input d-none" id="@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
-                                <label class="form-check-label myRB" for="@film.ContenuTitre.Replace(" ", "-")"><i class="far fa-star"></i></label>
+                                <input class="form-check-input d-none" id="radio-@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
+                                <label class="form-check-label myRB" for="radio-@film.ContenuTitre.Replace(" ", "-")"><i class="far fa-star"></i></label>
                             </div>
                         }
                         <h3 class="mb-0">

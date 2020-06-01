@@ -81,6 +81,11 @@ $(document).ready(function () {
         }
     });
 
+    if (initialDate != "") {
+        var date = new Date(initialDate);
+        calendar.gotoDate(date);
+    }
+
     //  Cacher le context menu quand le bouton gauche du souris est cliqué.
     $(document).bind("click", function (event) {
         $("#rmenu").hide();

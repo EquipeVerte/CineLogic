@@ -21,6 +21,10 @@
 
 </div>
 
+<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#helpModal">
+    <i class="fas fa-question"></i>
+</button>
+
 <h4>Selectionner le cinéma et salle:</h4>
 
 <div class="d-flex">
@@ -141,6 +145,20 @@
     <div class="col-md-8">
         <div id='calendar' class="p-4 border">
         </div>
+        <h5 class="mt-2">
+            Clé
+        </h5>
+        <div class="d-flex">
+            <span class="badge badge-primary mr-2">
+                Séance vide
+            </span>
+            <span class="badge badge-success mr-2">
+                Contenu assigné
+            </span>
+            <span class="badge badge-danger">
+                Durée insuffisante pour le contenu
+            </span>
+        </div>
     </div>
 </div>
 
@@ -227,6 +245,77 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal help -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Comment utiliser cette page?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pr-4">
+                    <!-- Affichage des détails sur la séance-->
+                    <h4>
+                        Choisir le cinéma et la salle
+                    </h4>
+                    <p>
+                        Choisir le cinéma et la salle vous voulez programmer, le calendrier sera mis à jour automatiquement.
+                    </p>
+                    <h4>
+                        Créer une nouvelle séance
+                    </h4>
+                    <p>
+                        <ol>
+                            <li>
+                                Choisir la date dans le "Datepicker" à gauche
+                            </li>
+                            <li>
+                                Choisir l'heure de début et de fin (les minutes sont optionnelles)
+                            </li>
+                            <li>
+                                Choisir un titre pour la séance
+                            </li>
+                        </ol>
+                    </p>
+                    <h4>
+                        Éditer les séances existantes
+                    </h4>
+                    <p>
+                        Trouver la date voulue, soit avec le "Datepicker" à gauche, soit avec les boutons de navigation sur le calendrier.
+                    </p>
+                    <h5>Ajuster la date et la durée</h5>
+                    <p>Vous pouvez éditer les heures de la séance en les glissant sur le calendrier.</p>
+                    <p>Pour ajuster la durée de la séance à la durée des contenus:</p>
+                    <ol>
+                        <li>
+                            Clique-droit sur la séance
+                        </li>
+                        <li>
+                            Choisir "Ajuster la durée"
+                        </li>
+                    </ol>
+                    <h5>
+                        Éditer les détails d'une séance
+                    </h5>
+                    <p>
+                        Cliquer sur la séance pour ouvrir une page d'édition d'une séance. Vous pouvez aussi ouvrir cette page par un clique-droit et "Éditer".
+                    </p>
+                    <h5>
+                        Supprimer une séance
+                    </h5>
+                    <p>
+                        Clique-droit sur la séance et choisir l'option "Supprimer"
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @section scripts {
@@ -256,7 +345,11 @@
             "UpdateSeanceTimes": "@Url.Action("UpdateTimes")",
             "DeleteSeanceAjax": "@Url.Action("DeleteAjax")",
             "AdjustSeanceTimes": "@Url.Action("AdjustTimes")"
-        }
+        };
+
+        var initialCineID = "@ViewBag.CineID";
+        var initialSalleID = "@ViewBag.SalleID";
+        var initialDate = "@ViewBag.InitialDate";
     </script>
 
     <script type="text/javascript">
