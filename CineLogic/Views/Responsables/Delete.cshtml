@@ -41,24 +41,27 @@
     {
         @Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-    @foreach (var cinema in Model.Cinemas)
-    {
-        <div style="color: red; background-color:rosybrown;">
-            Vous ne pouvez pas supprimer ce responsable, car il est assigné à un cinéma.
-            Veuillez réassigner le responsable de ces cinémas:
-        </div>
+        <div class="form-actions no-color">
+            @if (Model.Cinemas.Count() > 0)
+            {
+                <div style="color: red; background-color:rosybrown;">
+                    Vous ne pouvez pas supprimer ce responsable, car il est assigné à un cinéma.
+                    Veuillez réassigner le responsable de ces cinémas:
+                </div>
+                foreach (var cinema in Model.Cinemas)
+                {
 
-        <div class="form-group">
-            @Html.Label(cinema.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.Display(cinema.Nom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage(cinema.Nom, "", new { @class = "text-danger" })
-            </div>
+                        <div class="col-md-10">
+                            @Html.ActionLink(cinema.Nom, "Edit", "Cinemas", new { id = cinema.CinemaID }, null)
+                        </div>
+                    
+                }
+            }
+            else
+            {
+                <input type="submit" value="Delete" class="btn btn-default" />
+            }
+            | @Html.ActionLink("Back to List", "Index")
         </div>
-    }
-    <input type="submit" value="Delete" class="btn btn-default" /> |
-    @Html.ActionLink("Back to List", "Index")
-</div>
     }
 </div>
