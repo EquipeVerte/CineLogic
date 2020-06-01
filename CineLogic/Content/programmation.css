@@ -116,3 +116,27 @@ select {
 .btn-close:hover {
     color: #d9534f;
 }
+
+.bg-promo {
+    background-color: #348aa7 !important;
+}
+
+.bg-court {
+    background-color: #bce784 !important;
+}
+
+.bg-standard {
+    background-color: #5dd39e !important;
+}
+
+.text-promo {
+    color: #348aa7;
+}
+
+.text-court {
+    color: #bce784;
+}
+
+.text-standard {
+    color: #5dd39e;
+}

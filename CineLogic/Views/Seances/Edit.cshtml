@@ -135,9 +135,9 @@
         <h4>Durée totale: <span id="duree">@Model.Contenus.Sum(c => c.RuntimeMins) mins</span></h4>
 
         <div class="d-flex mb-2">
-            <div class="badge badge-danger mr-2">Promos</div>
-            <div class="badge badge-warning mr-2">Court metrages</div>
-            <div class="badge badge-success">Standards</div>
+            <div class="badge bg-promo mr-2">Promos</div>
+            <div class="badge bg-court mr-2">Courts métrages</div>
+            <div class="badge bg-standard">Standards</div>
         </div>
 
         <div class="progress mb-2" id="dureeGraph">
@@ -149,13 +149,13 @@
                 switch (film.Typage)
                 {
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
-                        color = "bg-danger";
+                        color = "bg-promo";
                         break;
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
-                        color = "bg-warning";
+                        color = "bg-court";
                         break;
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
-                        color = "bg-success";
+                        color = "bg-standard";
                         break;
                 }
                 double width = Math.Round((double)(film.RuntimeMins * 100) / Model.Contenus.Sum(c => c.RuntimeMins));
@@ -173,15 +173,15 @@
                 {
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
                         icon = "fas fa-ad";
-                        color = "text-danger";
+                        color = "text-promo";
                         break;
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
                         icon = "fas fa-video";
-                        color = "text-warning";
+                        color = "text-court";
                         break;
                     case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
                         icon = "fas fa-film";
-                        color = "text-success";
+                        color = "text-standard";
                         break;
                 }
                 <li class="list-group-item d-flex align-items-center" id="@film.ContenuTitre">
