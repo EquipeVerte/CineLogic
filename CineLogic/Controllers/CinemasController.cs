@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using System.Windows.Forms;
 using CineLogic.Models;
 using AutoMapper;
+using Newtonsoft.Json;
+using CineLogic.Models.Programmation;
 
 namespace CineLogic.Controllers
 {
@@ -203,6 +205,20 @@ namespace CineLogic.Controllers
             ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
             ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
             return View(cinema);
+        }
+
+        //  Ajax get cinemas.
+        [HttpGet]
+        public ContentResult Cinemas()
+        {
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
         }
     }
 }
