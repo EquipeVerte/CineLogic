@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Windows.Forms;
 using CineLogic.Models;
 using AutoMapper;
 using Newtonsoft.Json;

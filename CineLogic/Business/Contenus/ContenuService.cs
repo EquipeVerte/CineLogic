@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Services.Description;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace CineLogic.Business.Contenus
 {

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Windows.Forms;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
@@ -113,7 +112,8 @@ namespace CineLogic.Controllers
             Responsable responsable = db.Responsables.Find(id);
             if (responsable.Cinemas.Count > 0)
             {
-                MessageBox.Show("Impossible de supprimer ce responsable, veuillez le dé-assigner de ces cinémas.");
+                //  MessageBox ne marche pas sur un serveur!!!!! Il faut envoyer un message cote client.
+                //MessageBox.Show("Impossible de supprimer ce responsable, veuillez le dé-assigner de ces cinémas.");
             }
             else
             {

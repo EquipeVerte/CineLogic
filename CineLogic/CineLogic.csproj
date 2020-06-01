@@ -208,6 +208,9 @@
     <Compile Include="Models\Contenu.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContenuPromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CsvData.cs" />
     <Compile Include="Models\Directeur.cs">
       <DependentUpon>CineDB.tt</DependentUpon>
@@ -233,6 +236,12 @@
     <Compile Include="Models\MetaData\SeancePromo.cs" />
     <Compile Include="Models\MetaData\User.cs" />
     <Compile Include="Models\SalleViewModel.cs" />
+    <Compile Include="Models\SeanceContenu.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeancePromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
