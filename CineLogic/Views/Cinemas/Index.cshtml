@@ -149,7 +149,7 @@
         $(document).ready(function () {
             $('#list-tab').on('click', 'a', function (e) {
                 var id = $(this).attr("aria-controls");
-                for (var i = 1; i <= $('#list-tab-salle > a').length + 1; i++) {
+                for (var i = 1; i <= $('#list-tab-salle > a').length + 5; i++) {
                     $('#list-tab-salle a[aria-controls="' + i + '"]').addClass('fade disabled');
                     $('#nav-tabContent-salle').addClass('fade');
                     $('#nav-tabContent-salle a').addClass('disabled');
