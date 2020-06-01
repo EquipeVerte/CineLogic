@@ -149,6 +149,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Utilisateurs\IUserService.cs" />
+    <Compile Include="Business\Utilisateurs\UserService.cs" />
     <Compile Include="Business\Contenus\ContenuSelectionViewModel.cs" />
     <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
     <Compile Include="Business\Contenus\ContenuViewModel.cs" />
@@ -156,6 +158,9 @@
     <Compile Include="Business\Contenus\ContenuService.cs" />
     <Compile Include="Business\Contenus\CsvContenuLigne.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\Attributes\AdminOnlyAttribute.cs" />
+    <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
+    <Compile Include="Controllers\Attributes\RedirectIfSessionActiveAttribute.cs" />
     <Compile Include="Controllers\ContenusController.cs" />
     <Compile Include="Controllers\DirecteursController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
@@ -213,6 +218,8 @@
       <DependentUpon>CineDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Libraries\NameLibrary.cs" />
+    <Compile Include="Models\Libraries\SessionTypes.cs" />
+    <Compile Include="Models\Libraries\UserTypes.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Acteur.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
@@ -233,6 +240,12 @@
     <Compile Include="Models\MetaData\Directeur.cs" />
     <Compile Include="Models\MetaData\Responsable.cs" />
     <Compile Include="Models\MetaData\User.cs" />
+    <Compile Include="Models\SeanceContenu.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeancePromo.cs">
+      <DependentUpon>CineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Repositories\Programmation\EFSeanceRepository.cs" />
     <Compile Include="Repositories\Programmation\ISeanceRepository.cs" />
@@ -506,16 +519,25 @@
     <Content Include="Views\Salles\Create.cshtml" />
     <Content Include="Views\Salles\Delete.cshtml" />
     <Content Include="Views\Salles\Edit.cshtml" />
+    <Content Include="Views\Home\Accueil.cshtml" />
+    <Content Include="Views\Home\NotAuthorised.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Seances\Edit.cshtml" />
     <Content Include="Views\Shared\_LayoutAccueil.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Home\Prog.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
     <Content Include="Views\Cinemas\Assigner.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\Utilisateurs\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />

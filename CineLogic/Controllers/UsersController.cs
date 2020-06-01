@@ -7,31 +7,33 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CineLogic.Business.Utilisateurs;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Hashing;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers
 {
     [SessionActiveOnly]
     public class UsersController : Controller
     {
-        private CineDBEntities db = new CineDBEntities();
+        private readonly CineDBEntities db = new CineDBEntities();
 
         // GET: Users
+        [AdminOnly]
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            IUserService userservice = new UserService(db);
+            return View(userservice.GetAllUser());
         }
 
         // GET: Users/Details/5
         public ActionResult Details(string id)
         {
-            
-
             if (id == null)
             {
-                id = (string)Session["login"];
+                id = (string)Session[SessionTypes.login];
             }
             User user = db.Users.Find(id);
             if (user == null)
@@ -43,6 +45,7 @@ namespace CineLogic.Controllers
         }
 
         // GET: Users/Create
+        [AdminOnly]
         public ActionResult Create()
         {
             return View();
@@ -51,16 +54,19 @@ namespace CineLogic.Controllers
         // POST: Users/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminOnly]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,NomComplet")] UserViewModel userVM)
+        public ActionResult Create([Bind(Include = "Login,Password,NomComplet,Type")] UserViewModel userVM)
         {
             if (ModelState.IsValid)
             {
-                User user = new User();
-                user.Login = userVM.Login;
-                user.NomComplet = userVM.NomComplet;
-                user.Type = "admin";
+                User user = new User
+                {
+                    Login = userVM.Login,
+                    NomComplet = userVM.NomComplet,
+                    Type = userVM.Type
+                };
 
                 Hasher hasher = new Hasher();
 
@@ -109,10 +115,12 @@ namespace CineLogic.Controllers
             }
 
             //  Extraire les données nécessaires pour faire l'édition.
-            UserViewModel userVM = new UserViewModel();
-            userVM.Login = user.Login;
-            userVM.NomComplet = user.NomComplet;
-            userVM.Type = user.Type;
+            UserViewModel userVM = new UserViewModel
+            {
+                Login = user.Login,
+                NomComplet = user.NomComplet,
+                Type = user.Type
+            };
 
             return View(userVM);
         }
@@ -150,6 +158,7 @@ namespace CineLogic.Controllers
         }
 
         // GET: Users/Delete/5
+        [AdminOnly]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -165,6 +174,7 @@ namespace CineLogic.Controllers
         }
 
         // POST: Users/Delete/5
+        [AdminOnly]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

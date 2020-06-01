@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using CineLogic.Models;
 using AutoMapper;
 using Newtonsoft.Json;
+using CineLogic.Models.Libraries;
 using CineLogic.Models.Programmation;
 
 namespace CineLogic.Controllers
@@ -161,6 +162,16 @@ namespace CineLogic.Controllers
                 db.Cinemas.Remove(cinema);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+            if (Session[SessionTypes.type].Equals(UserTypes.admin))
+            {
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
+            }
+            else
+            {
+                string type = (String)Session[SessionTypes.login];
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Programmateur.Equals(type)))), "application/json");
+            }
         }
 
         protected override void Dispose(bool disposing)
