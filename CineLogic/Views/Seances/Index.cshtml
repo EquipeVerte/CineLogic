@@ -10,6 +10,12 @@
     ViewBag.Title = "Index";
 }
 
+<div class="ml-3 float-right">
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#helpModal">
+        <i class="fas fa-question"></i>
+    </button>
+</div>
+
 <!-- Icone animé qui est affiché lors que la page fait une operation ajax-->
 <div class="loading float-right">
     <div class="loader">
@@ -17,13 +23,6 @@
     </div>
 </div>
 
-<div id="sf-animation" class="float-right">
-
-</div>
-
-<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#helpModal">
-    <i class="fas fa-question"></i>
-</button>
 
 <h4>Selectionner le cinéma et salle:</h4>
 
@@ -248,7 +247,7 @@
 
     <!-- Modal help -->
     <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Comment utiliser cette page?</h5>

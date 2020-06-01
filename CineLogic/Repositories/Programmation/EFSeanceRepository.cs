@@ -51,6 +51,9 @@ namespace CineLogic.Repositories
 
         public void DeleteSeance(Seance seance)
         {
+            seance.SeanceContenus.Clear();
+            seance.SeancePromoes.Clear();
+
             db.Seances.Remove(seance);
 
             db.SaveChanges();
