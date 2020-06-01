@@ -59,8 +59,27 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index", "Cinemas")
+            @if (Model.EnExploitation == true)
+            {
+                <div style="color: red; background-color:rosybrown;">
+                    Impossible de supprimer ce cinéma: il est en exploitation.
+                </div>
+            }
+            else
+            {
+                if (Model.Seances.Count > 0)
+                {
+                    <span style="color: red; background-color:rosybrown;">
+                        Êtes-vous sûr de vouloir supprimer cette salle? Elle contient des séances.
+                    </span>
+                    <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                }
+                else
+                {
+                    <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                }
+            }
+            @Html.ActionLink("Back to List", "Index")
         </div>
     }
 </div>

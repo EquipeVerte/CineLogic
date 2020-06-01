@@ -6,12 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CineLogic.Controllers.Attributes;
+using System.Windows.Forms;
 using CineLogic.Models;
 
 namespace CineLogic.Controllers
 {
-    [SessionActiveOnly]
     public class ResponsablesController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -112,8 +111,15 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Responsable responsable = db.Responsables.Find(id);
-            db.Responsables.Remove(responsable);
-            db.SaveChanges();
+            if (responsable.Cinemas.Count > 0)
+            {
+                MessageBox.Show("Impossible de supprimer ce responsable, veuillez le dé-assigner de ces cinémas.");
+            }
+            else
+            {
+                db.Responsables.Remove(responsable);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
