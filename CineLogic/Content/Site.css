@@ -46,3 +46,10 @@ textarea {
     height: 140px;
     overflow-y: scroll;
 }
+.slider {
+    height: 300px !important;
+    flex-shrink: 0;
+}
+.titre{
+    width: 200px !important;
+}
