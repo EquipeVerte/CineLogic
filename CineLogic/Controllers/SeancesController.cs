@@ -115,6 +115,11 @@ namespace CineLogic.Controllers
                 }
             }
 
+            if(TempData["DuplicateError"] != null)
+            {
+                ViewBag.DuplicateError = TempData["DuplicateError"];
+            }
+
             return View(seance);
         }
 
@@ -195,9 +200,16 @@ namespace CineLogic.Controllers
         [HttpPost]
         public ActionResult AddContent(int seanceID, string contenuTitre)
         {
-            seanceService.AddContentToSeance(seanceID, contenuTitre);
+            try
+            {
+                seanceService.AddContentToSeance(seanceID, contenuTitre);
 
-            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+                System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+            }
+            catch(DuplicateContentException ex)
+            {
+                TempData["DuplicateError"] = ex.Message;
+            }
 
             return RedirectToAction("Edit", new { id = seanceID });
         }
