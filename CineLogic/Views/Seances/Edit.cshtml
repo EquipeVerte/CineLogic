@@ -365,7 +365,7 @@
                                     break;
                             }
 
-                            $("#film-select").append('<option value="' + item.Titre + '">' + item.Titre + " - " + type + " " + item.Runtime + '</option>');
+                            $("#film-select").append('<option value="' + item.Titre + '">' + item.Titre + " - " + type + " " + item.Runtime + 'mins</option>');
                         });
                 }).fail(function () {
                     console.log(jqxhr);
