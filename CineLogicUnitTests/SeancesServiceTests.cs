@@ -79,7 +79,7 @@ namespace CineLogic.Programmation.Tests
 
             service = new SeanceService(new EFSeanceRepository(mockContext.Object));
         }
-
+      
         [TestMethod]
         public void CreateSeance_ValidSeance_Successful()
         {

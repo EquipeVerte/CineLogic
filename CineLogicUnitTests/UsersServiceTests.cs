@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CineLogic.Models;
 using CineLogic.Business.Utilisateurs;
+using CineLogic.Business;
 using System.Linq;
 using Moq;
 using System.Data.Entity;
 
 namespace CineLogicUnitTests
 {
-    /// <summary>
-    /// Description résumée pour UnitTest2
-    /// </summary>
     [TestClass]
     public class UsersServiceTests
     {
@@ -79,10 +77,129 @@ namespace CineLogicUnitTests
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void GetAllUser_Successful()
         {
+            //  Arrange.
+            //  Act.
+
+            //  Assert.
             Assert.IsTrue(service.GetAllUser().Count == 4);
             Assert.IsTrue(service.GetAllUser()[0].Login == "AdminTest");
+        }
+
+        [TestMethod]
+        public void CreateUser_ValidUser_Successful()
+        {
+            //  Arrange.
+            User usager = new User()
+            {
+                Login = "ProgTest2",
+                PasswordHash = null,
+                Salt = null,
+                HashIterations = 1000,
+                NomComplet = "ProgTest2",
+                Type = "ProgTest2"
+            };
+
+            //  Act.
+            service.CreateUser(usager);
+
+            //  Assert.
+            Assert.IsTrue(service.GetAllUser()[4].Login == "ProgTest2");
+        }
+
+        [TestMethod]
+        public void CreateUser_ValidUser_UnSuccessful()
+        {
+            //  Arrange.
+            User usager = new User()
+            {
+                Login = "ProgTest2",
+                PasswordHash = null,
+                Salt = null,
+                HashIterations = 1000,
+                NomComplet = "ProgTest2",
+                Type = "ProgTest2"
+            };
+
+            //  Act.
+            service.CreateUser(usager);
+
+            //  Assert.
+            Assert.IsFalse(service.GetAllUser()[3].Login == "ProgTest");
+        }
+
+        [TestMethod]
+        public void EditUser_ValidUser_Succesful()
+        {
+            //  Arrange.
+            User usager = new User()
+            {
+                Login = "AdminTest",
+                PasswordHash = null,
+                Salt = null,
+                HashIterations = 1000,
+                NomComplet = "AdminTestChanged",
+                Type = "AdminTest"
+            };
+
+            //  Act.
+            service.UpdateUser(usager);
+
+            //  Assert.
+            Assert.AreEqual(usager.NomComplet, service.GetUserByLogin(usager).NomComplet);
+        }
+
+
+        [TestMethod]
+        public void DeleteUser_ValidLogin_Succesful()
+        {
+            //  Arrange.
+            User usager = new User()
+            {
+                Login = "ProgTest",
+                PasswordHash = null,
+                Salt = null,
+                HashIterations = 1000,
+                NomComplet = "ProgTest",
+                Type = "ProgTest"
+            };
+
+            //  Act.
+            service.DeleteUser(usager);
+
+            //  Assert.
+            Assert.IsTrue(service.GetAllUser().Count.Equals(3));
+        }
+
+        [TestMethod]
+        public void DeleteUser_InValidLogin_Succesful()
+        {
+            //  Arrange.
+            User usager = new User()
+            {
+                Login = "Toto",
+                PasswordHash = null,
+                Salt = null,
+                HashIterations = 1000,
+                NomComplet = "Toto",
+                Type = "ProgTest"
+            };
+
+            //  Act.
+            service.DeleteUser(usager);
+
+            //  Assert.
+            Assert.IsTrue(service.GetAllUser().Count.Equals(4));
+        }
+
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            if (service != null)
+            {
+                service.Dispose();
+            }
         }
     }
 }
