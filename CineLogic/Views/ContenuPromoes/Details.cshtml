@@ -4,12 +4,19 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+    <h2 class="border-left border-bottom border-info m-4 p-4">Details du film promotionnel</h2>
 
-<div>
-    <h4>ContenuPromo</h4>
-    <hr />
+<div class="m-4">
+
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.RuntimeMins)
         </dt>
@@ -20,7 +27,7 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Titre }) |
-    @Html.ActionLink("Back to List", "Index")
+<p class="m-4">
+    @Html.ActionLink("Editer", "Edit", new { id = Model.Titre }) |
+    @Html.ActionLink("Index des films promotionnels", "Index")
 </p>
