@@ -18,8 +18,25 @@
 <div id="carouselExampleIndicators" class="carousel slide slider" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        @{
+            if (l > 0)
+            {
+                for (int g = 1; g < j + 1; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+            else
+            {
+                for (int g = 1; g < j; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+        }
+        @*<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>*@
     </ol>
     <div class="carousel-inner">
         @*First slide*@
@@ -83,7 +100,6 @@
                             {
                                 foreach (var item in (Model.Contenus.Skip(5 * k)).Take(5))
                                 {
-                                    @*.Take(10)*@
                                     <tr class="border-bottom  border-warning">
                                         <td>
                                             @item.Titre

@@ -163,8 +163,8 @@
                             @Html.DisplayFor(modelItem => item.Nom)
                         </td>
                         <td class="EDS">
-                            @Html.ActionLink("Editer", "Edit", "Directeurs", new { id = item.Nom }, null) |
-                            @Html.ActionLink("Détails", "Details", "Directeurs", new { id = item.Nom }, null) |
+                            @Html.ActionLink("Editer", "Edit", "Genres", new { id = item.Nom }, null) |
+                            @Html.ActionLink("Détails", "Details", "Genres", new { id = item.Nom }, null) |
                             @Html.ActionLink("Supprimer", "SupprimerGenre", "Contenus", new { GenreId = item.Nom, contenuId = Model.Titre }, null)
                         </td>
                     </tr>

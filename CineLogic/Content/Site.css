@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 80px;
     padding-bottom: 20px;
+    width :100%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -50,6 +51,16 @@ textarea {
     height: 300px !important;
     flex-shrink: 0;
 }
+.slider2 {
+    height: 600px !important;
+    flex-shrink: 0;
+}
 .titre{
     width: 200px !important;
 }
+.largeur{
+    width:60px !important;
+}
+.ary{
+     width:1200px !important;
+ }
