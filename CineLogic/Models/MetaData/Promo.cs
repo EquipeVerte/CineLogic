@@ -1,10 +1,5 @@
-﻿using CineLogic.Business.Contenus;
-using CineLogic.Models.Libraries;
-using System;
-using System.Collections.Generic;
+﻿using CineLogic.Models.Libraries;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace CineLogic.Models
 {

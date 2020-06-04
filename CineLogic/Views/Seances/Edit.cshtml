@@ -158,13 +158,13 @@
                 string color = "";
                 switch (film.Typage)
                 {
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO:
                         color = "bg-promo";
                         break;
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT:
                         color = "bg-court";
                         break;
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD:
                         color = "bg-standard";
                         break;
                 }
@@ -181,15 +181,15 @@
                 string color = "";
                 switch (film.Typage)
                 {
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO:
                         icon = "fas fa-ad";
                         color = "text-promo";
                         break;
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT:
                         icon = "fas fa-video";
                         color = "text-court";
                         break;
-                    case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD:
                         icon = "fas fa-film";
                         color = "text-standard";
                         break;
@@ -201,7 +201,7 @@
                     <h3 class="mb-0 "><i class="@icon @color"></i> @film.ContenuTitre</h3>
                     <h5 class="ml-3 mb-0">@film.RuntimeMins mins</h5>
                     <div class="ml-auto d-flex flex-row">
-                        @if (film.Typage != CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO)
+                        @if (film.Typage != CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO)
                         {
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input d-none" id="radio-@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
@@ -238,15 +238,15 @@
                     <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
                     <div class="form-group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbPromo" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbPromo" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO" name="types" checked>
                             <label class="form-check-label" for="cbPromo">Promos</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbCourt" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbCourt" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT" name="types" checked>
                             <label class="form-check-label" for="cbCourt">Court metrages</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cbStandard" value="@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD" name="types" checked>
+                            <input class="form-check-input" type="checkbox" id="cbStandard" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD" name="types" checked>
                             <label class="form-check-label" for="cbStandard">Standards</label>
                         </div>
                     </div>
@@ -302,9 +302,9 @@
     <script>
 
         var typeDict = {
-            "promo": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO",
-            "court": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT",
-            "standard": "@CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD"
+            "promo": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO",
+            "court": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT",
+            "standard": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD"
         };
 
         $(document).ready(function () {
