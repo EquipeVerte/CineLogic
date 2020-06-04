@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using CineLogic.Business.Contenus;
-using CineLogic.Models;
-using CineLogic.Models.Programmation;
+﻿using CineLogic.Models;
+using CineLogic.Models.Libraries;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace CineLogic.Repositories
 {
@@ -102,8 +99,6 @@ namespace CineLogic.Repositories
             }
             else if (db.ContenuPromoes.Find(contenuTitre) != null)
             {
-                //  TODO find a way to not reference business from repo!
-                //  Should this be in business?
                 return ContenuTypeLibrary.CONT_TYPE_PROMO;
             }
             else

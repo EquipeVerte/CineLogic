@@ -1,10 +1,5 @@
 ﻿using CineLogic.Models;
-using CineLogic.Models.Programmation;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CineLogic.Repositories
 {

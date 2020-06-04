@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using CineLogic.Business.Contenus;
 using CineLogic.Models;
+using CineLogic.Models.Libraries;
 using CineLogic.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Web;
-using System.Web.Services.Description;
 
 namespace CineLogic.Business.Programmation
 {
@@ -221,11 +218,6 @@ namespace CineLogic.Business.Programmation
 
         public void AddContentToSeance(int seanceID, string contenuTitre)
         {
-            // TODO adding content to seance logic.
-
-            // If first standard content it becomes principal film.
-            // Film added at the end of order.
-
             string type = repository.GetContentType(contenuTitre);
 
             if (type == "notfound")

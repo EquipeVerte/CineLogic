@@ -16,6 +16,7 @@ using CineLogic.Business.Contenus;
 using System.Collections;
 using CsvHelper;
 using System.Globalization;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers
 {

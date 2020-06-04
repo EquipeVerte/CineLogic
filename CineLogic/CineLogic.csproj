@@ -152,7 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Contenus\ContenuSelectionViewModel.cs" />
     <Compile Include="Business\Contenus\ContenuService.cs" />
-    <Compile Include="Business\Contenus\ContenuTypeLibrary.cs" />
+    <Compile Include="Models\Libraries\ContenuTypeLibrary.cs" />
     <Compile Include="Business\Contenus\ContenuViewModel.cs" />
     <Compile Include="Business\Contenus\CsvContenuLigne.cs" />
     <Compile Include="Business\Utilisateurs\IUserService.cs" />

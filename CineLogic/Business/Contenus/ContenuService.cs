@@ -1,10 +1,6 @@
 ﻿using CineLogic.Models;
+using CineLogic.Models.Libraries;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using System.Web.Services.Description;
 using System.Windows;
 
 namespace CineLogic.Business.Contenus
