@@ -6,11 +6,6 @@
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Charger Plusieurs films (Fichier .csv)</h2>
 
-@*<div class="m-1">
-        <input type="submit" value="Ouvrir " class="btn btn-outline-info" />
-    </div>*@
-
-
 <div>
     @using (Html.BeginForm("CreateCsv", "Contenus", FormMethod.Post, new { @enctype = "multipart/form-data" }))
     {
@@ -19,16 +14,31 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="m-4">
 
-                <table>
-                </table>
-
                 <div class="form-group">
                     <input class="form-control-file " type="file" id="dataFile" name="csvFile" />
                 </div>
 
-
                 <div class="m-1">
-                    <input type="submit" value="Charger le fichier" class="btn btn-outline-info" id="chargerFichierBTN" />
+                    <div class="d-flex justify-content-start">
+                        <input type="submit" value="Charger le fichier" class="btn btn-outline-info" id="chargerFichierBTN" style="height:40px" />
+                        @{
+                            if (ViewBag.hourglassIn != null)
+                            {
+                                <img src="~/Images/hourglass.gif" style="height:50px" />
+                            }
+                        }
+                        @{
+                            if (ViewBag.hourglassOut != null)
+                            {
+                                <img src="~/Images/hourglass.gif" style="height:50px" hidden />
+                            }
+                        }
+
+
+                    </div>
+                </div>
+
+                <div>
                     @{
                         if (ViewBag.CheminVide != null)
                         {
@@ -41,6 +51,7 @@
                         {
                             <div class="alert alert-danger mt-4">@ViewBag.ErreurTypeFichier</div>
                         }
+
                     }
                 </div>
 
@@ -60,6 +71,8 @@
                 </div>
             </div>
         </div>
+
     }
 </div>
+
 

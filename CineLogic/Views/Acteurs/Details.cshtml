@@ -6,7 +6,7 @@
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Details de l'acteur</h2>
 
-<div >
+<div>
 
     <dl class="dl-horizontal m-4">
         <dt>
@@ -23,3 +23,24 @@
     @Html.ActionLink("Editer", "Edit", new { id = Model.Nom }) |
     @Html.ActionLink("Index des acteurs", "Index")
 </p>
+<div>
+    <div class="alert alert-info" role="alert">
+        Les films dans lesquels il a joué
+    </div>
+
+    <table class="table">
+        @foreach (var item in Model.Contenus)
+        {
+            @*.Take(10)*@
+            <tr class="border-bottom  border-warning">
+                <td>
+                    @item.Titre
+                </td>
+                <td>
+                    @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>

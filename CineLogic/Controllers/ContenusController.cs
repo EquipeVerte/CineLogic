@@ -16,6 +16,7 @@ using CineLogic.Business.Contenus;
 using System.Collections;
 using CsvHelper;
 using System.Globalization;
+using CineLogic.Models.Libraries;
 
 namespace CineLogic.Controllers
 {
@@ -123,13 +124,13 @@ namespace CineLogic.Controllers
 
                     //lignes.RemoveAt(0);
 
-
+                    ViewBag.hourglassIn = "True";
                     ContenuService contenuService = new ContenuService();
                     foreach (CsvContenuLigne csvContenuLigne in csvContenuLignes)
                     {
                         contenuService.ParsserColmn(csvContenuLigne);
                     }
-
+                    
 
                     filmAjouter += contenuService.filmAjouter;
                     ViewBag.FilmAjouter = filmAjouter;
@@ -147,32 +148,7 @@ namespace CineLogic.Controllers
                     ViewBag.ActeurExistant = acteurExistant;
 
 
-                    //foreach (string ligne in lignes)
-                    //{
-                    //    string[] colones = ligne.Split(';');
-                    //    ContenuService contenuService = new ContenuService();
-                    //    contenuService.ParsserColmn(colones);
-
-
-                    //    Contenu contenu = db.Contenus.Find(colones[01]);
-
-                    //    if (contenu == null)
-                    //    {
-                    //        filmAjouter++;
-                    //        ViewBag.FilmAjouter = filmAjouter;
-                    //        directeurAjouter += contenuService.directeurAjouter;
-                    //        ViewBag.DirecteurAjouter = directeurAjouter;
-                    //        acteurAjouter += contenuService.acteurAjouter;
-                    //        ViewBag.ActeurAjouter = acteurAjouter;
-
-                    //    }
-                    //    else
-                    //    {
-                    //        filmExistant++;
-                    //        //directeurExistant++;
-                    //        ViewBag.FilmExistant = filmExistant;
-                    //    }
-                    //}
+                    ViewBag.hourglassOut = "False";
                 }        
             }
             else
@@ -194,6 +170,15 @@ namespace CineLogic.Controllers
             {
                 return HttpNotFound();
             }
+            //Création de la liste des types des films
+            List<string> listeTypes = new List<string>();
+
+            foreach(string type in TypagesFilms.Display.Keys)
+            {
+                listeTypes.Add(type);
+            }
+            ViewBag.typage = new SelectList(TypagesFilms.Display, "Key", "Value");
+
             return View(contenu);
         }
 
@@ -202,11 +187,14 @@ namespace CineLogic.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)
+        public ActionResult Edit([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore,typage")] Contenu contenu)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(contenu).State = EntityState.Modified;
+                //**
+                Contenu con = db.Contenus.Find(contenu.Titre);
+                con.typage = contenu.typage;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
