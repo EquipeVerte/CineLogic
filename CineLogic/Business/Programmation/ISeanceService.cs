@@ -1,9 +1,4 @@
-﻿using CineLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CineLogic.Business.Programmation
 {
@@ -17,7 +12,15 @@ namespace CineLogic.Business.Programmation
 
         SeanceViewModel UpdateSeance(SeanceViewModel seance);
 
+        void UpdateSeanceContents(SeanceViewModel seance);
+
         void UpdateSeanceTimes(SeanceViewModel seance);
+
+        void AdjustTimeToContent(int seanceID);
+
+        void AddContentToSeance(int seanceID, string contenuTitre);
+
+        void DeleteContentFromSeance(int seanceID, string contenuTitre);
 
         void DeleteSeance(int id);
 

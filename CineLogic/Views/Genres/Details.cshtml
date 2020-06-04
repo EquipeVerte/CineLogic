@@ -5,19 +5,195 @@
 }
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Details du genre</h2>
+@{
+    int i = Model.Contenus.Count;
+    int j = i / 5;
+    int l = i % 5;
+}
 
-<div class="m-4">
-    <dl class="dl-horizontal m-4">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
+<div class="alert alert-info" role="alert">
+    <div><spsn>Nombre de film du genre - <span class=""> @Html.DisplayFor(model => model.Nom)</span> : </spsn>@i</div>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-    </dl>
+<div id="carouselExampleIndicators" class="carousel slide slider" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        @{
+            if (l > 0)
+            {
+                for (int g = 1; g < j + 1; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+            else
+            {
+                for (int g = 1; g < j; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+        }
+        @*<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>*@
+    </ol>
+    <div class="carousel-inner">
+        @*First slide*@
+        <div class="carousel-item active">
+            <table class="table table-dark">
+                @if (Model.Contenus.Count > 5)
+                {
+                    foreach (var item in Model.Contenus.Take(5))
+                    {
+                        <tr class="border-bottom  border-warning">
+                            <td>
+                                @item.Titre
+                            </td>
+                            <td>
+                                @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    foreach (var item in Model.Contenus.Take(Model.Contenus.Count))
+                    {
+                        <tr class="border-bottom  border-warning">
+                            <td>
+                                @item.Titre
+                            </td>
+                            <td>
+                                @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        @*Next slide*@
+
+        @{
+            if (l > 0)
+            {
+                for (int k = 1; k < j + 1; k++)
+                {
+                    <div class="carousel-item">
+                        <table class="table table-dark">
+                            @if ((Model.Contenus.Count - 5) < 5)
+                            {
+                                foreach (var item in (Model.Contenus.Skip(5)).Take(Model.Contenus.Count - 5))
+                                {
+                                    @*.Take(10)*@
+                                    <tr class="border-bottom  border-warning">
+                                        <td>
+                                            @item.Titre
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in (Model.Contenus.Skip(5 * k)).Take(5))
+                                {
+                                    <tr class="border-bottom  border-warning">
+                                        <td>
+                                            @item.Titre
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            }
+            else
+            {
+                for (int k = 1; k < j; k++)
+                {
+                    <div class="carousel-item">
+                        <table class="table table-dark">
+                            @if ((Model.Contenus.Count - 5) < 5)
+                            {
+                                foreach (var item in (Model.Contenus.Skip(5)).Take(Model.Contenus.Count - 5))
+                                {
+                                    @*.Take(10)*@
+                                    <tr class="border-bottom  border-warning">
+                                        <td>
+                                            @item.Titre
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in (Model.Contenus.Skip(5 * k)).Take(5))
+                                {
+                                    @*.Take(10)*@
+                                    <tr class="border-bottom  border-warning">
+                                        <td>
+                                            @item.Titre
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            }
+
+        }
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
 <p class="m-4">
     @Html.ActionLink("Editer", "Edit", new { id = Model.Nom }) |
     @Html.ActionLink("Index des genres", "Index")
 </p>
+
+
+@*<div class="m-4">
+        <dl class="dl-horizontal m-4">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nom)
+            </dd>
+        </dl>
+    </div>*@
+
+@*<table class="table">
+    @foreach (var item in (Model.Contenus))
+    {
+        <tr class="border-bottom  border-warning">
+            <td>
+                @item.Titre
+            </td>
+            <td>
+                @Html.ActionLink("Détails", "Details", "Contenus", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" })
+            </td>
+        </tr>
+    }
+</table>*@

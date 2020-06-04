@@ -17,7 +17,6 @@ namespace CineLogic.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Contenu()
         {
-            this.Seances = new HashSet<Seance>();
             this.Acteurs = new HashSet<Acteur>();
             this.Directeurs = new HashSet<Directeur>();
             this.Genres = new HashSet<Genre>();
@@ -34,8 +33,6 @@ namespace CineLogic.Models
         public Nullable<int> MetaScore { get; set; }
         public string typage { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seance> Seances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acteur> Acteurs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

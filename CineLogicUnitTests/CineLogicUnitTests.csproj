@@ -146,12 +146,6 @@
     <None Include="Scripts\umd\popper.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CineLogic\CineLogic.csproj">
-      <Project>{36663BA8-B91B-41C1-A378-6ADDE28E1323}</Project>
-      <Name>CineLogic</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +242,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CineLogic\CineLogic.csproj">
+      <Project>{36663ba8-b91b-41c1-a378-6adde28e1323}</Project>
+      <Name>CineLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

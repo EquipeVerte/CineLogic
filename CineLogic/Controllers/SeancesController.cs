@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using AutoMapper;
 using CineLogic.Business.Programmation;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
-using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
@@ -42,7 +34,7 @@ namespace CineLogic.Controllers
             this.seanceService = seanceService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? salleID, DateTime? seanceDate)
         {
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
@@ -50,6 +42,29 @@ namespace CineLogic.Controllers
                 {
                     ViewBag.UnsavedChanges = true;
                 }
+            }
+
+            if(salleID != null)
+            {
+                ViewBag.SalleID = salleID;
+
+                using (CineDBEntities db = new CineDBEntities())
+                {
+                    ViewBag.CineID = db.Salles.Find(salleID).CinemaID;
+                }
+                if(seanceDate != null)
+                {
+                    ViewBag.InitialDate = seanceDate;
+                }
+                else
+                {
+                    ViewBag.InitialDate = null;
+                }
+            }
+            else
+            {
+                ViewBag.SalleID = "";
+                ViewBag.CineID = "";
             }
 
             return View();
@@ -92,6 +107,11 @@ namespace CineLogic.Controllers
                 }
             }
 
+            if(TempData["DuplicateError"] != null)
+            {
+                ViewBag.DuplicateError = TempData["DuplicateError"];
+            }
+
             return View(seance);
         }
 
@@ -104,6 +124,8 @@ namespace CineLogic.Controllers
                 try
                 {
                     seanceService.UpdateSeance(seance);
+
+                    seanceService.UpdateSeanceContents(seance);
 
                     System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
@@ -160,9 +182,38 @@ namespace CineLogic.Controllers
         [HandleErrorJson]
         public ActionResult AdjustTimes(int seanceID)
         {
-            // TODO adjustment logic.
+            seanceService.AdjustTimeToContent(seanceID);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult AddContent(int seanceID, string contenuTitre)
+        {
+            try
+            {
+                seanceService.AddContentToSeance(seanceID, contenuTitre);
+
+                System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+            }
+            catch(DuplicateContentException ex)
+            {
+                TempData["DuplicateError"] = ex.Message;
+            }
+
+            return RedirectToAction("Edit", new { id = seanceID });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteContent(int seanceID, string contenuTitre)
+        {
+            seanceService.DeleteContentFromSeance(seanceID, contenuTitre);
+
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
+            return RedirectToAction("Edit", new { id = seanceID });
         }
 
         public ActionResult Save()

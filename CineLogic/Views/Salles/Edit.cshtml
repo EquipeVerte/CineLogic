@@ -1,5 +1,4 @@
-﻿
-@model CineLogic.Models.Salle
+﻿@model CineLogic.Models.SalleViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Salle</h4>
         <hr />
@@ -75,4 +74,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-

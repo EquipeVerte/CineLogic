@@ -31,8 +31,7 @@ namespace CineLogic.Programmation.Tests
                     Titre = "Test Séance 1",
                     HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                     HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                    SalleID = 1,
-                    ContenuTitre = "Test Film 1"
+                    SalleID = 1
                 },
                 new Seance()
                 {
@@ -40,8 +39,7 @@ namespace CineLogic.Programmation.Tests
                     Titre = "Test Séance 2",
                     HeureDebut = new DateTime(2020, 1, 1, 15, 0, 0),
                     HeureFin = new DateTime(2020, 1, 1, 18, 0, 0),
-                    SalleID = 1,
-                    ContenuTitre = "Test Film 1"
+                    SalleID = 1
                 },
                 new Seance()
                 {
@@ -49,8 +47,7 @@ namespace CineLogic.Programmation.Tests
                     Titre = "Test Séance 3",
                     HeureDebut = new DateTime(2020, 1, 1, 18, 0, 0),
                     HeureFin = new DateTime(2020, 1, 1, 21, 0, 0),
-                    SalleID = 1,
-                    ContenuTitre = "Test Film 2"
+                    SalleID = 1
                 },
                 new Seance()
                 {
@@ -58,8 +55,7 @@ namespace CineLogic.Programmation.Tests
                     Titre = "Test Séance 4",
                     HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                     HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                    SalleID = 2,
-                    ContenuTitre = "Test Film 2"
+                    SalleID = 2
                 }
             };
 
@@ -89,8 +85,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance",
                 HeureDebut = new DateTime(2020, 1, 2, 12, 00, 00),
                 HeureFin = new DateTime(2020, 1, 2, 15, 00, 00),
-                SalleID = 1,
-                ContenuTitre = "Test Contenu"
+                SalleID = 1
             };
 
             //  Act.
@@ -109,8 +104,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance 1",
                 HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                 HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film 1"
+                SalleID = 1
             };
 
             //  Act.
@@ -127,8 +121,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance 1",
                 HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                 HeureFin = new DateTime(2020, 1, 1, 12, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film 1"
+                SalleID = 1
             };
 
             //  Act.
@@ -146,8 +139,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance Changed",
                 HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                 HeureFin = new DateTime(2020, 1, 1, 15, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film 2"
+                SalleID = 1
             };
 
             //  Act.
@@ -167,8 +159,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance Changed",
                 HeureDebut = new DateTime(2020, 1, 1, 15, 0, 0),
                 HeureFin = new DateTime(2020, 1, 1, 18, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film 2"
+                SalleID = 1
             };
 
             //  Act.
@@ -186,8 +177,7 @@ namespace CineLogic.Programmation.Tests
                 Titre = "Test Séance Changed",
                 HeureDebut = new DateTime(2020, 1, 1, 12, 0, 0),
                 HeureFin = new DateTime(2020, 1, 1, 9, 0, 0),
-                SalleID = 1,
-                ContenuTitre = "Test Film 2"
+                SalleID = 1
             };
 
             //  Act.

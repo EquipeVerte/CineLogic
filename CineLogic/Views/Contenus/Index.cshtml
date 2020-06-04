@@ -3,17 +3,21 @@
 @{
     ViewBag.Title = "Index des films";
 }
+@{
+    int i = Model.Count();
+    int j = i / 10;
+    int l = i % 10;
+}
 
-<h2 class="border-left border-bottom border-info m-4 p-4">Index des films</h2>
-
-<p class="p-3, m-3">
-    @Html.ActionLink("Ajouter un Film", "Create")
-</p>
-<!--
-   <p class="p-3, m-3">
-    @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
-</p>
--->
+<h2 class="border-left border-bottom border-info m-2 p-4">Index des <span> @i </span> films </h2>
+<div class="d-flex justify-content-lg-start">
+    <p class="p-3, m-3">
+        @Html.ActionLink("Ajouter un Film", "Create")
+    </p>
+    <p class="p-3, m-3">
+        @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
+    </p>
+</div>
 
 <div>
     @{
@@ -26,7 +30,7 @@
 
     }
 </div>
-
+@*Bloc Script java*@
 <SCRIPT language="JavaScript" type="text/javascript">
 
         // Un tableau qui va contenir toutes tes images.
@@ -67,6 +71,9 @@
             this.setInterval(this.ChangerImage3, 2500)
         }
 </SCRIPT>
+@*Fin Bloc Script java*@
+
+@*Bloc des affiches*@
 <div class="row mb-3 d-flex justify-content-md-between">
     <div class="col-md-4">
         <div class="card m-2 border-0">
@@ -78,68 +85,656 @@
         </div>
     </div>
 </div>
+@*Fin bloc des affiche*@
 
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Titre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Annee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RuntimeMins)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Votes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Revenue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaScore)
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Annee)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RuntimeMins)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Votes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Revenue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MetaScore)
-            </td>
-            <td>
-                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning" }) |
-                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger" })
-            </td>
+@*Bloc ancien code*@
+<div>
+    @*<table class="table table-striped EDS">
+        <tr class="EDS">
+            <th>
+                @Html.DisplayNameFor(model => model.Titre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RuntimeMins)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Votes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetaScore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.typage)
+            </th>
+            <th class="align-content-center">
+                <sapn>Actions</sapn>
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Annee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RuntimeMins)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Votes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Revenue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetaScore)
+                </td>
+                <td>
+                    @{
+                        if (item.typage != null)
+                        {
+                            string icon = "";
+
+                            switch (item.typage)
+                            {
+                                case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                    icon = "fas fa-ad";
+
+                                    break;
+                                case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                    icon = "fas fa-video";
+
+                                    break;
+                                case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                    icon = "fas fa-film";
+
+                                    break;
+                            }
+                            <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                <i class="@icon"></i>
+                            </div>*@
+
+    @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+    @*}
+                        }
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                        @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                    </td>
+                </tr>
+            }
+        </table>*@
+</div>
+
+
+
+<div id="carouselExampleControls" class="carousel slide d-flex justify-content-start ary slider2" data-ride="carousel">
+    @* Indicateur des slides *@
+    <ol class="carousel-indicators mb-2">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        @{
+            if (l > 0)
+            {
+                for (int g = 1; g < j + 1; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+            else
+            {
+                for (int g = 1; g < j; g++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="g"></li>
+                }
+            }
+        }
+    </ol>
+
+
+
+    <div class="carousel-inner">
+        @*First slide*@
+        <div class="carousel-item active">
+            <table class="table table-bordered table-striped">
+                <tr class="EDS">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Titre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annee)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RuntimeMins)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Votes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Revenue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MetaScore)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.typage)
+                    </th>
+                    <th class="align-content-center action">
+                        <sapn>Actions</sapn>
+                    </th>
+                </tr>
+                @if (i > 10)
+                {
+                    foreach (var item in Model.Take(10))
+                    {
+                        <tr class="EDS">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Titre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Annee)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RuntimeMins)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Votes)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Revenue)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MetaScore)
+                            </td>
+                            <td>
+                                @{
+                                    if (item.typage != null)
+                                    {
+                                        string icon = "";
+
+                                        switch (item.typage)
+                                        {
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                icon = "fas fa-ad";
+
+                                                break;
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                icon = "fas fa-video";
+
+                                                break;
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                icon = "fas fa-film";
+
+                                                break;
+                                        }
+                                        <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                            <i class="@icon"></i>
+                                        </div>
+
+                                        @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                    }
+                                }
+
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                            </td>
+                        </tr>
+                    }
+
+                }
+                else //au cas ou la base contient moins de 10 films
+                {
+                    foreach (var item in Model.Take(i))
+                    {
+                        <tr class="EDS">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Titre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Annee)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RuntimeMins)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Votes)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Revenue)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MetaScore)
+                            </td>
+                            <td>
+                                @{
+                                    if (item.typage != null)
+                                    {
+                                        string icon = "";
+
+                                        switch (item.typage)
+                                        {
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                icon = "fas fa-ad";
+
+                                                break;
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                icon = "fas fa-video";
+
+                                                break;
+                                            case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                icon = "fas fa-film";
+
+                                                break;
+                                        }
+                                        <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                            <i class="@icon"></i>
+                                        </div>
+
+                                        @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                    }
+                                }
+
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        </div>
+        @*Next slide*@
+
+        @{
+            if (l > 0)
+            {
+                for (int k = 1; k < j + 1; k++)
+                {
+                    <div class="carousel-item">
+                        <table class="table table-bordered table-striped">
+                            <tr class="EDS">
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Titre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Annee)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RuntimeMins)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Rating)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Votes)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Revenue)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MetaScore)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.typage)
+                                </th>
+                                <th class="align-content-center">
+                                    <sapn>Actions</sapn>
+                                </th>
+                            </tr>
+                            @if ((i - 10) < 10) //si le reste des films est inférieur à 10
+                            {
+
+                                foreach (var item in (Model.Skip(10)).Take(i - 10))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Annee)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RuntimeMins)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rating)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Votes)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Revenue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MetaScore)
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.typage != null)
+                                                {
+                                                    string icon = "";
+
+                                                    switch (item.typage)
+                                                    {
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                            icon = "fas fa-ad";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                            icon = "fas fa-video";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                            icon = "fas fa-film";
+
+                                                            break;
+                                                    }
+                                                    <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                                        <i class="@icon"></i>
+                                                    </div>
+
+                                                    @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                                }
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in (Model.Skip(10 * k)).Take(10))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Annee)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RuntimeMins)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rating)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Votes)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Revenue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MetaScore)
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.typage != null)
+                                                {
+                                                    string icon = "";
+
+                                                    switch (item.typage)
+                                                    {
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                            icon = "fas fa-ad";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                            icon = "fas fa-video";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                            icon = "fas fa-film";
+
+                                                            break;
+                                                    }
+                                                    <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                                        <i class="@icon"></i>
+                                                    </div>
+
+                                                    @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                                }
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            }
+            else
+            {
+                for (int k = 1; k < j; k++)
+                {
+                    <div class="carousel-item">
+                        <table class="table table-bordered table-striped">
+                            <tr class="EDS">
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Titre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Annee)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RuntimeMins)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Rating)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Votes)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Revenue)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MetaScore)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.typage)
+                                </th>
+                                <th class="align-content-center action">
+                                    <sapn>Actions</sapn>
+                                </th>
+                            </tr>
+                            @if ((Model.Count() - 10) < 10)
+                            {
+
+                                foreach (var item in (Model.Skip(10)).Take(Model.Count() - 10))
+                                {
+                                    <tr class="EDS">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Annee)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RuntimeMins)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rating)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Votes)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Revenue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MetaScore)
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.typage != null)
+                                                {
+                                                    string icon = "";
+
+                                                    switch (item.typage)
+                                                    {
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                            icon = "fas fa-ad";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                            icon = "fas fa-video";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                            icon = "fas fa-film";
+
+                                                            break;
+                                                    }
+                                                    <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                                        <i class="@icon"></i>
+                                                    </div>
+
+                                                    @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                                }
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                foreach (var item in (Model.Skip(10 * k)).Take(10))
+                                {
+                                    <tr class="EDS">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Annee)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RuntimeMins)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rating)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Votes)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Revenue)
+                                        </td>
+                                        @*<td>
+                                                @Html.DisplayFor(modelItem => item.MetaScore)
+                                            </td>*@
+                                        <td>
+                                            @{
+                                                if (item.typage != null)
+                                                {
+                                                    string icon = "";
+
+                                                    switch (item.typage)
+                                                    {
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_PROMO:
+
+                                                            icon = "fas fa-ad";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_COURT:
+                                                            icon = "fas fa-video";
+
+                                                            break;
+                                                        case CineLogic.Business.Contenus.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                                                            icon = "fas fa-film";
+
+                                                            break;
+                                                    }
+                                                    <div title="@CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]">
+                                                        <i class="@icon"></i>
+                                                    </div>
+
+                                                    @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
+                                                }
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+                                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <a class="carousel-control-prev  btn btn-light largeur" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next btn btn-light largeur" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
 
 

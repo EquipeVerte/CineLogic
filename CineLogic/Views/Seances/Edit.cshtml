@@ -2,6 +2,8 @@
 
 @section css {
     @Styles.Render("~/Content/programmation.css")
+    <link href="~/Content/FontAwesome/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/FontAwesome/solid.min.css" rel="stylesheet" />
 }
 
 @{
@@ -10,208 +12,373 @@
 
 <h2>Édition : Séance @Model.SeanceID - @Model.Titre</h2>
 
-@if (ViewBag.UnsavedChanges != null)
-{
-    <div class="alert alert-danger" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
-            </div>
-        </div>
+<div class="form-group mt-3">
+    <div class="col-md-10">
+        <a href="@Url.Action("Index", new { salleID = Model.SalleID, seanceDate = Model.HeureDebut })" class="btn btn-outline-primary mr-2"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
+        <button type="submit" class="btn btn-outline-danger mr-2" form="delete"><i class="fas fa-trash"></i> Supprimer</button>
+        <button type="submit" class="btn btn-outline-success" form="edit"><i class="fas fa-sync-alt"></i> Actualiser</button>
     </div>
-}
-else
-{
-    <div class="alert alert-danger collapse" id="unsaved-alert">
-        <div class="row">
-            <div class="col-md-10  d-flex justify-content-start align-items-center">
-                <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
-            </div>
-            <div class="col-md-2 d-flex justify-content-end align-items-center">
-                <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
-                <button class="btn btn-success" id="save-changes">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-}
+</div>
 
-<!-- Icon animé qui est affiché lors de l'execution du ajax-->
-<!-- Formulaire d'édition de la séance-->
-@using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
-{
-    @Html.AntiForgeryToken()
+<hr />
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.SeanceID)
-        @Html.HiddenFor(model => model.SalleID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Titre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Titre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Titre, "", new { @class = "text-danger" })
+<!-- Alert de changements non-enregistrés -->
+<div>
+    @if (ViewBag.UnsavedChanges != null)
+    {
+        <div class="alert alert-danger" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                </div>
             </div>
         </div>
-
-        <!-- Selection et boit de récherche pour les films-->
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.ContenuTitre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ContenuTitre, new { @class = "form-control mb-1", @readonly = "readonly", @placeholder = "Aucun contenu assigné encore" })
+    }
+    else
+    {
+        <div class="alert alert-danger collapse" id="unsaved-alert">
+            <div class="row">
+                <div class="col-md-10  d-flex justify-content-start align-items-center">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Vous avez des changements non-enregistrés.</h5>
+                </div>
+                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                    <button class="btn btn-danger mr-2" id="annuler-changes">Annuler</button>
+                    <button class="btn btn-success" id="save-changes">Enregistrer</button>
+                </div>
             </div>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#filmSelection">
-                    Selectionner un film
-                </button>
-            </div>
-
         </div>
+    }
 
-        <div class="modal fade" id="filmSelection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Selectionner un film</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    @if (ViewBag.DuplicateError != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @ViewBag.DuplicateError
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+</div>
+
+<div class="row">
+    <!-- ÉDITION DE LA SÉANCE -->
+    <div class="col-md-4">
+        <!-- Formulaire d'édition de la séance-->
+        @using (Html.BeginForm("Edit", "Seances", FormMethod.Post, new { name = "edit", id = "edit" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.SeanceID)
+                @Html.HiddenFor(model => model.SalleID)
+                @Html.HiddenFor(model => model.Order)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Titre, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Titre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Titre, "", new { @class = "text-danger" })
                     </div>
-                    <div class="modal-body">
-                        <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
-                        <p>Pour retirer un film, sélectionner N/A.</p>
-                        <div class="form-group">
-                            <input id="filter" class="form-control mb-1" placeholder="Recherche" />
-                            <div class="d-flex justify-content-center">
-                                <div id="loading" class="pl-2">
-                                    <div class="loader-small">
-                                        <i class="fas fa-film"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <select id="film-select" class="form-control mr-2" size="6">
-                            </select>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HeureDebut, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.HeureDebut, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HeureDebut, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HeureFin, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.HeureFin, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HeureFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @if (ViewBag.ScheduleError != null)
+                {
+                    <div class="form-group">
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <h3>Erreur!</h3>
+                            <p>@ViewBag.ScheduleError</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">OK</button>
+                }
+                @if (ViewBag.Success != null)
+                {
+                    <div class="form-group">
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <h3>Succès!</h3>
+                            <p>La séance à été mis à jour avec succès</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- Formulaire de suppression pour la séance-->
+        @using (Html.BeginForm("Delete", "Seances", FormMethod.Post, new { name = "delete", id = "delete" }))
+        {
+            <div class="form-group">
+                @Html.HiddenFor(model => model.SeanceID)
+            </div>
+        }
+
+
+    </div>
+    <!-- CONTENUS -->
+    <div class="col-md-8">
+
+        <h4>Durée totale: <span id="duree">@Model.Contenus.Sum(c => c.RuntimeMins) mins</span></h4>
+
+        <div class="d-flex mb-2">
+            <div class="badge bg-promo mr-2">Promos</div>
+            <div class="badge bg-court mr-2">Courts métrages</div>
+            <div class="badge bg-standard">Standards</div>
+        </div>
+
+        <div class="progress mb-2" id="dureeGraph">
+            @{int i = 0;}
+            @foreach (var film in Model.Contenus)
+            {
+                string index = "index" + i++;
+                string color = "";
+                switch (film.Typage)
+                {
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO:
+                        color = "bg-promo";
+                        break;
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT:
+                        color = "bg-court";
+                        break;
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                        color = "bg-standard";
+                        break;
+                }
+                double width = Math.Round((double)(film.RuntimeMins * 100) / Model.Contenus.Sum(c => c.RuntimeMins));
+
+                <div id="@film.ContenuTitre" data-id="@film.ContenuTitre.Replace(" ", "-")" class="progress-bar @color border-right" role="progressbar" style="width:@width%"></div>
+            }
+        </div>
+
+        <ul class="list-group" id="list-films">
+            @foreach (var film in Model.Contenus)
+            {
+                string icon = "";
+                string color = "";
+                switch (film.Typage)
+                {
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO:
+                        icon = "fas fa-ad";
+                        color = "text-promo";
+                        break;
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT:
+                        icon = "fas fa-video";
+                        color = "text-court";
+                        break;
+                    case CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD:
+                        icon = "fas fa-film";
+                        color = "text-standard";
+                        break;
+                }
+                <li class="list-group-item d-flex align-items-center" id="@film.ContenuTitre">
+                    <div class="handle mr-3">
+                        <h3 class="mb-0"><i class="fas fa-bars"></i></h3>
+                    </div>
+                    <h3 class="mb-0 "><i class="@icon @color"></i> @film.ContenuTitre</h3>
+                    <h5 class="ml-3 mb-0">@film.RuntimeMins mins</h5>
+                    <div class="ml-auto d-flex flex-row">
+                        @if (film.Typage != CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input d-none" id="radio-@film.ContenuTitre.Replace(" ", "-")" type="radio" name="principalFilm" form="edit" value="@film.ContenuTitre" />
+                                <label class="form-check-label myRB" for="radio-@film.ContenuTitre.Replace(" ", "-")"><i class="far fa-star"></i></label>
+                            </div>
+                        }
+                        <h3 class="mb-0">
+                            @using (Html.BeginForm("DeleteContent", "Seances", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(model => model.SeanceID)
+                                @Html.Hidden("contenuTitre", film.ContenuTitre)
+                                <button type="submit" class="btn btn-close"><i class="fas fa-times"></i></button>
+                            }
+                        </h3>
+                    </div>
+                </li>
+            }
+        </ul>
+        <button class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#filmSelection"><i class="fas fa-plus"></i> Ajouter contenu</button>
+    </div>
+</div>
+
+@section modals {
+    <div class="modal fade" id="filmSelection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Selectionner un film</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Recherchez un film et sélectionnez-le dans la liste ci-dessous.</p>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbPromo" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO" name="types" checked>
+                            <label class="form-check-label" for="cbPromo">Promos</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbCourt" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT" name="types" checked>
+                            <label class="form-check-label" for="cbCourt">Court metrages</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cbStandard" value="@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD" name="types" checked>
+                            <label class="form-check-label" for="cbStandard">Standards</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex">
+                            <input id="filter" class="form-control mb-1" placeholder="Recherche" />
+                            <div id="loading" class="pl-2">
+                                <div class="loader-small">
+                                    <i class="fas fa-film"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("AddContent", "Seances", FormMethod.Post, new { name = "addContent", id = "addContent" }))
+                        {
+                            @Html.HiddenFor(model => model.SeanceID)
+                            <select id="film-select" class="form-control mr-2" size="6" name="contenuTitre">
+                            </select>
+                        }
+                        <button id="btnLoadMore" class="btn btn-outline-primary">
+                            Charger plus
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HeureDebut, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HeureDebut, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HeureDebut, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HeureFin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HeureFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HeureFin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        @if (ViewBag.ScheduleError != null)
-        {
-            <div class="form-group">
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <h3>Erreur!</h3>
-                    <p>@ViewBag.ScheduleError</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success" form="addContent"><i class="fas fa-plus"></i> Ajouter</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
-        }
-        @if (ViewBag.Success != null)
-        {
-            <div class="form-group">
-                <div class="alert alert-success alert-dismissible fade show">
-                    <h3>Succès!</h3>
-                    <p>La séance à été mis à jour avec succès</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        }
+        </div>
     </div>
 }
-
-<!-- Formulaire de suppression pour la séance-->
-@using (Html.BeginForm("Delete", "Seances", FormMethod.Post, new { name = "delete", id = "delete" }))
-{
-    <div class="form-group">
-        @Html.HiddenFor(model => model.SeanceID)
-    </div>
-}
-
-<!-- Boutons de soumission pour les formulaires-->
-<div class="form-group">
-    <div class="col-md-10">
-        <input type="submit" value="Supprimer" class="btn btn-outline-danger mr-3" form="delete" />
-        <input type="submit" value="Actualiser" class="btn btn-outline-success" form="edit" />
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="col-md-10">
-        <a href="@Url.Action("Index")" class="btn btn-outline-primary"><i class="fas fa-chevron-left"></i> Rétourner au calendrier</a>
-    </div>
-</div>
-
 
 @section scripts {
 
     <script type="text/javascript">
         $(document).ready(function () {
             $("#save-changes").on('click', function () {
-                console.log("save changes clicked");
-                var jqxhr = $.get("@Url.Action("Save")", function (data) {
-                    console.log("hide");
+                        console.log("save changes clicked");
+                        var jqxhr = $.get("@Url.Action("Save")", function (data) {
+                            console.log("hide");
                     $("#unsaved-alert").hide();
-                });
-            });
+                        });
+                    });
 
             $("#annuler-changes").on('click', function () {
                 $.get("@Url.Action("Annuler")", function (data) {
                     $("#unsaved-alert").hide();
+                    location.reload();
+                        });
+                    });
                 });
-            });
-        });
     </script>
     <script>
-        $(document).ready(function () {
 
-            getFilms();
+        var typeDict = {
+            "promo": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_PROMO",
+            "court": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_COURT",
+            "standard": "@CineLogic.Models.Libraries.ContenuTypeLibrary.CONT_TYPE_STANDARD"
+        };
+
+        $(document).ready(function () {
+            var initialNbToLoad = 20;
+            var nbToLoad = initialNbToLoad;
+
+            getFilms(nbToLoad);
 
             //  Mettre à jour les films à chaque changement dans la boite de recherche.
             //  Est-ce que l'ajax est néccesaire? Peut être fais en javascript avec une liste statique?
             $("#filter").on('input', function () {
                 console.log("Change");
-                getFilms();
+                nbToLoad = initialNbToLoad;
+                getFilms(initialNbToLoad);
             });
 
-            function getFilms() {
-                $.get("@Url.Action("Contenus", "Contenus")", { filter: $("#filter").val() }, function (data) {
-                    $("#film-select").empty();
-                    $("#film-select").append('<option value="">N/A</option>');
-                    $.each(data, function (i, item) {
-                        $("#film-select").append('<option value="' + item + '">' + item + '</option>');
-                    });
+            $("input:checkbox[name=types]").on('change', function () {
+                nbToLoad = initialNbToLoad;
+                getFilms(initialNbToLoad);
+            });
+
+            $("#btnLoadMore").click(function () {
+                nbToLoad = nbToLoad + 20;
+                getFilms(nbToLoad);
+            });
+
+            //  Remplir la liste des films.
+            function getFilms(nbFilms) {
+
+                var typesToGet = "";
+
+                $("input:checkbox[name=types]:checked").each(function () {
+                    typesToGet += $(this).val() + ",";
+                });
+
+                typesToGet = typesToGet.substring(0, typesToGet.length - 1);
+
+                console.log(typesToGet);
+
+                var data = {
+                    filter: $("#filter").val(),
+                    types: typesToGet,
+                    nbResults: nbFilms
+                };
+
+                console.log(data);
+
+                var jqxhr = $.get(
+                    "@Url.Action("Contenus", "Contenus")",
+                    data,
+                    function (data) {
+                        $("#film-select").empty();
+                        $("#film-select").append('<option value="">N/A</option>');
+
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            var type;
+
+                            switch (item.Type) {
+                                case typeDict["standard"]:
+                                    type = "Standard";
+                                    break;
+                                case typeDict["court"]:
+                                    type = "Court";
+                                    break;
+                                case typeDict["promo"]:
+                                    type = "Promo";
+                                    break;
+                            }
+
+                            $("#film-select").append('<option value="' + item.Titre + '">' + item.Titre + " - " + type + " " + item.Runtime + 'mins</option>');
+                        });
+                }).fail(function () {
+                    console.log(jqxhr);
                 });
             }
 
@@ -227,5 +394,85 @@ else
                 console.log("ajax stop");
                 $("#loading").hide();
             });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script>
+        $("input[name=Order]").val(getOrder().toString());
+
+        //  Créer la liste éditable.
+        var el = document.getElementById('list-films');
+        var sortable = new Sortable(el, {
+            handle: '.handle',
+            animation: 150,
+            onEnd: function (evt) {
+                //console.log(this.toArray());
+                //console.log(evt.oldIndex);
+                //console.log(evt.newIndex);
+
+                var oldorder = dureeGraph.toArray();
+
+                var newOrder = move(oldorder, evt.oldIndex, evt.newIndex);
+
+                dureeGraph.sort(newOrder);
+
+                $("input[name=Order]").val(getOrder().toString());
+            }
+        });
+
+        function move(arr, from, to) {
+            arr.splice(to, 0, arr.splice(from, 1)[0]);
+            return arr;
+        };
+
+        var dg = document.getElementById('dureeGraph');
+        var dureeGraph = new Sortable(dg, {
+            dataIdAttr: 'data-id'
+        });
+
+        //  Rétourne une liste des titres des contenus dans l'ordre d'affichage.
+        function getOrder() {
+            var order = [];
+
+            $('#list-films').children('.list-group-item').each(function (i, item) {
+                order.push(item.id);
+            });
+
+            console.log(order.toString());
+
+            return order;
+        }
+
+        $(document).ready(function () {
+            //  Custom radio buttons.
+            $('input[name=principalFilm]').change(function () {
+                $('#list-films').children('.list-group-item').each(function (i, item) {
+                    console.log($('input[name=principalFilm]').filter(':checked').val());
+                    if (item.id == $('input[type=radio][name=principalFilm]').filter(':checked').val()) {
+                        $(item).find("label").html('<i class="fas fa-star"></i>')
+                    }
+                    else {
+                        $(item).find("label").html('<i class="far fa-star"></i>');
+                    }
+                });
+            });
+
+            //  Définir le contenu principal au début.
+
+            @{
+                string titre = "";
+                var content = Model.Contenus.Where(c => c.estPrincipal).FirstOrDefault();
+                if (Model.Contenus.Count > 0 && content != null)
+                {
+                    titre = content.ContenuTitre;
+                }
+            }
+
+
+            $('input[name=principalFilm]').val(["@titre"]);
+
+            $('input[name=principalFilm]').change();
+        });
     </script>
 }

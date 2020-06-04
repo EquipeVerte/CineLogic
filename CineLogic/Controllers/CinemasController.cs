@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
-using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
-using CineLogic.Models.Programmation;
+using AutoMapper;
 using Newtonsoft.Json;
 using CineLogic.Models.Libraries;
+using CineLogic.Models.Programmation;
 
 namespace CineLogic.Controllers
 {
-    [SessionActiveOnly]
     public class CinemasController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Cinema, CinemaViewModel>();
+            cfg.CreateMap<CinemaViewModel, Cinema>();
+        }).CreateMapper();
 
         // GET: Cinemas
         public ActionResult Index()
@@ -77,13 +82,15 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Cinema cinema = db.Cinemas.Find(id);
+
             if (cinema == null)
             {
                 return HttpNotFound();
             }
+            CinemaViewModel c = mapper.Map<Cinema, CinemaViewModel>(cinema);
             ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
             ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
-            return View(cinema);
+            return View(c);
         }
 
         // POST: Cinemas/Edit/5
@@ -91,11 +98,12 @@ namespace CineLogic.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] CinemaViewModel cinema)
         {
+            Cinema c = mapper.Map<CinemaViewModel, Cinema>(cinema);
             if (ModelState.IsValid)
             {
-                db.Entry(cinema).State = EntityState.Modified;
+                db.Entry(c).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -125,32 +133,36 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Cinema cinema = db.Cinemas.Find(id);
-            db.Cinemas.Remove(cinema);
+            if (cinema.Salles.Count > 0)
+            {
+                bool contientSeances = false;
+                List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
+                foreach (Salle salle in salles)
+                {
+                    if (salle.Seances.Count > 0)
+                        contientSeances = true;
+                }
+
+                if (contientSeances)
+                {
+                    var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                    db.Seances.RemoveRange(seances);
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+                else
+                {
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+
+            }
+            else
+                db.Cinemas.Remove(cinema);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
-        //  Ajax get cinemas.
-        [HttpGet]
-        public ContentResult Cinemas()
-        {
-            CineDBEntities db = new CineDBEntities();
 
-            IMapper mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Cinema, CinemaSelectionItem>();
-            }).CreateMapper();
-
-            if (Session[SessionTypes.type].Equals(UserTypes.admin))
-            {
-                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
-            }
-            else
-            {
-                string type = (String)Session[SessionTypes.login];
-                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Programmateur.Equals(type)))), "application/json");
-            }
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -195,5 +207,28 @@ namespace CineLogic.Controllers
             ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
             return View(cinema);
         }
+
+        //  Ajax get cinemas.
+        [HttpGet]
+        public ContentResult Cinemas()
+        {
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            if (Session[SessionTypes.type].Equals(UserTypes.admin))
+            {
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
+            }
+            else
+            {
+                string type = (String)Session[SessionTypes.login];
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Programmateur.Equals(type)))), "application/json");
+            }
+        }
     }
 }
+

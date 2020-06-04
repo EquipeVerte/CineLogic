@@ -13,12 +13,15 @@ $(document).ready(function () {
     $('body').append(
         '<div class="show" id="rmenu">' +
         '<div class="card">' +
-        '<ul class="list-group list-group-flush">' +
-        '<li class="list-group-item py-2 px-3">' +
-        '<span id="rmenu-delete" href="#">Supprimer</span>' +
+        '<ul class="list-group">' +
+        '<li id="rmenu-delete" class="list-group-item py-2 px-3">' +
+        '<span><i class="far fa-trash-alt"></i> Supprimer</span>' +
         '</li>' +
-        '<li class="list-group-item py-2 px-3">' +
-        '<span id="rmenu-ajuster">Ajuster le temps</span>' +
+        '<li id="rmenu-ajuster" class="list-group-item py-2 px-3">' +
+        '<span><i class="far fa-clock"></i> Ajuster la durée</span>' +
+        '</li>' +
+        '<li id="rmenu-edit" class="list-group-item py-2 px-3">' +
+        '<span><i class="far fa-edit"></i> Éditer</span>' +
         '</li>' +
         '</ul>' +
         '</div>' +
@@ -42,7 +45,7 @@ $(document).ready(function () {
             hour12: false
         },
         editable: true,
-        snapDuration: '00:15:00',
+        snapDuration: '00:05:00',
         eventOverlap: false,
         eventDrop: function (info) {
             timesChanged(info);
@@ -67,11 +70,21 @@ $(document).ready(function () {
                     console.log(info.event.id);
                     adjustTimes(info.event);
                 });
+                $("#rmenu-edit").on('click', function () {
+                    console.log("Edit");
+                    console.log(info.event.id);
+                    window.open(dictURLs["EditSeance"] + "/" + info.event.id, "_self");
+                });
 
                 window.event.returnValue = false;
             });
         }
     });
+
+    if (initialDate != "") {
+        var date = new Date(initialDate);
+        calendar.gotoDate(date);
+    }
 
     //  Cacher le context menu quand le bouton gauche du souris est cliqué.
     $(document).bind("click", function (event) {
@@ -195,6 +208,9 @@ $(document).ready(function () {
 
     //  Fonction pour mettre à jour les evenements.
     refreshEvents = function () {
+
+        console.log("hi");
+
         if (eventsRefreshing) return;
         eventsRefreshing = true;
 
@@ -213,16 +229,22 @@ $(document).ready(function () {
             var events = [];
             //  Ajouter chaque evenement dans le tableau des evenements.
             $.each(data, function (i, item) {
+               //console.log(item);
+
+                var time = new Date(item.HeureFin).getTime() - new Date(item.HeureDebut).getTime();
+
+                var overrun = (time - item.TotalRuntime * 60 * 1000) < 0;
+
                 events.push({
                     id: item.SeanceID,
                     url: dictURLs["EditSeance"] + '/' + item.SeanceID,
-                    title: item.Titre + (item.ContenuTitre == null ? "" : " - " + item.ContenuTitre),
+                    title: item.Titre + (item.PrincipalFilm == null ? "" : " - " + item.PrincipalFilm),
                     start: item.HeureDebut,
                     end: item.HeureFin,
-                    backgroundColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
-                    borderColor: item.ContenuTitre == null ? 'primary' : '#5CB85C',
+                    backgroundColor: overrun ? '#d9534f' : item.PrincipalFilm == null ? 'primary' : '#5CB85C',
+                    borderColor: overrun ? '#d9534f' : item.PrincipalFilm == null ? 'primary' : '#5CB85C',
                     eventTitle: item.Titre,
-                    contenuTitre: item.ContenuTitre
+                    contenuTitre: item.PrincipalFilm
                 });
             });
             //  Ajouter les evenements à le calendrier.

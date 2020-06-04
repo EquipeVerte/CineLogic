@@ -52,9 +52,17 @@ namespace CineLogic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Acteurs.Add(acteur);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Acteurs.Add(acteur);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                catch (Exception ex)
+                {
+                    ViewBag.Erreur = "Le nom existe déja. \n" + ex.Message;
+                }
             }
 
             return View(acteur);
@@ -112,9 +120,17 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Acteur acteur = db.Acteurs.Find(id);
-            db.Acteurs.Remove(acteur);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (acteur.Contenus.Count == 0)
+            {
+                db.Acteurs.Remove(acteur);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         protected override void Dispose(bool disposing)

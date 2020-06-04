@@ -1,9 +1,8 @@
-﻿using System;
+﻿using CineLogic.Business.Contenus;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace CineLogic.Business.Programmation
 {
@@ -25,8 +24,15 @@ namespace CineLogic.Business.Programmation
         [Required]
         [DisplayName("Salle ID")]
         public int SalleID { get; set; }
-        [DisplayName("Titre du film")]
-        public string ContenuTitre { get; set; }
+
+        public List<ContenuViewModel> Contenus { get; set; }
+        //public List<ContenuViewModel> SeancePromoes { get; set; }
+        public string PrincipalFilm { get; set; }
+        public string Order { get; set; }
+        public int? TotalRuntime { get => Contenus.Sum(c => c.RuntimeMins); }
+
+        //[DisplayName("Titre du film")]
+        //public string ContenuTitre { get; set; }
 
         public bool Validate(ISeanceService seanceService)
         {
