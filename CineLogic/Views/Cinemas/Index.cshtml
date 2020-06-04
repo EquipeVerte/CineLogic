@@ -92,7 +92,7 @@
             {
                 foreach (var salle in item.Salles)
                 {
-                    <a class="list-group-item list-group-item-action bg-success text-white fade disabled" id="list-@Html.DisplayFor(modelItem => salle.SalleID)-salle" data-toggle="list" href="#list-@Html.DisplayFor(modelItem => salle.SalleID)-salle-pane" role="tab" aria-controls="@Html.DisplayFor(modelItem => item.CinemaID)">@Html.DisplayFor(modelItem => salle.Nom)</a>
+                    <a class="list-group-item list-group-item-action bg-success text-white d-none disabled" id="list-@Html.DisplayFor(modelItem => salle.SalleID)-salle" data-toggle="list" href="#list-@Html.DisplayFor(modelItem => salle.SalleID)-salle-pane" role="tab" aria-controls="@Html.DisplayFor(modelItem => item.CinemaID)">@Html.DisplayFor(modelItem => salle.Nom)</a>
                 }
             }
         </div>
@@ -147,18 +147,18 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#list-tab').on('click', 'a', function (e) {
+            $('#list-tab').on('click', 'a', function () {
                 var id = $(this).attr("aria-controls");
                 for (var i = 1; i <= $('#list-tab-salle > a').length + 5; i++) {
-                    $('#list-tab-salle a[aria-controls="' + i + '"]').addClass('fade disabled');
-                    $('#nav-tabContent-salle').addClass('fade');
+                    $('#list-tab-salle a[aria-controls="' + i + '"]').addClass('d-none disabled');
+                    $('#nav-tabContent-salle').addClass('d-none');
                     $('#nav-tabContent-salle a').addClass('disabled');
                 }
-                $('#list-tab-salle a[aria-controls="' + id + '"]').removeClass('fade disabled');
+                $('#list-tab-salle a[aria-controls="' + id + '"]').removeClass('d-none disabled');
             })
 
-            $('#list-tab-salle').on('click', 'a', function (e) {
-                $('#nav-tabContent-salle').removeClass('fade');
+            $('#list-tab-salle').on('click', 'a', function () {
+                $('#nav-tabContent-salle').removeClass('d-none');
                 $('#nav-tabContent-salle a').removeClass('disabled');
             })
         });

@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using AutoMapper;
 using CineLogic.Business.Programmation;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
+using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
@@ -34,53 +42,115 @@ namespace CineLogic.Controllers
             this.seanceService = seanceService;
         }
 
-        public ActionResult Index(int? salleID, DateTime? seanceDate)
+        public ActionResult Index()
         {
             if (System.Web.HttpContext.Current.Session[SESSION_UV] != null)
             {
-                if((bool)System.Web.HttpContext.Current.Session[SESSION_UV])
+                if ((bool)System.Web.HttpContext.Current.Session[SESSION_UV])
                 {
                     ViewBag.UnsavedChanges = true;
                 }
             }
 
-            if(salleID != null)
-            {
-                ViewBag.SalleID = salleID;
-
-                using (CineDBEntities db = new CineDBEntities())
-                {
-                    ViewBag.CineID = db.Salles.Find(salleID).CinemaID;
-                }
-                if(seanceDate != null)
-                {
-                    ViewBag.InitialDate = seanceDate;
-                }
-                else
-                {
-                    ViewBag.InitialDate = null;
-                }
-            }
-            else
-            {
-                ViewBag.SalleID = "";
-                ViewBag.CineID = "";
-            }
-
             return View();
         }
-        
+
         [HttpPost]
         [HandleErrorJson]
         [ValidateAjax]
         public ActionResult Create(SeanceViewModel seance)
         {
-            seanceService.CreateSeance(seance);
+            if (seance.Multiples)
+            {
+                int chiffreFreq = seance.ChiffreFreq;
+                DateTime dateDebutHeureDebut = seance.DateDebutHeureDebut;
+                DateTime dateDebutHeureFin = seance.DateDebutHeureFin;
+                DateTime dateFin = seance.DateFin;
+                int nbSeances = seance.NbSeances;
+
+                if (seance.TypeFreq == "Jour")
+                {
+                    for (int i = 0; i < nbSeances; i++)
+                    {
+                        if (i == 0)
+                        {
+                            seance.HeureDebut = dateDebutHeureDebut;
+                            seance.HeureFin = dateDebutHeureFin;
+                        }
+                        else
+                        {
+                            seance.HeureDebut = seance.HeureDebut.AddDays(chiffreFreq);
+                            seance.HeureFin = seance.HeureFin.AddDays(chiffreFreq);
+                        }
+                        seanceService.CreateSeance(seance);
+                    }
+                }
+                else if (seance.TypeFreq == "Semaine")
+                {
+                    string[] joursSem = new string[seance.JoursSem.Length];
+                    int numJour = 0;
+
+                    for (int i = 0; i < joursSem.Length; i++)
+                    {
+                        joursSem[i] = getJourSemaine(int.Parse(seance.JoursSem[i]));
+                    }
+
+                    while (dateDebutHeureDebut <= dateFin)
+                    {
+                        for (int i = 0; i < joursSem.Length; i++)
+                        {
+                            if (joursSem[i] == dateDebutHeureDebut.DayOfWeek.ToString())
+                            {
+                                numJour = i;
+                                seance.HeureDebut = dateDebutHeureDebut;
+                                seance.HeureFin = dateDebutHeureFin;
+
+                                seanceService.CreateSeance(seance);
+                            }
+                        }
+
+                        if (seance.ChiffreFreq > 1 && numJour == joursSem.Length - 1)
+                        {
+                            numJour = 0;
+                            dateDebutHeureDebut = dateDebutHeureDebut.AddDays(7 * (chiffreFreq - 1) + 1);
+                            dateDebutHeureFin = dateDebutHeureFin.AddDays(7 * (chiffreFreq - 1) + 1);
+                        }
+                        else
+                        {
+                            dateDebutHeureDebut = dateDebutHeureDebut.AddDays(1);
+                            dateDebutHeureFin = dateDebutHeureFin.AddDays(1);
+                        }
+                    }
+                }
+            }
+            else
+                seanceService.CreateSeance(seance);
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = true;
-
             return Json(new { success = true });
         }
+
+        public string getJourSemaine(int chiffreJour)
+        {
+            switch (chiffreJour)
+            {
+                case 1:
+                    return "Monday";
+                case 2:
+                    return "Tuesday";
+                case 3:
+                    return "Wednesday";
+                case 4:
+                    return "Thursday";
+                case 5:
+                    return "Friday";
+                case 6:
+                    return "Saturday";
+                default:
+                    return "Sunday";
+            }
+        }
+
 
         [HttpGet]
         public ContentResult Seances(int salleID)
@@ -92,7 +162,7 @@ namespace CineLogic.Controllers
         [HandleError]
         public ActionResult Edit(int? id)
         {
-            if (id == null) 
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -105,11 +175,6 @@ namespace CineLogic.Controllers
                 {
                     ViewBag.UnsavedChanges = true;
                 }
-            }
-
-            if(TempData["DuplicateError"] != null)
-            {
-                ViewBag.DuplicateError = TempData["DuplicateError"];
             }
 
             return View(seance);
@@ -144,7 +209,7 @@ namespace CineLogic.Controllers
             }
         }
 
-        
+
         [HttpPost]
         [HandleError]
         public ActionResult Delete(int seanceID)
@@ -192,16 +257,9 @@ namespace CineLogic.Controllers
         [HttpPost]
         public ActionResult AddContent(int seanceID, string contenuTitre)
         {
-            try
-            {
-                seanceService.AddContentToSeance(seanceID, contenuTitre);
+            seanceService.AddContentToSeance(seanceID, contenuTitre);
 
-                System.Web.HttpContext.Current.Session[SESSION_UV] = true;
-            }
-            catch(DuplicateContentException ex)
-            {
-                TempData["DuplicateError"] = ex.Message;
-            }
+            System.Web.HttpContext.Current.Session[SESSION_UV] = true;
 
             return RedirectToAction("Edit", new { id = seanceID });
         }

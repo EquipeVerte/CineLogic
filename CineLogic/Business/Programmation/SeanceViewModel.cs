@@ -1,4 +1,5 @@
 ﻿using CineLogic.Business.Contenus;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,20 @@ namespace CineLogic.Business.Programmation
         [Required]
         [DisplayName("Salle ID")]
         public int SalleID { get; set; }
+
+
+        // Attributs Multi Seances
+        public bool Multiples { get; set; }
+        public int ChiffreFreq { get; set; }
+        public string TypeFreq { get; set; }
+        public string[] JoursSem { get; set; }
+        public DateTime DateDebutHeureDebut { get; set; }
+        public DateTime DateDebutHeureFin { get; set; }
+        public DateTime DateFin { get; set; }
+        public int NbSeances { get; set; }
+
+
+
 
         public List<ContenuViewModel> Contenus { get; set; }
         //public List<ContenuViewModel> SeancePromoes { get; set; }
