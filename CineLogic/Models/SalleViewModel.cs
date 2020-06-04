@@ -22,8 +22,14 @@ namespace CineLogic.Models
         [MaxLength(100, ErrorMessage = "La longueur maximale du nom est 100 caractères.")]
         [DisplayName("Nom")]
         public string Nom { get; set; }
+        [Required(ErrorMessage = "Le type d'écran est requis.")]
+        [MinLength(1, ErrorMessage = "La longueur minimale du type d'écran est 1 caractère.")]
+        [MaxLength(100, ErrorMessage = "La longueur maximale du type d'écran est 100 caractères.")]
         [DisplayName("Type d'écran")]
         public string TypeEcran { get; set; }
+        [Required(ErrorMessage = "Le système de son est requis.")]
+        [MinLength(1, ErrorMessage = "La longueur minimale du système de son est 1 caractère.")]
+        [MaxLength(100, ErrorMessage = "La longueur maximale du système de son est 100 caractères.")]
         [DisplayName("Système de son")]
         public string SystemSon { get; set; }
         [DisplayName("En exploitation")]

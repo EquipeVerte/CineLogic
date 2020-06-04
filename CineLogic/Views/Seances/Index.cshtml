@@ -10,12 +10,6 @@
     ViewBag.Title = "Index";
 }
 
-<div class="ml-3 float-right">
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#helpModal">
-        <i class="fas fa-question"></i>
-    </button>
-</div>
-
 <!-- Icone animé qui est affiché lors que la page fait une operation ajax-->
 <div class="loading float-right">
     <div class="loader">
@@ -23,6 +17,9 @@
     </div>
 </div>
 
+<div id="sf-animation" class="float-right">
+
+</div>
 
 <h4>Selectionner le cinéma et salle:</h4>
 
@@ -88,6 +85,8 @@
                 Vous devez selectionner une date!
             </div>
 
+
+
             <!-- Bouton pour changer la date de l'horaire-->
             <div class="form-group">
                 <button class="btn btn-outline-primary float-right" id="datechanger">Aller à la date <i class="fas fa-chevron-right"></i></button>
@@ -109,8 +108,75 @@
                 </div>
             </div>
 
+
+            <!-- Checkbox multi seances -->
+            <div class="form-check">
+                <input type="checkbox" id="multi" class="form-check-input">
+                <label class="form-check-label" for="multi"> Multiples</label><br />
+            </div>
+
+            <!-- Cette section s'affichera seulement si multi est sélectionné -->
+            <div id="config_multi" class="d-none">
+                <div class="d-flex">
+                    <div class="col-10">
+                        Fréquence (répété à chaque)
+                        <div class="row justify-content-center">
+                            <input type="number" class="form-control col-3" id="chiffre-freq" value="1" min="1" max="364">
+                            <select class="form-control col-5" id="type-freq">
+                                <option selected value="Jour">Jour</option>
+                                <option value="Semaine">Semaine</option>
+                            </select>
+                        </div><br />
+
+                        <div id="jours-semaine" class="row d-none justify-content-around">
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="lun-1" class="form-check-input">
+                                <label class="form-check-label" for="lun"> Lun</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="mar-2" class="form-check-input">
+                                <label class="form-check-label" for="mar"> Mar</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="mer-3" class="form-check-input">
+                                <label class="form-check-label" for="mer"> Mer</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="jeu-4" class="form-check-input">
+                                <label class="form-check-label" for="jeu"> Jeu</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="ven-5" class="form-check-input">
+                                <label class="form-check-label" for="ven"> Ven</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="sam-6" class="form-check-input">
+                                <label class="form-check-label" for="sam"> Sam</label>
+                            </div>
+                            <div class="form-check col-3">
+                                <input type="checkbox" id="dim-0" class="form-check-input">
+                                <label class="form-check-label" for="dim"> Dim</label>
+                            </div>
+                        </div><br />
+
+                        Durée
+                        <div>
+                            <div>
+                                Début <input class="datepicker-multi" id="debut-date" data-date-format="dd/mm/yyyy">
+                            </div>
+                            <div>
+                                Fin <input class="datepicker-multi" id="fin-date" data-date-format="dd/mm/yyyy">
+                            </div>
+                        </div><br />
+                    </div>
+                </div>
+
+            </div>
+
+
             <!-- Input pour titre de la séance-->
             <div class="form-group">
+                <br />
                 <label>@Html.DisplayNameFor(model => model.Titre)</label>
                 <input name="titre" class="form-control" type="text" maxlength="20" />
             </div>
@@ -123,6 +189,11 @@
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+
+            <!-- Message d'erreur - Durée -->
+            <div id="alert-duree" class="alert alert-danger collapse">
+                Vous devez selectionner une date de début et de fin valides pour vos multiples séances!
             </div>
 
             <!-- Alert de succès-->
@@ -143,20 +214,6 @@
     <!-- Affichage des séances dans un calandrier -->
     <div class="col-md-8">
         <div id='calendar' class="p-4 border">
-        </div>
-        <h5 class="mt-2">
-            Clé
-        </h5>
-        <div class="d-flex">
-            <span class="badge badge-primary mr-2">
-                Séance vide
-            </span>
-            <span class="badge badge-success mr-2">
-                Contenu assigné
-            </span>
-            <span class="badge badge-danger">
-                Durée insuffisante pour le contenu
-            </span>
         </div>
     </div>
 </div>
@@ -203,7 +260,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Création d'une séance</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Création de séance</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -211,7 +268,7 @@
                 <div class="modal-body">
                     <!-- Affichage des détails sur la séance-->
                     <p>
-                        Vous allez créer cette séance:
+                        Vous allez créer <span id="nbSeances">1</span> séance(s):
                     </p>
                     <dl>
                         <dt>
@@ -222,11 +279,11 @@
                             Titre
                         </dt>
                         <dd id="conf-titre"></dd>
-                        <dt>
+                        <dt id="conf-debut-texte">
                             Heure de début
                         </dt>
                         <dd id="conf-debut"></dd>
-                        <dt>
+                        <dt id="conf-fin-texte">
                             Heure de fin
                         </dt>
                         <dd id="conf-fin"></dd>
@@ -344,7 +401,7 @@
             "UpdateSeanceTimes": "@Url.Action("UpdateTimes")",
             "DeleteSeanceAjax": "@Url.Action("DeleteAjax")",
             "AdjustSeanceTimes": "@Url.Action("AdjustTimes")"
-        };
+        }
 
         var initialCineID = "@ViewBag.CineID";
         var initialSalleID = "@ViewBag.SalleID";
@@ -378,5 +435,49 @@
     @Scripts.Render("~/Content/fullcalendarjs")
     @Scripts.Render("~/Content/bootstrapdatepickerjs")
     @Scripts.Render("~/Content/Programmation")
+
+
+    <!-- Script multi seances -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#multi').change(function () {
+                multi = $('#multi').prop("checked");
+                if (multi) {
+                    $('#config_multi').removeClass('d-none');
+                }
+                else {
+                    $('#config_multi').addClass('d-none');
+                }
+            })
+
+            $('#type-freq').change(function () {
+                freq = $('#type-freq').val();
+                if (freq == 'Jour') {
+                    $('#jours-semaine').addClass('d-none');
+                    $('#jour-moi').addClass('d-none');
+                }
+                else if (freq == 'Semaine') {
+                    $('#jours-semaine').removeClass('d-none');
+                    $('#jour-moi').addClass('d-none');
+                }
+            })
+
+            $('.datepicker-multi').datepicker();
+
+            $('#date-picker').datepicker().on('changeDate', function () {
+                datePicker = new Date($("#date-picker").datepicker('getDate'));
+                dateDebut = new Date($("#debut-date").datepicker('getDate'));
+                if (Date.parse(datePicker) != Date.parse(dateDebut))
+                    $('#debut-date').datepicker('setDate', datePicker);
+            })
+
+            $('#debut-date').datepicker().on('changeDate', function () {
+                datePicker = new Date($("#date-picker").datepicker('getDate'));
+                dateDebut = new Date($("#debut-date").datepicker('getDate'));
+                if (Date.parse(datePicker) != Date.parse(dateDebut))
+                    $('#date-picker').datepicker('setDate', dateDebut);
+            })
+        });
+    </script>
 }
 
