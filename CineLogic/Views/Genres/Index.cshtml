@@ -21,7 +21,7 @@
             </th>
 
         </tr>
-
+       
         @foreach (var item in Model)
         {
             <tr>
@@ -41,13 +41,14 @@
                         }
                         else
                         {
-                            <button type="button" class="btn btn-outline-danger EDS" disabled data-toggle="tooltip" data-placement="top" title="Suppression interdite le directeur est assigné à un film">Supprimer</button>
+                            <button type="button" class="btn btn-outline-danger EDS" disabled data-toggle="tooltip" data-placement="top" title="Suppression interdite ce genre est assigné à un film">Supprimer</button>
                         }
                     }
                 </td>
                 <td>
                     <div>@item.Contenus.Count</div>
                 </td>
+                
 
             </tr>
         }

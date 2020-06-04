@@ -35,5 +35,7 @@ namespace CineLogic.Models
         public Nullable<decimal> Revenue { get; set; }
         [Range(0, 100, ErrorMessage = "Le MetaScore ne peu être que entre {1} and {2}.")]
         public Nullable<int> MetaScore { get; set; }
+        [Display(Name =NameLibrary.CONTENU_DISP_Type)]
+        public string typage { get; set; }
     }
 }

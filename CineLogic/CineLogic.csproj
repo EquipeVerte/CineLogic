@@ -159,6 +159,7 @@
     <Compile Include="Business\Programmation\DuplicateContentException.cs" />
     <Compile Include="Business\Utilisateurs\UserService.cs" />
     <Compile Include="Controllers\ActeursController.cs" />
+    <Compile Include="Controllers\ContenuPromoesController.cs" />
     <Compile Include="Controllers\Attributes\AdminOnlyAttribute.cs" />
     <Compile Include="Controllers\Attributes\DontAllowAccessAttribute.cs" />
     <Compile Include="Controllers\Attributes\RedirectIfSessionActiveAttribute.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Models\Libraries\NameLibrary.cs" />
     <Compile Include="Models\Libraries\SessionTypes.cs" />
     <Compile Include="Models\Libraries\UserTypes.cs" />
+    <Compile Include="Models\Libraries\TypagesFilms.cs" />
     <Compile Include="Models\Libraries\ValidationLibrary.cs" />
     <Compile Include="Models\MetaData\Acteur.cs" />
     <Compile Include="Models\MetaData\Contenu.cs" />
@@ -317,6 +319,7 @@
     <Content Include="Scripts\Fullcalendar\timegrid\main.min.css" />
     <Content Include="Scripts\Fullcalendar\timegrid\main.min.js" />
     <Content Include="Content\programmation.css" />
+    <Content Include="Images\hourglass.gif" />
     <Content Include="Scripts\Programmation\AjaxLoader.js" />
     <Content Include="Scripts\Programmation\Calendar.js" />
     <Content Include="Scripts\Programmation\DatePicker.js" />
@@ -551,6 +554,11 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Contenus\CreateCsv.cshtml" />
+    <Content Include="Views\ContenuPromoes\Create.cshtml" />
+    <Content Include="Views\ContenuPromoes\Delete.cshtml" />
+    <Content Include="Views\ContenuPromoes\Details.cshtml" />
+    <Content Include="Views\ContenuPromoes\Edit.cshtml" />
+    <Content Include="Views\ContenuPromoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
