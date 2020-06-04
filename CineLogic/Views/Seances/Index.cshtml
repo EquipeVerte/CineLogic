@@ -10,6 +10,14 @@
     ViewBag.Title = "Index";
 }
 
+<div class="ml-3 float-right">
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#helpModal">
+        <i class="fas fa-question"></i>
+    </button>
+</div>
+
+
+
 <!-- Icone animé qui est affiché lors que la page fait une operation ajax-->
 <div class="loading float-right">
     <div class="loader">
@@ -214,6 +222,20 @@
     <!-- Affichage des séances dans un calandrier -->
     <div class="col-md-8">
         <div id='calendar' class="p-4 border">
+        </div>
+        <h5 class="mt-2">
+            Clé
+        </h5>
+        <div class="d-flex">
+            <span class="badge badge-primary mr-2">
+                Séance vide
+            </span>
+            <span class="badge badge-success mr-2">
+                Contenu assigné
+            </span>
+            <span class="badge badge-danger">
+                Durée insuffisante pour le contenu
+            </span>
         </div>
     </div>
 </div>
