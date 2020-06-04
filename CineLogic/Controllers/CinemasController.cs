@@ -89,7 +89,7 @@ namespace CineLogic.Controllers
             }
             CinemaViewModel c = mapper.Map<Cinema, CinemaViewModel>(cinema);
             ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
-            ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
+            ViewBag.Programmateur = new SelectList(db.Users.Where(u => u.Type == UserTypes.prog), "Login", "NomComplet", cinema.Programmateur);
             return View(c);
         }
 
