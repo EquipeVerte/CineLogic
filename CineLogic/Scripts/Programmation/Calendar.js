@@ -58,19 +58,26 @@ $(document).ready(function () {
                 e.preventDefault();
                 console.log("Context Menu");
                 $("#rmenu").show();
+                $('#rmenu-delete').off('click');
+                $('#rmenu-ajuster').off('click');
+                $('#rmenu-edit').off('click');
+                console.log("events off");
                 $("#rmenu").css({ 'top': mouseY(event) + 'px' });
                 $("#rmenu").css({ 'left': mouseX(event) + 'px' });
-                $("#rmenu-delete").on('click', function () {
+                $("#rmenu-delete").on('click', function (event) {
+                    event.preventDefault();
                     console.log("Delete");
                     console.log(info.event.id);
                     deleteEvent(info.event);
                 });
                 $("#rmenu-ajuster").on('click', function () {
+                    event.preventDefault();
                     console.log("Ajuster");
                     console.log(info.event.id);
                     adjustTimes(info.event);
                 });
                 $("#rmenu-edit").on('click', function () {
+                    event.preventDefault();
                     console.log("Edit");
                     console.log(info.event.id);
                     window.open(dictURLs["EditSeance"] + "/" + info.event.id, "_self");
@@ -80,6 +87,8 @@ $(document).ready(function () {
             });
         }
     });
+
+
 
     if (initialDate != "") {
         var date = new Date(initialDate);
