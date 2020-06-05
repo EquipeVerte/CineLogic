@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Programmation;
 using Newtonsoft.Json;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class SallesController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -128,7 +130,26 @@ namespace CineLogic.Controllers
             Salle salle = db.Salles.Find(id);
             if (salle.Seances.Count > 0)
             {
-                var seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                List<Seance> seances = db.Seances.Where(t => t.SalleID == id).ToList();
+                List<int> seancesId = new List<int>();
+                foreach (Seance seance in seances)
+                {
+                    if (seance.SeanceContenus.Count > 0)
+                        seancesId.Add(seance.SeanceID);
+                }
+
+                if (seancesId.Count > 0)
+                {
+                    List<SeanceContenu> seancesContenu = new List<SeanceContenu>();
+                    List<SeancePromo> seancesPromo = new List<SeancePromo>();
+                    foreach (int j in seancesId)
+                    {
+                        seancesContenu = db.SeanceContenus.Where(t => t.SeanceID == j).ToList();
+                        seancesPromo = db.SeancePromoes.Where(t => t.SeanceID == j).ToList();
+                        db.SeanceContenus.RemoveRange(seancesContenu);
+                        db.SeancePromoes.RemoveRange(seancesPromo);
+                    }
+                }
                 db.Seances.RemoveRange(seances);
                 db.Salles.Remove(salle);
             }

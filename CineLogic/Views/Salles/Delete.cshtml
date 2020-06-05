@@ -7,7 +7,7 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Êtes-vous sûr de vouloir supprimer cette salle?</h3>
 <div>
     <h4>Salle</h4>
     <hr />
@@ -70,13 +70,13 @@
                 if (Model.Seances.Count > 0)
                 {
                     <span style="color: red; background-color:rosybrown;">
-                        Êtes-vous sûr de vouloir supprimer cette salle? Elle contient des séances.
+                        Êtes-vous vraiment sûr de vouloir supprimer cette salle? Elle contient des séances.
                     </span>
-                    <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                    <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                 }
                 else
                 {
-                    <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                    <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                 }
             }
             @Html.ActionLink("Back to List", "Index", "Cinemas")

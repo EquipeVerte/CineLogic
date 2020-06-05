@@ -1,12 +1,12 @@
 ﻿@model CineLogic.Models.Cinema
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Supprimer";
 }
 
-<h2>Delete</h2>
+<h2>Supprimer</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Êtes-vous sûr de vouloir supprimer ce cinéma?</h3>
 <div>
     <h4>Cinema</h4>
     <hr />
@@ -71,24 +71,24 @@
                     if (Model.Salles.Any(s => s.Seances.Count > 0))
                     {
                         <span style="color: red; background-color:rosybrown;">
-                            Êtes-vous sûr de vouloir supprimer ce cinéma? Il contient des salles et des séances.
+                            Êtes-vous vraiment sûr de vouloir supprimer ce cinéma? Il contient des salles et des séances.
                         </span>
-                        <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                        <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                     }
                     else
                     {
                         <span style="color: red; background-color:rosybrown;">
                             Êtes-vous sûr de vouloir supprimer ce cinéma? Il contient des salles.
                         </span>
-                        <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                        <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                     }
                 }
                 else
                 {
-                    <input type="submit" value="Delete" class="btn btn-default" /> <br />
+                    <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                 }
             }
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Retour à la liste", "Index")
         </div>
     }
 </div>
