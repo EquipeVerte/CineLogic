@@ -9,7 +9,7 @@ using System.Linq;
 using Moq;
 using System.Data.Entity;
 
-namespace CineLogicUnitTests
+namespace CineLogic.Utilisateurs.Tests
 {
     [TestClass]
     public class UsersServiceTests
