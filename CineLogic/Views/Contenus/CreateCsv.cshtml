@@ -5,7 +5,13 @@
 }
 
 <h2 class="border-left border-bottom border-info m-4 p-4">Charger Plusieurs films (Fichier .csv)</h2>
-
+@********@
+<script language="JavaScript" type="text/javascript">
+    function myFunction() {
+        document.getElementById("hourglass").style.visibility = "visible";
+    }
+</script>
+@********@
 <div>
     @using (Html.BeginForm("CreateCsv", "Contenus", FormMethod.Post, new { @enctype = "multipart/form-data" }))
     {
@@ -17,27 +23,11 @@
                 <div class="form-group">
                     <input class="form-control-file " type="file" id="dataFile" name="csvFile" />
                 </div>
-
-                <div class="m-1">
+                <div class="m-1 d-flex justify-content-start">
                     <div class="d-flex justify-content-start">
-                        <input type="submit" value="Charger le fichier" class="btn btn-outline-info" id="chargerFichierBTN" style="height:40px" />
-                        @{
-                            if (ViewBag.hourglassIn != null)
-                            {
-                                <img src="~/Images/hourglass.gif" style="height:50px" />
-                            }
-                        }
-                        @{
-                            if (ViewBag.hourglassOut != null)
-                            {
-                                <img src="~/Images/hourglass.gif" style="height:50px" hidden />
-                            }
-                        }
-
-
+                        <input type="submit" onclick="myFunction()" value="Charger le fichier" class="btn btn-outline-info" id="chargerFichierBTN" style="height:40px" />
                     </div>
                 </div>
-
                 <div>
                     @{
                         if (ViewBag.CheminVide != null)
@@ -45,33 +35,32 @@
                             <div class="alert alert-danger mt-4">@ViewBag.CheminVide</div>
                         }
                     }
-
                     @{
                         if (ViewBag.ErreurTypeFichier != null)
                         {
                             <div class="alert alert-danger mt-4">@ViewBag.ErreurTypeFichier</div>
                         }
-
                     }
                 </div>
-
                 <div class="d-flex justify-content-center">
                     <div class="mr-2">
-                        <div class="alert alert-info mt-1"><span>Nombre de films ajoutés : </span><strong>@ViewBag.FilmAjouter</strong></div>
-                        <div class="alert alert-info mt-1"><span>Nombre de films existants : </span><strong>@ViewBag.FilmExistant</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre de films ajoutés : </span><strong>@ViewBag.FilmAjouter</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre de films existants : </span><strong>@ViewBag.FilmExistant</strong></div>
                     </div>
                     <div class="mr-2">
-                        <div class="alert alert-info mt-1"><span>Nombre d'acteurs ajoutés : </span><strong>@ViewBag.ActeurAjouter</strong></div>
-                        <div class="alert alert-info mt-1"><span>Nombre d'acteurs existants : </span><strong>@ViewBag.ActeurExistant</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre d'acteurs ajoutés : </span><strong>@ViewBag.ActeurAjouter</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre d'acteurs existants : </span><strong>@ViewBag.ActeurExistant</strong></div>
                     </div>
                     <div class="mr-2">
-                        <div class="alert alert-info mt-1"><span>Nombre de directeurs ajoutés : </span><strong>@ViewBag.DirecteurAjouter</strong></div>
-                        <div class="alert alert-info mt-1"><span>Nombre de directeurs existants : </span><strong>@ViewBag.DirecteurExistant</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre de directeurs ajoutés : </span><strong>@ViewBag.DirecteurAjouter</strong></div>
+                        <div class="alert alert-info mt-1 rapport"><span>Nombre de directeurs existants : </span><strong>@ViewBag.DirecteurExistant</strong></div>
+                    </div>
+                    <div id="hourglass" style="visibility:hidden">
+                        <img src="~/Images/hourglass.gif" style="height:200px;"/>
                     </div>
                 </div>
             </div>
         </div>
-
     }
 </div>
 
