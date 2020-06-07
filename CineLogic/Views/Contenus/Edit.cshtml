@@ -81,9 +81,7 @@
                         <div class="d-flex justify-content-around EDS">
                             @Html.LabelFor(model => model.typage, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <div class="mb-2">
-                                    @Html.DisplayFor(model => model.typage)
-                                </div>
+                              
                                 @Html.DropDownList("typage", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.typage, "", new { @class = "text-danger" })
                             </div>
@@ -125,7 +123,7 @@
                         <td class="EDS">
                             @Html.DisplayFor(modelItem => item.Nom)
                         </td>
-                        <td class="EDS">
+                        <td class="EDS d-flex justify-content-end">
                             @Html.ActionLink("Editer", "Edit", "Acteurs", new { id = item.Nom }, null) |
                             @Html.ActionLink("Détails", "Details", "Acteurs", new { id = item.Nom }, null) |
                             @Html.ActionLink("Supprimer", "SupprimerActeur", "Contenus", new { ActeurId = item.Nom, contenuId = Model.Titre }, null)
@@ -144,7 +142,7 @@
                         <td class="EDS">
                             @Html.DisplayFor(modelItem => item.Nom)
                         </td>
-                        <td class="EDS">
+                        <td class="EDS d-flex justify-content-end">
                             @Html.ActionLink("Editer", "Edit", "Directeurs", new { id = item.Nom }, null) |
                             @Html.ActionLink("Détails", "Details", "Directeurs", new { id = item.Nom }, null) |
                             @Html.ActionLink("Supprimer", "SupprimerDirecteur", "Contenus", new { DirecteurId = item.Nom, contenuId = Model.Titre }, null)
@@ -162,7 +160,7 @@
                         <td class="EDS">
                             @Html.DisplayFor(modelItem => item.Nom)
                         </td>
-                        <td class="EDS">
+                        <td class="EDS d-flex justify-content-end">
                             @Html.ActionLink("Editer", "Edit", "Genres", new { id = item.Nom }, null) |
                             @Html.ActionLink("Détails", "Details", "Genres", new { id = item.Nom }, null) |
                             @Html.ActionLink("Supprimer", "SupprimerGenre", "Contenus", new { GenreId = item.Nom, contenuId = Model.Titre }, null)

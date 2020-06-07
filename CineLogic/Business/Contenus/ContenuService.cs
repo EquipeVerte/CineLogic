@@ -159,7 +159,6 @@ namespace CineLogic.Business.Contenus
                 try
                 {
                     contenu.Rating = csvContenuLigne.Rating;
-
                 }
                 catch (Exception ex) { MessageBox.Show(contenu.Rating + "  ////   " + ex.ToString()); }
                 try

@@ -9,12 +9,12 @@
     int l = i % 10;
 }
 
-<h2 class="border-left border-bottom border-info m-2 p-4">Index des <span> @i </span> films </h2>
+<h2 class="border-left border-bottom border-info m-2 p-2">Index des <span> @i </span> films </h2>
 <div class="d-flex justify-content-lg-start">
-    <p class="p-3, m-3">
+    <p class="p-3, m-2">
         @Html.ActionLink("Ajouter un Film", "Create")
     </p>
-    <p class="p-3, m-3">
+    <p class="p-3, m-2">
         @Html.ActionLink("Charger un fichier CSV", "CreateCsv")
     </p>
 </div>
@@ -27,7 +27,8 @@
         lst_url.Add("https://m.media-amazon.com/images/I/91QRZ50m9ML._SS500_.jpg");
         lst_url.Add("https://images-na.ssl-images-amazon.com/images/I/61XO6Euk-RL._SL500_AC_SS350_.jpg");
         lst_url.Add("https://i.ebayimg.com/images/g/FaoAAOSwz-ldZ9SH/s-l1600.jpg");
-
+        lst_url.Add("https://fr.web.img3.acsta.net/pictures/19/04/19/09/29/4029006.jpg");
+        lst_url.Add("https://1.bp.blogspot.com/-sigucaZalUQ/UoL0GhqNv3I/AAAAAAAAAD0/cXAWVZbLuwY/s1600/Maleficent+Film+Poster.jpg");
     }
 </div>
 @*Bloc Script java*@
@@ -74,7 +75,7 @@
 @*Fin Bloc Script java*@
 
 @*Bloc des affiches*@
-<div class="row mb-3 d-flex justify-content-md-between">
+<div class="row mb-2 d-flex justify-content-md-between w-100">
     <div class="col-md-4">
         <div class="card m-2 border-0">
             <div class="card-img-caption d-flex justify-content-between">
@@ -708,7 +709,6 @@
                                                     @*<text > @CineLogic.Models.Libraries.TypagesFilms.Display[item.typage]</text>*@
                                                 }
                                             }
-
                                         </td>
                                         <td>
                                             @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |

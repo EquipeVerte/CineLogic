@@ -124,14 +124,18 @@ namespace CineLogic.Controllers
 
                     //lignes.RemoveAt(0);
 
-                    ViewBag.hourglassIn = "True";
+                    //ViewBag.hourglassIn = "True";
                     ContenuService contenuService = new ContenuService();
+                    int i = 1;
+                    int count = csvContenuLignes.Count();
+                    ViewBag.count = count;
                     foreach (CsvContenuLigne csvContenuLigne in csvContenuLignes)
                     {
                         contenuService.ParsserColmn(csvContenuLigne);
+                        ViewBag.hourglassIN = i;
+                        i++;
                     }
                     
-
                     filmAjouter += contenuService.filmAjouter;
                     ViewBag.FilmAjouter = filmAjouter;
                     directeurAjouter += contenuService.directeurAjouter;
