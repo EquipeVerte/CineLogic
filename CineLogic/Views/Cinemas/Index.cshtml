@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Cinémas</h2>
+<h2>Cinémas</h2> 
 
 <div class="row">
     <div class="col-4">
@@ -149,7 +149,7 @@
         $(document).ready(function () {
             $('#list-tab').on('click', 'a', function () {
                 var id = $(this).attr("aria-controls");
-                for (var i = 1; i <= $('#list-tab-salle > a').length + 5; i++) {
+                for (var i = 1; i <= $('#list-tab-salle > a').length + 10; i++) {
                     $('#list-tab-salle a[aria-controls="' + i + '"]').addClass('d-none disabled');
                     $('#nav-tabContent-salle').addClass('d-none');
                     $('#nav-tabContent-salle a').addClass('disabled');

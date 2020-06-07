@@ -2,10 +2,10 @@
 @model CineLogic.Models.Salle
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Supprimer";
 }
 
-<h2>Delete</h2>
+<h2>Supprimer</h2>
 
 <h3>Êtes-vous sûr de vouloir supprimer cette salle?</h3>
 <div>
@@ -62,16 +62,16 @@
             @if (Model.EnExploitation == true)
             {
                 <div style="color: red; background-color:rosybrown;">
-                    Impossible de supprimer ce cinéma: il est en exploitation.
+                    Impossible de supprimer cette salle: elle est en exploitation.
                 </div>
             }
             else
             {
                 if (Model.Seances.Count > 0)
                 {
-                    <span style="color: red; background-color:rosybrown;">
-                        Êtes-vous vraiment sûr de vouloir supprimer cette salle? Elle contient des séances.
-                    </span>
+        <span style="color: red; background-color:rosybrown;">
+            Cetta salle contient des séances. Êtes-vous vraiment sûr de vouloir la supprimer?
+        </span>
                     <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                 }
                 else
@@ -79,7 +79,7 @@
                     <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                 }
             }
-            @Html.ActionLink("Back to List", "Index", "Cinemas")
+            @Html.ActionLink("Retour à la liste", "Index", "Cinemas")
         </div>
     }
 </div>

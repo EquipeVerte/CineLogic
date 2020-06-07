@@ -71,14 +71,14 @@
                     if (Model.Salles.Any(s => s.Seances.Count > 0))
                     {
                         <span style="color: red; background-color:rosybrown;">
-                            Êtes-vous vraiment sûr de vouloir supprimer ce cinéma? Il contient des salles et des séances.
+                            Ce cinéma contient des salles et des séances. Êtes-vous vraiment sûr de vouloir le supprimer?
                         </span>
                         <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                     }
                     else
                     {
                         <span style="color: red; background-color:rosybrown;">
-                            Êtes-vous sûr de vouloir supprimer ce cinéma? Il contient des salles.
+                            Ce cinéma contient des salles. Êtes-vous vraiment sûr de vouloir le supprimer?
                         </span>
                         <input type="submit" value="Supprimer" class="btn btn-default" /> <br />
                     }
