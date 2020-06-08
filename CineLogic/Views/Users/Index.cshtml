@@ -39,8 +39,11 @@
                 </td>
                 <td>
                     @Html.ActionLink("Éditer", "Edit", new { id = item.Login }) |
-                    @Html.ActionLink("Détails", "Details", new { id = item.Login }) |
-                    @Html.ActionLink("Suprimmer", "Delete", new { id = item.Login })
+                    @Html.ActionLink("Détails", "Details", new { id = item.Login })
+                    @if (item.Cinemas.Count == 0)
+                    {
+                        <span> | </span> @Html.ActionLink("Suprimmer", "Delete", new { id = item.Login })
+                    }
                 </td>
             </tr>
         }
