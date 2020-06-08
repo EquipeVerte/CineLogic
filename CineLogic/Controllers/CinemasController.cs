@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using CineLogic.Models.Libraries;
 using CineLogic.Models.Programmation;
 using CineLogic.Controllers.Attributes;
+using System.Windows;
 
 namespace CineLogic.Controllers
 {
@@ -148,13 +149,16 @@ namespace CineLogic.Controllers
                 if (sallesId.Count > 0)
                 {
                     List<Seance> seances = new List<Seance>();
+                    List<int> seancesId = new List<int>();
                     foreach (int i in sallesId)
                     {
                         seances = db.Seances.Where(t => t.SalleID == i).ToList();
-                        List<int> seancesId = new List<int>();
+                        
                         foreach (Seance seance in seances)
                         {
                             if (seance.SeanceContenus.Count > 0)
+                                seancesId.Add(seance.SeanceID);
+                            if (seance.SeancePromoes.Count > 0)
                                 seancesId.Add(seance.SeanceID);
                         }
 
