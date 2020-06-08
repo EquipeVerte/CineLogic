@@ -262,10 +262,10 @@
                         @using (Html.BeginForm("AddContent", "Seances", FormMethod.Post, new { name = "addContent", id = "addContent" }))
                         {
                             @Html.HiddenFor(model => model.SeanceID)
-                            <select id="film-select" class="form-control mr-2" size="6" name="contenuTitre">
+                            <select id="film-select" class="form-control mr-2" size="6" name="contenuTitre" required oninvalid="this.setCustomValidity('Veuillez selectionner un contenu.')"  oninput="this.setCustomValidity('')">
                             </select>
                         }
-                        <button id="btnLoadMore" class="btn btn-outline-primary">
+                        <button id="btnLoadMore" class="btn btn-outline-primary mt-1">
                             Charger plus
                         </button>
                     </div>
@@ -328,6 +328,7 @@
 
             $("#btnLoadMore").click(function () {
                 nbToLoad = nbToLoad + 20;
+                console.log(nbToLoad);
                 getFilms(nbToLoad);
             });
 
