@@ -244,7 +244,7 @@ namespace CineLogic.Business.Programmation
                 seanceContenu.indexOrdre = contents.Count == 0 ? 0 : contents.Max(c => c.indexOrdre) + 1;
                 seanceContenu.SeanceID = seance.SeanceID;
 
-                if (type == ContenuTypeLibrary.CONT_TYPE_STANDARD && seance.SeanceContenus.Where(sc => sc.Contenu.typage == ContenuTypeLibrary.CONT_TYPE_STANDARD).Count() == 0)
+                if (type == ContenuTypeLibrary.CONT_TYPE_STANDARD && seance.SeanceContenus.Where(sc => sc.SeanceID == seanceContenu.SeanceID && sc.Contenu.typage == ContenuTypeLibrary.CONT_TYPE_STANDARD).Count() == 0)
                 {
                     seanceContenu.estPrincipal = true;
                 }
