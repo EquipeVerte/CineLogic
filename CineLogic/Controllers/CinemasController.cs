@@ -12,9 +12,12 @@ using AutoMapper;
 using Newtonsoft.Json;
 using CineLogic.Models.Libraries;
 using CineLogic.Models.Programmation;
+using CineLogic.Controllers.Attributes;
+using System.Windows;
 
 namespace CineLogic.Controllers
 {
+    [SessionActiveOnly]
     public class CinemasController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
@@ -135,18 +138,44 @@ namespace CineLogic.Controllers
             Cinema cinema = db.Cinemas.Find(id);
             if (cinema.Salles.Count > 0)
             {
-                bool contientSeances = false;
                 List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
+                List<int> sallesId = new List<int>();
                 foreach (Salle salle in salles)
                 {
                     if (salle.Seances.Count > 0)
-                        contientSeances = true;
+                        sallesId.Add(salle.SalleID);
                 }
 
-                if (contientSeances)
+                if (sallesId.Count > 0)
                 {
-                    var seances = db.Seances.Where(t => t.SalleID == id).ToList();
-                    db.Seances.RemoveRange(seances);
+                    List<Seance> seances = new List<Seance>();
+                    List<int> seancesId = new List<int>();
+                    foreach (int i in sallesId)
+                    {
+                        seances = db.Seances.Where(t => t.SalleID == i).ToList();
+                        
+                        foreach (Seance seance in seances)
+                        {
+                            if (seance.SeanceContenus.Count > 0)
+                                seancesId.Add(seance.SeanceID);
+                            if (seance.SeancePromoes.Count > 0)
+                                seancesId.Add(seance.SeanceID);
+                        }
+
+                        if (seancesId.Count > 0)
+                        {
+                            List<SeanceContenu> seancesContenu = new List<SeanceContenu>();
+                            List<SeancePromo> seancesPromo = new List<SeancePromo>();
+                            foreach (int j in seancesId)
+                            {
+                                seancesContenu = db.SeanceContenus.Where(t => t.SeanceID == j).ToList();
+                                seancesPromo = db.SeancePromoes.Where(t => t.SeanceID == j).ToList();
+                                db.SeanceContenus.RemoveRange(seancesContenu);
+                                db.SeancePromoes.RemoveRange(seancesPromo);
+                            }
+                        }
+                        db.Seances.RemoveRange(seances);
+                    }
                     db.Salles.RemoveRange(salles);
                     db.Cinemas.Remove(cinema);
                 }

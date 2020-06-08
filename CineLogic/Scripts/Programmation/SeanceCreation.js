@@ -46,7 +46,7 @@
             if ($('#multi').is(':checked')) {
                 $("#nbSeances").html($('#type-freq').val() == "Jour" ?
                     Math.floor((Math.abs($('#debut-date').datepicker('getDate') - $('#fin-date').datepicker('getDate')) / 86400000) / parseInt($('#chiffre-freq').val())) + 1
-                    : parseInt((countCertainDays(getJoursSem(), $('#debut-date').datepicker('getDate'), $('#fin-date').datepicker('getDate')) / parseInt($('#chiffre-freq').val())) + 1));
+                    : parseInt((countCertainDays(getJoursSem(), $('#debut-date').datepicker('getDate'), $('#fin-date').datepicker('getDate')) / parseInt($('#chiffre-freq').val()))));
                 $("#conf-debut-texte").html("Début de script");
                 $("#conf-debut").html(new Date($("#debut-date").datepicker('getDate')
                     .setMinutes(

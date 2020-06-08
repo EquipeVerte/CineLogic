@@ -1,12 +1,12 @@
 ﻿@model CineLogic.Models.Responsable
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Supprimer";
 }
 
-<h2>Delete</h2>
+<h2>Supprimer</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Êtes-vous sûr de vouloir supprimer ce responsable?</h3>
 <div>
     <h4>Responsable</h4>
     <hr />
@@ -50,18 +50,16 @@
                 </div>
                 foreach (var cinema in Model.Cinemas)
                 {
-
-                        <div class="col-md-10">
-                            @Html.ActionLink(cinema.Nom, "Edit", "Cinemas", new { id = cinema.CinemaID }, null)
-                        </div>
-                    
+                    <div class="col-md-10">
+                        @Html.ActionLink(cinema.Nom, "Edit", "Cinemas", new { id = cinema.CinemaID }, null)
+                    </div>
                 }
             }
             else
             {
-                <input type="submit" value="Delete" class="btn btn-default" />
+                <input type="submit" value="Supprimer" class="btn btn-default" />
             }
-            | @Html.ActionLink("Back to List", "Index")
+            | @Html.ActionLink("Liste des responsables", "Index")
         </div>
     }
 </div>
