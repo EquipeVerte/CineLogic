@@ -46,6 +46,7 @@ namespace CineLogic.Controllers
         // GET: Contenus/Create
         public ActionResult Create()
         {
+            ViewBag.typage = new SelectList(TypagesFilms.Display, "Key", "Value");
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace CineLogic.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore")] Contenu contenu)
+        public ActionResult Create([Bind(Include = "Titre,Description,Annee,RuntimeMins,Rating,Votes,Revenue,MetaScore, typage")] Contenu contenu)
         {
             if (ModelState.IsValid)
             {

@@ -160,7 +160,7 @@ $(document).ready(function () {
                 animateSuccess();
             },
             error: function (e) {
-                alert("Ajustement échoué!");
+                alert("Ajustement échoué! Verifier qu'il y a assez de temps après la séance.");
                 animateFailure();
             }
         });
