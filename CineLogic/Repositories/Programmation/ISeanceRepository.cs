@@ -1,10 +1,5 @@
 ﻿using CineLogic.Models;
-using CineLogic.Models.Programmation;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CineLogic.Repositories
 {
@@ -22,6 +17,12 @@ namespace CineLogic.Repositories
         IEnumerable<Seance> GetSeancesBySalle(int salleID);
 
         void UpdateSeance(Seance seance);
+
+        void AddContenu(SeanceContenu contenu);
+
+        void AddPromo(SeancePromo promo);
+
+        string GetContentType(string contenuTitre);
 
         int SaveChanges();
 

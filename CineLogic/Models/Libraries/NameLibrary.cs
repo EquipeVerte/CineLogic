@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CineLogic.Models.Libraries
+﻿namespace CineLogic.Models.Libraries
 {
     public class NameLibrary
     {
@@ -11,5 +6,9 @@ namespace CineLogic.Models.Libraries
         public const string CONTENU_DISP_Rating = "Classement";
         public const string CONTENU_DISP_Revenue = " Renvenue en Millions";
         public const string CONTENU_DISP_Annee = "Année de sortie";
+        public const string CONTENU_DISP_Type = "Type";
+
+        public const string ACTEUR_DISP_Nom = "Nom Acteur";
+        public const string DIRECTEUR_DISP_Nom = "Nom Directeur";
     }
 }

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CineLogic.Models.ContenuPromo>
+
+@{
+    ViewBag.Title = "Index des films promotionnels";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Index des films promotionnels</h2>
+
+<p class="p-3, m-3">
+    @Html.ActionLink("Ajouter un Film promotionnel", "Create")
+</p>
+<table class="table table-striped EDS">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </th>
+        <th>
+            <sapn>Actions</sapn>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Titre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RuntimeMins)
+    </td>
+    <td>
+        @Html.ActionLink("Editer", "Edit", new { id = item.Titre }, new { @class = "btn btn-outline-info EDS" }) |
+        @Html.ActionLink("Détails", "Details", new { id = item.Titre }, new { @class = "btn btn-outline-warning EDS" }) |
+        @Html.ActionLink("Supprimer", "Delete", new { id = item.Titre }, new { @class = "btn  btn-outline-danger EDS" })
+    </td>
+</tr>
+}
+
+</table>

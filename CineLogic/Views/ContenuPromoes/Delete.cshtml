@@ -1,0 +1,42 @@
+﻿@model CineLogic.Models.ContenuPromo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2 class="border-left border-bottom border-info m-4 p-4">Supprimer un film promotionnel</h2>
+<h3 class="alert alert-danger m-4">Voulez-vous vraiment supprimer ce film promotionnel ?</h3>
+
+<div class="m-4">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RuntimeMins)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="m-4">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger" /> |
+            @Html.ActionLink("Index des films promotionnels", "Index")
+        </div>
+    }
+</div>

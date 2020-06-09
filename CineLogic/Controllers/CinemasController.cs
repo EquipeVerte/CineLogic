@@ -4,13 +4,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
-using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
-using CineLogic.Models.Programmation;
+using AutoMapper;
 using Newtonsoft.Json;
+using CineLogic.Models.Libraries;
+using CineLogic.Models.Programmation;
+using CineLogic.Controllers.Attributes;
 
 namespace CineLogic.Controllers
 {
@@ -18,6 +18,12 @@ namespace CineLogic.Controllers
     public class CinemasController : Controller
     {
         private CineDBEntities db = new CineDBEntities();
+
+        private IMapper mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Cinema, CinemaViewModel>();
+            cfg.CreateMap<CinemaViewModel, Cinema>();
+        }).CreateMapper();
 
         // GET: Cinemas
         public ActionResult Index()
@@ -76,13 +82,15 @@ namespace CineLogic.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Cinema cinema = db.Cinemas.Find(id);
+
             if (cinema == null)
             {
                 return HttpNotFound();
             }
+            CinemaViewModel c = mapper.Map<Cinema, CinemaViewModel>(cinema);
             ViewBag.ResponsableID = new SelectList(db.Responsables, "ResponsableID", "Nom", cinema.ResponsableID);
-            ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
-            return View(cinema);
+            ViewBag.Programmateur = new SelectList(db.Users.Where(u => u.Type == UserTypes.prog), "Login", "NomComplet", cinema.Programmateur);
+            return View(c);
         }
 
         // POST: Cinemas/Edit/5
@@ -90,11 +98,12 @@ namespace CineLogic.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "CinemaID,Nom,Adresse,EnExploitation,ResponsableID,Programmateur")] CinemaViewModel cinema)
         {
+            Cinema c = mapper.Map<CinemaViewModel, Cinema>(cinema);
             if (ModelState.IsValid)
             {
-                db.Entry(cinema).State = EntityState.Modified;
+                db.Entry(c).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -124,24 +133,62 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Cinema cinema = db.Cinemas.Find(id);
-            db.Cinemas.Remove(cinema);
+            if (cinema.Salles.Count > 0)
+            {
+                List<Salle> salles = db.Salles.Where(t => t.CinemaID == id).ToList();
+                List<int> sallesId = new List<int>();
+                foreach (Salle salle in salles)
+                {
+                    if (salle.Seances.Count > 0)
+                        sallesId.Add(salle.SalleID);
+                }
+
+                if (sallesId.Count > 0)
+                {
+                    List<Seance> seances = new List<Seance>();
+                    List<int> seancesId = new List<int>();
+                    foreach (int i in sallesId)
+                    {
+                        seances = db.Seances.Where(t => t.SalleID == i).ToList();
+                        
+                        foreach (Seance seance in seances)
+                        {
+                            if (seance.SeanceContenus.Count > 0)
+                                seancesId.Add(seance.SeanceID);
+                            if (seance.SeancePromoes.Count > 0)
+                                seancesId.Add(seance.SeanceID);
+                        }
+
+                        if (seancesId.Count > 0)
+                        {
+                            List<SeanceContenu> seancesContenu = new List<SeanceContenu>();
+                            List<SeancePromo> seancesPromo = new List<SeancePromo>();
+                            foreach (int j in seancesId)
+                            {
+                                seancesContenu = db.SeanceContenus.Where(t => t.SeanceID == j).ToList();
+                                seancesPromo = db.SeancePromoes.Where(t => t.SeanceID == j).ToList();
+                                db.SeanceContenus.RemoveRange(seancesContenu);
+                                db.SeancePromoes.RemoveRange(seancesPromo);
+                            }
+                        }
+                        db.Seances.RemoveRange(seances);
+                    }
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+                else
+                {
+                    db.Salles.RemoveRange(salles);
+                    db.Cinemas.Remove(cinema);
+                }
+
+            }
+            else
+                db.Cinemas.Remove(cinema);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
-        //  Ajax get cinemas.
-        [HttpGet]
-        public ContentResult Cinemas()
-        {
-            CineDBEntities db = new CineDBEntities();
 
-            IMapper mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Cinema, CinemaSelectionItem>();
-            }).CreateMapper();
-
-            return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -186,5 +233,28 @@ namespace CineLogic.Controllers
             ViewBag.Programmateur = new SelectList(db.Users, "Login", "NomComplet", cinema.Programmateur);
             return View(cinema);
         }
+
+        //  Ajax get cinemas.
+        [HttpGet]
+        public ContentResult Cinemas()
+        {
+            CineDBEntities db = new CineDBEntities();
+
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Cinema, CinemaSelectionItem>();
+            }).CreateMapper();
+
+            if (Session[SessionTypes.type].Equals(UserTypes.admin))
+            {
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Salles.Count > 0))), "application/json");
+            }
+            else
+            {
+                string type = (String)Session[SessionTypes.login];
+                return Content(JsonConvert.SerializeObject(mapper.Map<IEnumerable<Cinema>, IEnumerable<CinemaSelectionItem>>(db.Cinemas.Where(c => c.Programmateur.Equals(type)))), "application/json");
+            }
+        }
     }
 }
+

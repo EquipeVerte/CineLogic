@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using CineLogic.Models;
-using CineLogic.Models.Programmation;
+﻿using CineLogic.Models;
+using CineLogic.Models.Libraries;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace CineLogic.Repositories
 {
@@ -50,7 +48,12 @@ namespace CineLogic.Repositories
 
         public void DeleteSeance(Seance seance)
         {
+            seance.SeanceContenus.Clear();
+            seance.SeancePromoes.Clear();
+
             db.Seances.Remove(seance);
+
+            db.SaveChanges();
         }
 
         public IEnumerable<Seance> GetSeancesBySalle(int salleID)
@@ -75,7 +78,40 @@ namespace CineLogic.Repositories
             seanceToUpdate.HeureDebut = seance.HeureDebut;
             seanceToUpdate.HeureFin = seance.HeureFin;
             seanceToUpdate.Titre = seance.Titre;
-            seanceToUpdate.ContenuTitre = seance.ContenuTitre;
+
+            db.SaveChanges();
+        }
+
+        public void AddContenu(SeanceContenu contenu)
+        {
+            db.SeanceContenus.Add(contenu);
+
+            contenu.Contenu = db.Contenus.Find(contenu.ContenuTitre);
+
+            db.SaveChanges();
+        }
+
+        public string GetContentType(string contenuTitre)
+        {
+            if(db.Contenus.Find(contenuTitre) != null)
+            {
+                return db.Contenus.Find(contenuTitre).typage;
+            }
+            else if (db.ContenuPromoes.Find(contenuTitre) != null)
+            {
+                return ContenuTypeLibrary.CONT_TYPE_PROMO;
+            }
+            else
+            {
+                return "notfound";
+            }
+        }
+
+        public void AddPromo(SeancePromo promo)
+        {
+            db.SeancePromoes.Add(promo);
+
+            db.SaveChanges();
         }
 
         public int SaveChanges()

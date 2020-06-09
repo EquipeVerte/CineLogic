@@ -15,25 +15,43 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nom)
             </th>
-            <!--
             <th></th>
-                -->
-        </tr>
+            <th>
+                Nbr de film de ce genre
+            </th>
 
+        </tr>
+       
         @foreach (var item in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nom)
                 </td>
-                <!--
+
                 <td>
-                    @Html.ActionLink("Editer", "Edit", new { id = item.Nom }, new { @class = "btn btn-outline-info" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Nom }, new { @class = "btn btn-outline-warning" })
-                    @*@Html.ActionLink("Supprimer", "Delete", new { id=item.Nom }, new { @class = "btn  btn-outline-danger" })*@
+                    @Html.ActionLink("Editer", "Edit", new { id = item.Nom }, new { @class = "btn btn-outline-info EDS" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Nom }, new { @class = "btn btn-outline-warning EDS" })
+
+
+                    @{
+                        if (item.Contenus.Count == 0)
+                        {
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Nom }, new { @class = "btn  btn-outline-danger EDS" })
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-outline-danger EDS" disabled data-toggle="tooltip" data-placement="top" title="Suppression interdite ce genre est assigné à un film">Supprimer</button>
+                        }
+                    }
                 </td>
-                    -->
+                <td>
+                    <div>@item.Contenus.Count</div>
+                </td>
+                
+
             </tr>
         }
+
     </table>
 </div>

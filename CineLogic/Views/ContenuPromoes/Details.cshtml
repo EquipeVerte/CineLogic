@@ -1,0 +1,33 @@
+﻿@model CineLogic.Models.ContenuPromo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <h2 class="border-left border-bottom border-info m-4 p-4">Details du film promotionnel</h2>
+
+<div class="m-4">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RuntimeMins)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RuntimeMins)
+        </dd>
+
+    </dl>
+</div>
+<p class="m-4">
+    @Html.ActionLink("Editer", "Edit", new { id = Model.Titre }) |
+    @Html.ActionLink("Index des films promotionnels", "Index")
+</p>

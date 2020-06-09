@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
@@ -112,8 +108,16 @@ namespace CineLogic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Responsable responsable = db.Responsables.Find(id);
-            db.Responsables.Remove(responsable);
-            db.SaveChanges();
+            if (responsable.Cinemas.Count > 0)
+            {
+                //  MessageBox ne marche pas sur un serveur!!!!! Il faut envoyer un message cote client.
+                //MessageBox.Show("Impossible de supprimer ce responsable, veuillez le dé-assigner de ces cinémas.");
+            }
+            else
+            {
+                db.Responsables.Remove(responsable);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

@@ -1,12 +1,12 @@
 ﻿@model CineLogic.Models.Responsable
 
 @{
-    ViewBag.Title = "Suppression";
+    ViewBag.Title = "Supprimer";
 }
 
-<h2>Suppression</h2>
+<h2>Supprimer</h2>
 
-<h3>Êtes-vous certain que vous voulez supprimer ce responsable?</h3>
+<h3>Êtes-vous sûr de vouloir supprimer ce responsable?</h3>
 <div>
     <h4>Responsable</h4>
     <hr />
@@ -37,12 +37,29 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Supprimer" class="btn btn-default" /> |
-            @Html.ActionLink("Liste des responsables", "Index")
+            @if (Model.Cinemas.Count() > 0)
+            {
+                <div style="color: red; background-color:rosybrown;">
+                    Vous ne pouvez pas supprimer ce responsable, car il est assigné à un cinéma.
+                    Veuillez réassigner le responsable de ces cinémas:
+                </div>
+                foreach (var cinema in Model.Cinemas)
+                {
+                    <div class="col-md-10">
+                        @Html.ActionLink(cinema.Nom, "Edit", "Cinemas", new { id = cinema.CinemaID }, null)
+                    </div>
+                }
+            }
+            else
+            {
+                <input type="submit" value="Supprimer" class="btn btn-default" />
+            }
+            | @Html.ActionLink("Liste des responsables", "Index")
         </div>
     }
 </div>

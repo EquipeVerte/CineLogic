@@ -11,6 +11,9 @@
             $("#cinema-select").append(
                 '<option value="' + item.CinemaID + '">' + item.Nom + '</option>'
             );
+            if (initialSalleID != "") {
+                $("#cinema-select").val(initialCineID);
+            }
             getSalles();
         });
     });
@@ -33,7 +36,19 @@
                         '<option value="' + item.SalleID + '">' + item.Nom + '</option>'
                     );
                 });
-                refreshEvents();
+                
+                console.log(initialCineID);
+                console.log(initialSalleID);
+                
+                if (initialSalleID != "") {
+                    
+                    $("#salle-select").val(initialSalleID);
+                    refreshEvents();
+                }
+                else {
+                    refreshEvents();
+                }
+                
             }
         );
     }

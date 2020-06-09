@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
@@ -52,9 +49,16 @@ namespace CineLogic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Directeurs.Add(directeur);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Directeurs.Add(directeur);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch(Exception ex)
+                {
+                    ViewBag.Erreur = "Le nom existe déja. \n" + ex.Message;
+                }
             }
 
             return View(directeur);

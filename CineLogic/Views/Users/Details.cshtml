@@ -30,5 +30,12 @@
 </div>
 <p>
     @Html.ActionLink("Éditer", "Edit", new { id = Model.Login }) |
-    @Html.ActionLink("Liste des usagers", "Index")
+    @if (Session[CineLogic.Models.Libraries.SessionTypes.login].Equals(CineLogic.Models.Libraries.UserTypes.admin))
+    {
+     @Html.ActionLink("Liste des usagers", "Index")
+    }
+    else
+    {
+     @Html.ActionLink("Home", "Prog", "Home")
+    }
 </p>

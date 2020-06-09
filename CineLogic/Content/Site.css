@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 80px;
     padding-bottom: 20px;
+    width: 100%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -19,15 +20,16 @@ textarea {
 .description textarea {
     width: 300px !important;
     height: 300px !important;
+    margin-top: 8px;
 }
 
 .details {
-    width: 450px !important;
+    width: 400px !important;
 }
 
 .affiche {
     width: 140px !important;
-    height: 200px !important;
+    height: 170px !important;
     flex-shrink: 0;
 }
 
@@ -37,4 +39,40 @@ textarea {
 
 .logo {
     max-height: 2.5rem;
+}
+
+.EDS {
+    font-size: 12px !important;
+}
+
+.scrollable {
+    height: 140px;
+    width: 400px;
+    width: 400px;
+    overflow-y: scroll;
+}
+
+.slider {
+    height: 300px !important;
+    flex-shrink: 0;
+}
+
+.slider2 {
+    height: 620px !important;
+    flex-shrink: 0;
+}
+
+.titre {
+    width: 200px !important;
+}
+
+.largeur {
+    width: 60px !important;
+}
+
+.ary {
+    width: 1200px !important;
+}
+.rapport{
+    width:290px !important;
 }
