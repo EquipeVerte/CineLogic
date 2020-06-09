@@ -110,38 +110,41 @@ namespace CineLogic.Controllers
                 }
                 else if (seance.TypeFreq == "Semaine")
                 {
-                    string[] joursSem = new string[seance.JoursSem.Length];
-                    int numJour = 0;
-
-                    for (int i = 0; i < joursSem.Length; i++)
+                    if(seance.JoursSem != null)
                     {
-                        joursSem[i] = getJourSemaine(int.Parse(seance.JoursSem[i]));
-                    }
+                        string[] joursSem = new string[seance.JoursSem.Length];
+                        int numJour = 0;
 
-                    while (dateDebutHeureDebut <= dateFin)
-                    {
                         for (int i = 0; i < joursSem.Length; i++)
                         {
-                            if (joursSem[i] == dateDebutHeureDebut.DayOfWeek.ToString())
+                            joursSem[i] = getJourSemaine(int.Parse(seance.JoursSem[i]));
+                        }
+
+                        while (dateDebutHeureDebut <= dateFin)
+                        {
+                            for (int i = 0; i < joursSem.Length; i++)
                             {
-                                numJour = i;
-                                seance.HeureDebut = dateDebutHeureDebut;
-                                seance.HeureFin = dateDebutHeureFin;
+                                if (joursSem[i] == dateDebutHeureDebut.DayOfWeek.ToString())
+                                {
+                                    numJour = i;
+                                    seance.HeureDebut = dateDebutHeureDebut;
+                                    seance.HeureFin = dateDebutHeureFin;
 
-                                seanceService.CreateSeance(seance);
+                                    seanceService.CreateSeance(seance);
+                                }
                             }
-                        }
 
-                        if (seance.ChiffreFreq > 1 && numJour == joursSem.Length - 1)
-                        {
-                            numJour = 0;
-                            dateDebutHeureDebut = dateDebutHeureDebut.AddDays(7 * (chiffreFreq - 1) + 1);
-                            dateDebutHeureFin = dateDebutHeureFin.AddDays(7 * (chiffreFreq - 1) + 1);
-                        }
-                        else
-                        {
-                            dateDebutHeureDebut = dateDebutHeureDebut.AddDays(1);
-                            dateDebutHeureFin = dateDebutHeureFin.AddDays(1);
+                            if (seance.ChiffreFreq > 1 && numJour == joursSem.Length - 1)
+                            {
+                                numJour = 0;
+                                dateDebutHeureDebut = dateDebutHeureDebut.AddDays(7 * (chiffreFreq - 1) + 1);
+                                dateDebutHeureFin = dateDebutHeureFin.AddDays(7 * (chiffreFreq - 1) + 1);
+                            }
+                            else
+                            {
+                                dateDebutHeureDebut = dateDebutHeureDebut.AddDays(1);
+                                dateDebutHeureFin = dateDebutHeureFin.AddDays(1);
+                            }
                         }
                     }
                 }
@@ -150,6 +153,7 @@ namespace CineLogic.Controllers
                 seanceService.CreateSeance(seance);
 
             System.Web.HttpContext.Current.Session[SESSION_UV] = true;
+
             return Json(new { success = true });
         }
 

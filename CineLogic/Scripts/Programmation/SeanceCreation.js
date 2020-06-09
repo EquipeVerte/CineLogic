@@ -136,7 +136,8 @@
                 $("#alert-seance").empty();
                 //  Afficher les erreurs.
                 $.each(e.responseJSON, function (i, item) {
-                    $("#alert-seance").append("<b>" + dictVarNames[item.Key] + " : </b>");
+                    console.log(item.Key);
+                    $("#alert-seance").append("<b>" + (dictVarNames[item.Key] === undefined ? item.Key : dictVarNames[item.Key]) + " : </b>");
                     $("#alert-seance").append($.each(item.Errors, function (i2, item2) {
                         return item2;
                     }) + "<br/>");
