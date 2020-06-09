@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using CineLogic.Models.Hashing;
-using System.Web.UI.WebControls;
 using CineLogic.Controllers.Attributes;
 using CineLogic.Models;
 using CineLogic.Models.Libraries;

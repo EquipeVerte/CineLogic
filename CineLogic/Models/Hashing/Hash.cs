@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CineLogic.Models.Hashing
+﻿namespace CineLogic.Models.Hashing
 {
     public class Hash
     {

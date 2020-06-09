@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using CineLogic.Models;
 using AutoMapper;
@@ -13,7 +11,6 @@ using Newtonsoft.Json;
 using CineLogic.Models.Libraries;
 using CineLogic.Models.Programmation;
 using CineLogic.Controllers.Attributes;
-using System.Windows;
 
 namespace CineLogic.Controllers
 {
